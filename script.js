@@ -6,8 +6,8 @@ if (sessionStorage.getItem('visited')) {
     sessionStorage.setItem('visited', '1');
     setTimeout(() => {
         loaderModal.classList.add('hide');
-        setTimeout(() => loaderModal.remove(), 400);
-    }, 2000);
+        setTimeout(() => loaderModal.remove(), 500);
+    }, 1500);
 }
 
 // ── Fade-to-black on card click ─────────────────────────────
