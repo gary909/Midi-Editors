@@ -61,14 +61,16 @@ function setupCardSynths() {
             rafId = requestAnimationFrame(returnLoop);
         }
 
-        thumb.addEventListener('mouseenter', () => {
+        const card = thumb.closest('.editor-card');
+
+        card.addEventListener('mouseenter', () => {
             spinning = true;
             if (rafId) cancelAnimationFrame(rafId);
             lastTime = null;
             rafId = requestAnimationFrame(spinLoop);
         });
 
-        thumb.addEventListener('mouseleave', () => {
+        card.addEventListener('mouseleave', () => {
             spinning = false;
             if (rafId) cancelAnimationFrame(rafId);
             returnToZero();
