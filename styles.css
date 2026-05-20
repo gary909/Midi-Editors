@@ -144,6 +144,84 @@ body {
     background: #374151;
 }
 
+/* ─── Loading Modal ────────────────────────────────────────── */
+#loader-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 1;
+    transition: opacity 0.4s ease;
+}
+
+#loader-modal.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader-box {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 2rem 2.5rem;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+}
+
+.loader-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.loader-track {
+    background: #e5e7eb;
+    border-radius: 999px;
+    height: 8px;
+    overflow: hidden;
+}
+
+.loader-bar {
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #5c5fef, #e11d48);
+    animation: loader-fill 1.8s ease-out forwards;
+}
+
+@keyframes loader-fill {
+    from { width: 0%; }
+    to   { width: 100%; }
+}
+
+.loader-label {
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    color: #9ca3af;
+}
+
+/* ─── Fade Overlay ─────────────────────────────────────────── */
+#fade-overlay {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.45s ease;
+    z-index: 9999;
+}
+
+#fade-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
 /* ─── Footer ────────────────────────────────────────────────── */
 .site-footer {
     text-align: center;
