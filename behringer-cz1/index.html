@@ -3,22 +3,2135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Behringer CZ1 — MIDI Editor</title>
-    <style>
-        body { font-family: system-ui, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; background: #f5f5f5; color: #374151; text-align: center; gap: 1rem; padding: 2rem; }
-        h1 { font-size: 1.5rem; }
-        p { color: #6b7280; max-width: 480px; line-height: 1.6; }
-        a { color: #ea580c; }
-        .back { display: inline-block; margin-top: 1rem; padding: 0.5rem 1.25rem; background: #111827; color: #fff; border-radius: 6px; text-decoration: none; font-size: 0.875rem; font-weight: 600; }
-    </style>
+    <title>CZ-1 Mini Editor</title>
+    <meta name="description" content="A free online Behringer CZ-1 Mini MIDI Editor. Edit and save your patches with ease via MIDI CC control.">
+ 
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron&family=VT323&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&family=Tourney:ital,wght@0,100..900;1,100..900&display=swap">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="CZ-1 Mini MIDI Editor">
+    <meta property="og:description" content="Edit your Behringer CZ-1 Mini patches via MIDI in your browser.">
+
+    <link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
+    <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="favicon/site.webmanifest">
+
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <h1>Behringer CZ1 — MIDI Editor</h1>
-    <p>
-        Copy the files from
-        <a href="https://github.com/gary909/Behringer-CZ1-Midi-Editor" target="_blank" rel="noopener">github.com/gary909/Behringer-CZ1-Midi-Editor</a>
-        into this folder (<code>behringer-cz1/</code>), replacing this placeholder file.
-    </p>
-    <a href="../index.html" class="back">&larr; Back to editors</a>
+    <div class="zoom-controls" id="zoom-controls">
+        <button class="zoom-btn" id="zoom-out-btn" aria-label="Zoom out" title="Zoom Out">−</button>
+        <button class="zoom-btn" id="zoom-in-btn" aria-label="Zoom in" title="Zoom In">+</button>
+    </div>
+    
+    <div class="hamburger-menu" id="hamburger-menu">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+    
+    <nav class="side-nav" id="side-nav">
+        <a href="#" class="close-btn" id="close-btn">&times;</a>
+        <a href="#" id="about-btn" class="HambText">CZ-1 MINI EDITOR</a>
+        <div class="nav-synth-wrap">
+            <img src="media/CZMini_cutout.svg" alt="" aria-hidden="true" class="nav-synth-img nav-synth-img--back">
+            <img src="media/CZMini_cutout.svg" alt="" aria-hidden="true" class="nav-synth-img nav-synth-img--mid">
+            <img src="media/CZMini_cutout.svg" alt="CZ-1 Mini Synth Image" class="nav-synth-img nav-synth-img--front">
+        </div>
+        
+        <div class="accordion-item">
+            <button class="accordion-header">GUIDE</button>
+            <div class="accordion-content">
+                <p class="guideNote"><a class="guideNote" href="https://www.youtube.com/watch?v=BY4VxUiM_XU" target="_blank">- Video overview here -</a></p>
+                <p class="guideNote">Connect your CZ-1 Mini via USB. Enable your browser for MIDI access (Safari not supported). If no midi-enable pop-up is present, click to the right of the URL bar and enable MIDI access.</p>
+                <p class="guideNote">Your device should show up in the Select MIDI device screen.</p>
+                <p class="guideNote">You can now use the sliders to edit your patch via MIDI CC.</p>
+                <p class="guideNote">Still not working? Try closing and reopening your browser. Happy editing!</p>
+                <!-- <p class="guideNote">Happy editing!</p> -->
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header">OTHER EDITORS</button>
+            <div class="accordion-content">
+                <a class="linkText" href="https://www.behringer-jt4000m-editor.co.uk/">JT4000M MICRO EDITOR</a>
+                <a class="linkText" href="https://gary909.github.io/JT-Midi-Editor/">JT MINI</a>
+                <!-- <a class="linkText" target="_blank" href="https://www.behringer-cz1-editor.co.uk/">CZ-1 MINI (coming soon)</a> -->
+                <a class="linkText" href="https://gary909.github.io/Pro_VS_Mini_Editor/">Pro VS MINI</a>
+                <a class="linkText" href="https://www.behringer-ub1-micro-editor.co.uk/">UB-1 MICRO EDITOR</a>
+                    <!-- <a class="linkText" href="javascript:void(0)">PRO VS MINI (coming soon)</a> -->
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header">DOWNLOAD</button>
+            <div class="accordion-content">
+                <a class="linkText" href="javascript:void(0)">COMING SOON</a>
+
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header">CZ-1 MINI MANUAL</button>
+            <div class="accordion-content">
+                <a class="linkText" target="_blank" href="https://behringer.com/en/products?category_id=synthesizers-and-keyboards">LINK TO PDF MANUAL</a>
+            </div>
+        </div>
+
+        <div class="nav-note">
+            <p class="nav-note"><b>NOTE</b>: This is a community-created MIDI editor for the Behringer CZ-1 Mini. Use at your own risk. <a href="privacy.html">This software is provided as-is, without warranty of any kind.</a></p>
+        </div>
+    </nav>
+
+    <div id="main-header">
+        <div id="header-block">
+            <h1>CZ-1</h1>
+            <h2>MINI</h2>
+        </div>
+        
+        <div id="midi-status">
+            <label class="outerLabel" for="midi-output-select">SELECT MIDI DEVICE</label>
+            <select id="midi-output-select">
+                <option value="">-- No Devices Found --</option>
+            </select>
+            <span id="midi-device-status-text"></span>
+        </div>
+
+        <div id="patch-controls">
+            <div class="patch-button-group">
+                <label class="outerLabel" for="init-patch-button">INIT</label>
+                <button title="initialize the basic patch" id="init-patch-button"></button>
+            </div>
+            <div class="patch-button-group">
+                <label class="outerLabel" for="random-patch-button">RANDOM</label>
+                <button title="create a random patch" id="random-patch-button"></button>
+            </div>
+            <div class="patch-button-group">
+                <label class="outerLabel" for="preset-patch-button">SYNTH</label>
+                <button title="load synth preset" id="preset-patch-button"></button>
+            </div>
+            <div class="patch-button-group">
+                <label class="outerLabel" for="bass-patch-button">BASS</label>
+                <button title="load bass preset" id="bass-patch-button"></button>
+            </div>
+            <div class="patch-button-group">
+                <label class="outerLabel" for="string-patch-button">STRING</label>
+                <button title="load string preset" id="string-patch-button"></button>
+            </div>
+            <div class="patch-button-group">
+                <label class="outerLabel" for="organ-patch-button">ORGAN</label>
+                <button title="load organ preset" id="organ-patch-button"></button>
+            </div>
+            <div class="patch-button-group">
+                <label class="outerLabel" for="sine-patch-button">SINE</label>
+                <button title="load sine preset" id="sine-patch-button"></button>
+            </div>
+        </div>
+        <div id="preset-name-display"></div>
+
+        <div id="header-spacer"></div>
+    </div>
+    <!-- *******************************Start of Controls Here*************************** -->
+    <div id="controls">
+        
+        <!-- Lines SVG Left -->
+        <div class="lines-graphic-left">
+            <img src="media/cz_Lines_duo.svg" alt="Lines Diagram" class="lines-diagram-left">
+        </div>
+
+        <!-- DCO 1 -->
+        <div class="control-box vertical-sliders noisy dco1-max-width">
+            <h3 id="dco1-heading" title="The DCO (Digitally Controlled Oscillator): 
+Is the primary source of sound generation for the CZ-1 MINI. 
+While it technically outputs a basic sine wave, it can recall 
+standard and coded waveforms from memory to serve as the 
+foundation for a sound">DCO 1<button class="box-init-btn" data-box="dco1" title="Init DCO 1">I</button><button class="box-random-btn" data-box="dco1" title="Randomise DCO 1">&#x27F3;</button></h3>
+            <div class="waveform-display">
+                <span class="waveform-label">WAVEFORMS</span>
+                <img src="media/waveforms.svg" alt="Waveforms" class="waveform-grid">
+                <div class="waveform-indicators">
+                    <div class="waveform-indicator wf-dco1" data-waveform="0"></div>
+                    <div class="waveform-indicator wf-dco2" data-waveform="0"></div>
+                </div>
+            </div>
+            <div class="parameter-row" title="Selects the waveforms used by the DCO">
+                <label for="dco1-wf1">WF1</label>
+                <input type="range" id="dco1-wf1" min="0" max="127" value="0" list="dco1-wf1-list">
+                <datalist id="dco1-wf1-list">
+                    <option value="0" label="Sawtooth"></option>
+                    <option value="19" label="Square"></option>
+                    <option value="37" label="Pulse"></option>
+                    <option value="55" label="DoubleSine"></option>
+                    <option value="73" label="Saw-Pulse"></option>
+                    <option value="91" label="Resonance I"></option>
+                    <option value="109" label="Resonance II"></option>
+                    <option value="127" label="Resonance III"></option>
+                </datalist>
+            </div>
+            <div class="parameter-row" title="Selects the waveforms used by the DCO">
+                <label for="dco2-wf2">WF2</label>
+                <input type="range" id="dco2-wf2" min="0" max="127" value="0" list="dco2-wf2-list">
+                <datalist id="dco2-wf2-list">
+                    <option value="0" label="Sawtooth"></option>
+                    <option value="19" label="Square"></option>
+                    <option value="37" label="Pulse"></option>
+                    <option value="55" label="DoubleSine"></option>
+                    <option value="73" label="Saw-Pulse"></option>
+                    <option value="91" label="Resonance I"></option>
+                    <option value="109" label="Resonance II"></option>
+                    <option value="127" label="Resonance III"></option>
+                </datalist>
+            </div>
+            <div class="parameter-row" title="Adjusts the harmonic content 
+produced by the DCO waveshape">
+                <label for="dco1-dcw">DCW</label>
+                <input type="range" id="dco1-dcw" min="0" max="127" value="0">
+            </div>
+        </div>
+
+        <!-- LINE SELECT -->
+        <div class="control-box vertical-sliders noisy">
+            <h3 title="This is where you choose which DCO to use:
+Line 1: DCO 1 active
+Line 2: DCO 2 active
+Line 1+2: both DCOs active (Detune available)
+Line 1+1: DCO 1 is doubled (Detune available)">LINE SELECT</h3>
+            <div class="parameter-row">
+                <div class="circle-labels">
+                    <span>1</span>
+                    <span>2</span>
+                    <span>1+2</span>
+                    <span>1+1</span>
+                </div>
+                <div class="line-indicator-circles">
+                    <div class="circle" data-value="0"></div>
+                    <div class="circle" data-value="42"></div>
+                    <div class="circle" data-value="85"></div>
+                    <div class="circle" data-value="127"></div>
+                </div>
+                <label for="line-select">LINE</label>
+                <input type="range" id="line-select" min="0" max="127" value="0" list="line-select-list" title="This is where you choose which DCO to use:
+Line 1: DCO 1 active
+Line 2: DCO 2 active
+Line 1+2: both DCOs active (Detune available)
+Line 1+1: DCO 1 is doubled (Detune available)">
+                <datalist id="line-select-list">
+                    <option value="0" label="1">"1"</option>
+                    <option value="43" label="2">2</option>
+                    <option value="85" label="1+2">1+2</option>
+                    <option value="127" label="1+1">1+1</option>
+                </datalist>
+            </div>
+        </div>
+
+        <!-- PITCH LEVEL -->
+        <!-- <div class="control-box vertical-sliders noisy">
+            <h3>PITCH LEVEL</h3>
+            <div class="parameter-row" title="Pitch End Point">
+                <label for="pitch-end-point">END</label>
+                <input type="range" id="pitch-end-point" min="0" max="127" value="0" list="pitch-end-point-list">
+                <datalist id="pitch-end-point-list">
+                    <option value="0" label="2"></option>
+                    <option value="22" label="3"></option>
+                    <option value="43" label="4"></option>
+                    <option value="64" label="5"></option>
+                    <option value="85" label="6"></option>
+                    <option value="106" label="7"></option>
+                    <option value="127" label="8"></option>
+                </datalist>
+            </div>
+        </div> -->
+
+        <!-- DCO 2 -->
+        <div class="control-box vertical-sliders noisy dco2-max-width">
+            <h3 id="dco2-heading" title="DCO 2: 
+DCO 2 has a ring mod and noise available (but not 
+via this editor as the midi info is not supplied 
+by Behringer): To use it, on the synth, click 'DCO 2', 
+scroll to 'MOD'  and choose between 'off', 'ring' 
+or 'noise'">DCO 2<button class="box-init-btn" data-box="dco2" title="Init DCO 2">I</button><button class="box-random-btn" data-box="dco2" title="Randomise DCO 2">&#x27F3;</button></h3>
+            <div class="waveform-display">
+                <span class="waveform-label">WAVEFORMS</span>
+                <img src="media/waveforms.svg" alt="Waveforms" class="waveform-grid">
+                <div class="waveform-indicators">
+                    <div class="waveform-indicator wf-dco3" data-waveform="0"></div>
+                    <div class="waveform-indicator wf-dco4" data-waveform="0"></div>
+                </div>
+            </div>
+            <div class="parameter-row" title="Selects the waveforms used by the DCO">
+                <label for="dco1-wf1-lineoffset">WF1</label>
+                <input type="range" id="dco1-wf1-lineoffset" min="0" max="127" value="0" list="dco1-wf1-lineoffset-list">
+                <datalist id="dco1-wf1-lineoffset-list">
+                    <option value="0" label="Sawtooth"></option>
+                    <option value="19" label="Square"></option>
+                    <option value="37" label="Pulse"></option>
+                    <option value="55" label="DoubleSine"></option>
+                    <option value="73" label="Saw-Pulse"></option>
+                    <option value="91" label="Resonance I"></option>
+                    <option value="109" label="Resonance II"></option>
+                    <option value="127" label="Resonance III"></option>
+                </datalist>
+            </div>
+            <div class="parameter-row" title="Selects the waveforms used by the DCO">
+                <label for="dco1-wf2-lineoffset">WF2</label>
+                <input type="range" id="dco1-wf2-lineoffset" min="0" max="127" value="0" list="dco1-wf2-lineoffset-list">
+                <datalist id="dco1-wf2-lineoffset-list">
+                    <option value="0" label="Sawtooth"></option>
+                    <option value="19" label="Square"></option>
+                    <option value="37" label="Pulse"></option>
+                    <option value="55" label="DoubleSine"></option>
+                    <option value="73" label="Saw-Pulse"></option>
+                    <option value="91" label="Resonance I"></option>
+                    <option value="109" label="Resonance II"></option>
+                    <option value="127" label="Resonance III"></option>
+                </datalist>
+            </div>
+            <div class="parameter-row" title="Adjusts the harmonic content 
+produced by the DCO waveshape">
+                <label for="dco1-dcw-lineoffset">DCW</label>
+                <input type="range" id="dco1-dcw-lineoffset" min="0" max="127" value="0">
+            </div>
+        </div>
+
+        <!-- Lines SVG Right -->
+        <div class="lines-graphic-right">
+            <img src="media/cz_Lines_duo.svg" alt="Lines Diagram" class="lines-diagram-right">
+        </div>
+        
+        <!-- PITCH RATE -->
+        <div class="control-box vertical-sliders noisy pitch-rate-small">
+            <h3 id="pitch-env1-heading" title="DCO (Pitch): 
+Affects the pitch of the note. A value of 0 is 
+the stable original pitch, while higher values 
+cause the note to glide to progressively higher 
+pitches. A maximum value of 99 provides a 
+6-octave modulation range.">DCO PITCH ENV 1<button class="box-init-btn" data-box="pitch-env1" title="Init DCO Pitch Env 1">I</button><button class="box-random-btn" data-box="pitch-env1" title="Randomise DCO Pitch Env 1">&#x27F3;</button></h3>
+            <div class="parameter-row" title="DCO Pitch Sustain Point:
+Sets the sustain point 
+of the envelope.">
+                <label for="pitch-sustain-point">SUS</label>
+                <input type="range" id="pitch-sustain-point" min="0" max="127" value="0" list="pitch-sustain-point-list">
+                <datalist id="pitch-sustain-point-list">
+                    <option value="0" label="0"></option>
+                    <option value="19" label="1"></option>
+                    <option value="37" label="2"></option>
+                    <option value="55" label="3"></option>
+                    <option value="73" label="4"></option>
+                    <option value="91" label="5"></option>
+                    <option value="109" label="6"></option>
+                    <option value="127" label="7"></option>
+                </datalist>
+            </div>
+                        <div class="parameter-row" title="DCO Pitch End Point:
+Sets the end or release stage 
+of the envelope (determining 
+the final behavior of the sound 
+after the key is released)">
+                <label for="pitch-end-point">END</label>
+                <input type="range" id="pitch-end-point" min="0" max="127" value="0" list="pitch-end-point-list">
+                <datalist id="pitch-end-point-list">
+                    <option value="0" label="2"></option>
+                    <option value="22" label="3"></option>
+                    <option value="43" label="4"></option>
+                    <option value="64" label="5"></option>
+                    <option value="85" label="6"></option>
+                    <option value="106" label="7"></option>
+                    <option value="127" label="8"></option>
+                </datalist>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="Pitch Rate 1:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="pitch-rate-1">RATE 1<span class="pitch1-sustain-indicator" data-rate="1"></span></label>
+                    <input type="range" id="pitch-rate-1" min="0" max="127" value="0" class="pitch-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="Pitch Level 1:
+The Pitch Level (LV) applied to the DCO determines the destination frequency 
+for an envelope stage, where a value of 0 maintains the note's original stable 
+pitch while higher values (up to 99) glide the pitch upward within a 6-octave 
+modulation range">
+                    <label for="pitch-level-1">LVL 1</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="pitch-level-1" min="0" max="127" value="0" class="pitch-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                        <!-- <div class="pot-value">0</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="Pitch Rate 2:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="pitch-rate-2">RATE 2<span class="pitch1-sustain-indicator" data-rate="2"></span><span class="pitch1-end-indicator" data-rate="2"></span></label>
+                    <input type="range" id="pitch-rate-2" min="0" max="127" value="0" class="pitch-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="Pitch Level 2:
+The Pitch Level (LV) applied to the DCO determines the destination frequency 
+for an envelope stage, where a value of 0 maintains the note's original stable 
+pitch while higher values (up to 99) glide the pitch upward within a 6-octave 
+modulation range">
+                    <label for="pitch-level-2">LVL 2</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="pitch-level-2" min="0" max="127" value="0" class="pitch-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                        <!-- <div class="pot-value">0</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="Pitch Rate 3:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="pitch-rate-3">RATE 3<span class="pitch1-sustain-indicator" data-rate="3"></span><span class="pitch1-end-indicator" data-rate="3"></span></label>
+                    <input type="range" id="pitch-rate-3" min="0" max="127" value="0" class="pitch-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="Pitch Level 3:
+The Pitch Level (LV) applied to the DCO determines the destination frequency 
+for an envelope stage, where a value of 0 maintains the note's original stable 
+pitch while higher values (up to 99) glide the pitch upward within a 6-octave 
+modulation range">
+                    <label for="pitch-level-3">LVL 3</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="pitch-level-3" min="0" max="127" value="0" class="pitch-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                        <!-- <div class="pot-value">0</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="Pitch Rate 4:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="pitch-rate-4">RATE 4<span class="pitch1-sustain-indicator" data-rate="4"></span><span class="pitch1-end-indicator" data-rate="4"></span></label>
+                    <input type="range" id="pitch-rate-4" min="0" max="127" value="0" class="pitch-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="Pitch Level 4:
+The Pitch Level (LV) applied to the DCO determines the destination frequency 
+for an envelope stage, where a value of 0 maintains the note's original stable 
+pitch while higher values (up to 99) glide the pitch upward within a 6-octave 
+modulation range">
+                    <label for="pitch-level-4">LVL 4</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="pitch-level-4" min="0" max="127" value="0" class="pitch-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                        <!-- <div class="pot-value">0</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="Pitch Rate 5:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="pitch-rate-5">RATE 5<span class="pitch1-sustain-indicator" data-rate="5"></span><span class="pitch1-end-indicator" data-rate="5"></span></label>
+                    <input type="range" id="pitch-rate-5" min="0" max="127" value="0" class="pitch-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="Pitch Level 5:
+The Pitch Level (LV) applied to the DCO determines the destination frequency 
+for an envelope stage, where a value of 0 maintains the note's original stable 
+pitch while higher values (up to 99) glide the pitch upward within a 6-octave 
+modulation range">
+                    <label for="pitch-level-5">LVL 5</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="pitch-level-5" min="0" max="127" value="0" class="pitch-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                        <!-- <div class="pot-value">0</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="Pitch Rate 6:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="pitch-rate-6">RATE 6<span class="pitch1-sustain-indicator" data-rate="6"></span><span class="pitch1-end-indicator" data-rate="6"></span></label>
+                    <input type="range" id="pitch-rate-6" min="0" max="127" value="0" class="pitch-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="Pitch Level 6:
+The Pitch Level (LV) applied to the DCO determines the destination frequency 
+for an envelope stage, where a value of 0 maintains the note's original stable 
+pitch while higher values (up to 99) glide the pitch upward within a 6-octave 
+modulation range">
+                    <label for="pitch-level-6">LVL 6</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="pitch-level-6" min="0" max="127" value="0" class="pitch-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                        <!-- <div class="pot-value">0</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="Pitch Rate 7:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="pitch-rate-7">RATE 7<span class="pitch1-sustain-indicator" data-rate="7"></span><span class="pitch1-end-indicator" data-rate="7"></span></label>
+                    <input type="range" id="pitch-rate-7" min="0" max="127" value="0" class="pitch-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="Pitch Level 7:
+The Pitch Level (LV) applied to the DCO determines the destination frequency 
+for an envelope stage, where a value of 0 maintains the note's original stable 
+pitch while higher values (up to 99) glide the pitch upward within a 6-octave 
+modulation range">
+                    <label for="pitch-level-7">LVL 7</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="pitch-level-7" min="0" max="127" value="0" class="pitch-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                        <!-- <div class="pot-value">0</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="Pitch Rate 8:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="pitch-rate-8">RATE 8<span class="pitch1-end-indicator" data-rate="8"></span></label>
+                    <input type="range" id="pitch-rate-8" min="0" max="127" value="0" class="pitch-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="Pitch Level 8:
+The Pitch Level (LV) applied to the DCO determines the destination frequency 
+for an envelope stage, where a value of 0 maintains the note's original stable 
+pitch while higher values (up to 99) glide the pitch upward within a 6-octave 
+modulation range">
+                    <label for="pitch-level-8">LVL 8</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="pitch-level-8" min="0" max="127" value="0" class="pitch-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                        <!-- <div class="pot-value">0</div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PITCH ENV 2 -->
+        <div class="control-box vertical-sliders noisy pitch-rate-small">
+            <h3 id="pitch-env2-heading" title="DCO (Pitch): 
+Affects the pitch of the note. A value of 0 
+is the stable original pitch, while higher 
+values cause the note to glide to 
+progressively higher pitches. A maximum 
+value of 99 provides a 6-octave 
+modulation range.">DCO PITCH ENV 2<button class="box-init-btn" data-box="pitch-env2" title="Init Pitch Env 2">I</button><button class="box-random-btn" data-box="pitch-env2" title="Randomise Pitch Env 2">&#x27F3;</button></h3>
+            <div class="parameter-row" title="DCO Pitch Sustain Point:
+Sets the sustain point
+ of the envelope.">
+                <label for="pitch2-sustain-point">SUS</label>
+                <input type="range" id="pitch2-sustain-point" min="0" max="127" value="0" list="pitch2-sustain-point-list">
+                <datalist id="pitch2-sustain-point-list">
+                    <option value="0" label="0"></option>
+                    <option value="19" label="1"></option>
+                    <option value="37" label="2"></option>
+                    <option value="55" label="3"></option>
+                    <option value="73" label="4"></option>
+                    <option value="91" label="5"></option>
+                    <option value="109" label="6"></option>
+                    <option value="127" label="7"></option>
+                </datalist>
+            </div>
+            <div class="parameter-row" title="DCO Pitch End Point:
+Sets the end or release stage
+of the envelope (determining 
+the final behavior of the sound 
+after the key is released)">
+                <label for="pitch2-end-point">END</label>
+                <input type="range" id="pitch2-end-point" min="0" max="127" value="0" list="pitch2-end-point-list">
+                <datalist id="pitch2-end-point-list">
+                    <option value="0" label="2"></option>
+                    <option value="22" label="3"></option>
+                    <option value="43" label="4"></option>
+                    <option value="64" label="5"></option>
+                    <option value="85" label="6"></option>
+                    <option value="106" label="7"></option>
+                    <option value="127" label="8"></option>
+                </datalist>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="Pitch 2 Rate 1:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="pitch2-rate-1">RATE 1<span class="pitch2-sustain-indicator" data-rate="1"></span></label>
+                    <input type="range" id="pitch2-rate-1" min="0" max="127" value="0" class="pitch-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="Pitch 2 Level 1:
+The Pitch Level (LV) applied to the DCO determines the destination frequency 
+for an envelope stage, where a value of 0 maintains the note's original stable 
+pitch while higher values (up to 99) glide the pitch upward within a 6-octave 
+modulation range">
+                    <label for="pitch2-level-1">LVL 1</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="pitch2-level-1" min="0" max="127" value="0" class="pitch-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="Pitch 2 Rate 2:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="pitch2-rate-2">RATE 2<span class="pitch2-sustain-indicator" data-rate="2"></span><span class="pitch2-end-indicator" data-rate="2"></span></label>
+                    <input type="range" id="pitch2-rate-2" min="0" max="127" value="0" class="pitch-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="Pitch 2 Level 2:
+The Pitch Level (LV) applied to the DCO determines the destination frequency 
+for an envelope stage, where a value of 0 maintains the note's original stable 
+pitch while higher values (up to 99) glide the pitch upward within a 6-octave 
+modulation range">
+                    <label for="pitch2-level-2">LVL 2</label>
+                        <div class="pot-wrapper">
+                            <input type="range" id="pitch2-level-2" min="0" max="127" value="0" class="pitch-rate-slider">
+                            <div class="pot-knob">
+                                <div class="pot-indicator"></div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="Pitch 2 Rate 3:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="pitch2-rate-3">RATE 3<span class="pitch2-sustain-indicator" data-rate="3"></span><span class="pitch2-end-indicator" data-rate="3"></span></label>
+                    <input type="range" id="pitch2-rate-3" min="0" max="127" value="0" class="pitch-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="Pitch 2 Level 3:
+The Pitch Level (LV) applied to the DCO determines the destination frequency 
+for an envelope stage, where a value of 0 maintains the note's original stable 
+pitch while higher values (up to 99) glide the pitch upward within a 6-octave 
+modulation range">
+                    <label for="pitch2-level-3">LVL 3</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="pitch2-level-3" min="0" max="127" value="0" class="pitch-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="Pitch 2 Rate 4:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="pitch2-rate-4">RATE 4<span class="pitch2-sustain-indicator" data-rate="4"></span><span class="pitch2-end-indicator" data-rate="4"></span></label>
+                    <input type="range" id="pitch2-rate-4" min="0" max="127" value="0" class="pitch-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="Pitch 2 Level 4:
+The Pitch Level (LV) applied to the DCO determines the destination frequency 
+for an envelope stage, where a value of 0 maintains the note's original stable 
+pitch while higher values (up to 99) glide the pitch upward within a 6-octave 
+modulation range">
+                    <label for="pitch2-level-4">LVL 4</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="pitch2-level-4" min="0" max="127" value="0" class="pitch-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="Pitch 2 Rate 5:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="pitch2-rate-5">RATE 5<span class="pitch2-sustain-indicator" data-rate="5"></span><span class="pitch2-end-indicator" data-rate="5"></span></label>
+                    <input type="range" id="pitch2-rate-5" min="0" max="127" value="0" class="pitch-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="Pitch 2 Level 5:
+The Pitch Level (LV) applied to the DCO determines the destination frequency 
+for an envelope stage, where a value of 0 maintains the note's original stable 
+pitch while higher values (up to 99) glide the pitch upward within a 6-octave 
+modulation range">
+                    <label for="pitch2-level-5">LVL 5</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="pitch2-level-5" min="0" max="127" value="0" class="pitch-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="Pitch 2 Rate 6:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="pitch2-rate-6">RATE 6<span class="pitch2-sustain-indicator" data-rate="6"></span><span class="pitch2-end-indicator" data-rate="6"></span></label>
+                    <input type="range" id="pitch2-rate-6" min="0" max="127" value="0" class="pitch-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="Pitch 2 Level 6:
+The Pitch Level (LV) applied to the DCO determines the destination frequency 
+for an envelope stage, where a value of 0 maintains the note's original stable 
+pitch while higher values (up to 99) glide the pitch upward within a 6-octave 
+modulation range">
+                    <label for="pitch2-level-6">LVL 6</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="pitch2-level-6" min="0" max="127" value="0" class="pitch-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="Pitch 2 Rate 7:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="pitch2-rate-7">RATE 7<span class="pitch2-sustain-indicator" data-rate="7"></span><span class="pitch2-end-indicator" data-rate="7"></span></label>
+                    <input type="range" id="pitch2-rate-7" min="0" max="127" value="0" class="pitch-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="Pitch 2 Level 7:
+The Pitch Level (LV) applied to the DCO determines the destination frequency 
+for an envelope stage, where a value of 0 maintains the note's original stable 
+pitch while higher values (up to 99) glide the pitch upward within a 6-octave 
+modulation range">
+                    <label for="pitch2-level-7">LVL 7</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="pitch2-level-7" min="0" max="127" value="0" class="pitch-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="Pitch 2 Rate 8:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="pitch2-rate-8">RATE 8<span class="pitch2-end-indicator" data-rate="8"></span></label>
+                    <input type="range" id="pitch2-rate-8" min="0" max="127" value="0" class="pitch-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="Pitch 2 Level 8:
+The Pitch Level (LV) applied to the DCO determines the destination frequency 
+for an envelope stage, where a value of 0 maintains the note's original stable 
+pitch while higher values (up to 99) glide the pitch upward within a 6-octave 
+modulation range">
+                    <label for="pitch2-level-8">LVL 8</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="pitch2-level-8" min="0" max="127" value="0" class="pitch-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DCW ENV 1 -->
+        <div class="control-box vertical-sliders noisy dcw-rate-small">
+            <h3 id="dcw-env1-heading" title="DCW (Timbre): 
+The DCW (Digitally Controlled Wave) envelope is an independent 
+8-stage generator used to sculpt a sound's timbre or tone over time. 
+It performs a role similar to a Voltage Controlled Filter (VCF) on a
+ traditional analog synthesizer, but instead of using a variable 
+ cutoff frequency to attenuate frequencies, it uses Phase Distortion 
+ to gradually introduce harmonics. 0 results in a basic sine wave, 
+ while 99 outputs a fully distorted waveshape matching the one selected 
+for the DCO (e.g. a sawtooth wave)">DCW ENV 1<button class="box-init-btn" data-box="dcw-env1" title="Init DCW Env 1">I</button><button class="box-random-btn" data-box="dcw-env1" title="Randomise DCW Env 1">&#x27F3;</button></h3>
+            <div class="parameter-column moved-params-pot-group">
+                <div class="parameter-row keyfollow-btn-control" title="KFO (Key Follow): 
+When turned on, playing higher notes causes 
+the waveform to progressively shift closer 
+to a sine wave, effectively making the sound 
+'darker' or less harmonically complex in 
+higher registers">
+                    <label for="kf-check-dco1-dcw-keyfollow">KEY<br>FOLLOW</label>
+                    <input type="range" id="dco1-dcw-keyfollow" min="0" max="127" value="0" class="dcw-rate-slider keyfollow-hidden-input">
+                    <input type="checkbox" id="kf-check-dco1-dcw-keyfollow" class="keyfollow-checkbox" data-input="dco1-dcw-keyfollow">
+                </div>
+                <div class="parameter-row pot-control" title="KFR (Key Follow Range): 
+This determines the intensity of the effect. 
+Higher range values lead to more significant 
+changes in timbre as you play higher notes on 
+the keyboard">
+                    <label for="dco1-dcw-keyfollow-range">KEY-F<br>RANGE</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dco1-dcw-keyfollow-range" min="0" max="127" value="0" class="dcw-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        <div class="parameter-row" title="DCW Sustain Point:
+Sets the sustain point 
+of the envelope.">
+                <label for="dcw-sustain-point">SUS</label>
+                <input type="range" id="dcw-sustain-point" min="0" max="127" value="0" list="dcw-sustain-point-list">
+                <datalist id="dcw-sustain-point-list">
+                    <option value="0" label="0"></option>
+                    <option value="21" label="1"></option>
+                    <option value="43" label="2"></option>
+                    <option value="64" label="3"></option>
+                    <option value="85" label="4"></option>
+                    <option value="106" label="5"></option>
+                    <option value="127" label="6"></option>
+                </datalist>
+            </div>
+            <div class="parameter-row" title="DCW End Point:
+Sets the end or release stage 
+of the envelope (determining 
+the final behavior of the sound 
+after the key is released)">
+                <label for="dcw-end-point">END</label>
+                <input type="range" id="dcw-end-point" min="0" max="127" value="0" list="dcw-end-point-list">
+                <datalist id="dcw-end-point-list">
+                    <!-- <option value="0" label="0"></option>
+                    <option value="16" label="1"></option>
+                    <option value="32" label="2"></option>
+                    <option value="48" label="3"></option>
+                    <option value="64" label="4"></option>
+                    <option value="80" label="5"></option>
+                    <option value="96" label="6"></option>
+                    <option value="112" label="7"></option>
+                    <option value="127" label="8"></option> -->
+                    <option value="0" label="2"></option>
+                    <option value="22" label="3"></option>
+                    <option value="43" label="4"></option>
+                    <option value="64" label="5"></option>
+                    <option value="85" label="6"></option>
+                    <option value="106" label="7"></option>
+                    <option value="127" label="8"></option>
+                </datalist>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCW Rate 1:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dcw-rate-1">RATE 1<span class="dcw1-sustain-indicator" data-rate="1"></span></label>
+                    <input type="range" id="dcw-rate-1" min="0" max="127" value="0" class="dcw-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCW LEVEL 1:
+The DCW Level (LV) determines the amount of Phase Distortion applied to the 
+oscillator's waveshape, effectively functioning as a timbre control by gradually 
+introducing harmonics. An LV setting of 0 outputs a basic sine wave (the 
+fundamental frequency without harmonics), while a maximum setting of 99 transforms 
+the wave into the fully distorted waveshape selected in the DCO section, such as a 
+sawtooth wave. Intermediate values transition the sound through different shapes, 
+such as a triangle wave in the middle position, where higher levels result in a 
+perceptively brighter timbre and lower levels create a darker one">
+                    <label for="dcw-level-1">LVL 1</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dcw-level-1" min="0" max="127" value="0" class="dcw-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                        <!-- <div class="pot-value">0</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCW Rate 2:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dcw-rate-2">RATE 2<span class="dcw1-sustain-indicator" data-rate="2"></span><span class="dcw1-end-indicator" data-rate="2"></span></label>
+                    <input type="range" id="dcw-rate-2" min="0" max="127" value="0" class="dcw-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCW LEVEL 2:
+The DCW Level (LV) determines the amount of Phase Distortion applied to the 
+oscillator's waveshape, effectively functioning as a timbre control by gradually 
+introducing harmonics. An LV setting of 0 outputs a basic sine wave (the 
+fundamental frequency without harmonics), while a maximum setting of 99 transforms 
+the wave into the fully distorted waveshape selected in the DCO section, such as a 
+sawtooth wave. Intermediate values transition the sound through different shapes, 
+such as a triangle wave in the middle position, where higher levels result in a 
+perceptively brighter timbre and lower levels create a darker one">
+                    <label for="dcw-level-2">LVL 2</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dcw-level-2" min="0" max="127" value="0" class="dcw-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                        <!-- <div class="pot-value">0</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCW Rate 3:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dcw-rate-3">RATE 3<span class="dcw1-sustain-indicator" data-rate="3"></span><span class="dcw1-end-indicator" data-rate="3"></span></label>
+                    <input type="range" id="dcw-rate-3" min="0" max="127" value="0" class="dcw-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCW LEVEL 3:
+The DCW Level (LV) determines the amount of Phase Distortion applied to the 
+oscillator's waveshape, effectively functioning as a timbre control by gradually 
+introducing harmonics. An LV setting of 0 outputs a basic sine wave (the 
+fundamental frequency without harmonics), while a maximum setting of 99 transforms 
+the wave into the fully distorted waveshape selected in the DCO section, such as a 
+sawtooth wave. Intermediate values transition the sound through different shapes, 
+such as a triangle wave in the middle position, where higher levels result in a 
+perceptively brighter timbre and lower levels create a darker one">
+                    <label for="dcw-level-3">LVL 3</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dcw-level-3" min="0" max="127" value="0" class="dcw-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                        <!-- <div class="pot-value">0</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCW Rate 4:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dcw-rate-4">RATE 4<span class="dcw1-sustain-indicator" data-rate="4"></span><span class="dcw1-end-indicator" data-rate="4"></span></label>
+                    <input type="range" id="dcw-rate-4" min="0" max="127" value="0" class="dcw-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCW LEVEL 4:
+The DCW Level (LV) determines the amount of Phase Distortion applied to the 
+oscillator's waveshape, effectively functioning as a timbre control by gradually 
+introducing harmonics. An LV setting of 0 outputs a basic sine wave (the 
+fundamental frequency without harmonics), while a maximum setting of 99 transforms 
+the wave into the fully distorted waveshape selected in the DCO section, such as a 
+sawtooth wave. Intermediate values transition the sound through different shapes, 
+such as a triangle wave in the middle position, where higher levels result in a 
+perceptively brighter timbre and lower levels create a darker one">
+                    <label for="dcw-level-4">LVL 4</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dcw-level-4" min="0" max="127" value="0" class="dcw-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                        <!-- <div class="pot-value">0</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCW Rate 5:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dcw-rate-5">RATE 5<span class="dcw1-sustain-indicator" data-rate="5"></span><span class="dcw1-end-indicator" data-rate="5"></span></label>
+                    <input type="range" id="dcw-rate-5" min="0" max="127" value="0" class="dcw-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCW LEVEL 5:
+The DCW Level (LV) determines the amount of Phase Distortion applied to the 
+oscillator's waveshape, effectively functioning as a timbre control by gradually 
+introducing harmonics. An LV setting of 0 outputs a basic sine wave (the 
+fundamental frequency without harmonics), while a maximum setting of 99 transforms 
+the wave into the fully distorted waveshape selected in the DCO section, such as a 
+sawtooth wave. Intermediate values transition the sound through different shapes, 
+such as a triangle wave in the middle position, where higher levels result in a 
+perceptively brighter timbre and lower levels create a darker one">
+                    <label for="dcw-level-5">LVL 5</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dcw-level-5" min="0" max="127" value="0" class="dcw-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                        <!-- <div class="pot-value">0</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCW Rate 6:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dcw-rate-6">RATE 6<span class="dcw1-sustain-indicator" data-rate="6"></span><span class="dcw1-end-indicator" data-rate="6"></span></label>
+                    <input type="range" id="dcw-rate-6" min="0" max="127" value="0" class="dcw-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCW LEVEL 6:
+The DCW Level (LV) determines the amount of Phase Distortion applied to the 
+oscillator's waveshape, effectively functioning as a timbre control by gradually 
+introducing harmonics. An LV setting of 0 outputs a basic sine wave (the 
+fundamental frequency without harmonics), while a maximum setting of 99 transforms 
+the wave into the fully distorted waveshape selected in the DCO section, such as a 
+sawtooth wave. Intermediate values transition the sound through different shapes, 
+such as a triangle wave in the middle position, where higher levels result in a 
+perceptively brighter timbre and lower levels create a darker one">
+                    <label for="dcw-level-6">LVL 6</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dcw-level-6" min="0" max="127" value="0" class="dcw-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                        <!-- <div class="pot-value">0</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCW Rate 7:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dcw-rate-7">RATE 7<span class="dcw1-sustain-indicator" data-rate="7"></span><span class="dcw1-end-indicator" data-rate="7"></span></label>
+                    <input type="range" id="dcw-rate-7" min="0" max="127" value="0" class="dcw-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCW LEVEL 7:
+The DCW Level (LV) determines the amount of Phase Distortion applied to the 
+oscillator's waveshape, effectively functioning as a timbre control by gradually 
+introducing harmonics. An LV setting of 0 outputs a basic sine wave (the 
+fundamental frequency without harmonics), while a maximum setting of 99 transforms 
+the wave into the fully distorted waveshape selected in the DCO section, such as a 
+sawtooth wave. Intermediate values transition the sound through different shapes, 
+such as a triangle wave in the middle position, where higher levels result in a 
+perceptively brighter timbre and lower levels create a darker one">
+                    <label for="dcw-level-7">LVL 7</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dcw-level-7" min="0" max="127" value="0" class="dcw-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                        <!-- <div class="pot-value">0</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCW Rate 8:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dcw-rate-8">RATE 8<span class="dcw1-end-indicator" data-rate="8"></span></label>
+                    <input type="range" id="dcw-rate-8" min="0" max="127" value="0" class="dcw-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCW LEVEL 8:
+The DCW Level (LV) determines the amount of Phase Distortion applied to the 
+oscillator's waveshape, effectively functioning as a timbre control by gradually 
+introducing harmonics. An LV setting of 0 outputs a basic sine wave (the 
+fundamental frequency without harmonics), while a maximum setting of 99 transforms 
+the wave into the fully distorted waveshape selected in the DCO section, such as a 
+sawtooth wave. Intermediate values transition the sound through different shapes, 
+such as a triangle wave in the middle position, where higher levels result in a 
+perceptively brighter timbre and lower levels create a darker one">
+                    <label for="dcw-level-8">LVL 8</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dcw-level-8" min="0" max="127" value="0" class="dcw-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                        <!-- <div class="pot-value">0</div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DCW ENV 2 -->
+        <div class="control-box vertical-sliders noisy dcw-rate-small">
+            <h3 id="dcw-env2-heading" title="DCW (Timbre): 
+The DCW (Digitally Controlled Wave) envelope is an independent 
+8-stage generator used to sculpt a sound's timbre or tone over time. 
+It performs a role similar to a Voltage Controlled Filter (VCF) on a
+ traditional analog synthesizer, but instead of using a variable 
+ cutoff frequency to attenuate frequencies, it uses Phase Distortion 
+ to gradually introduce harmonics. 0 results in a basic sine wave, 
+ while 99 outputs a fully distorted waveshape matching the one selected 
+for the DCO (e.g. a sawtooth wave)">DCW ENV 2<button class="box-init-btn" data-box="dcw-env2" title="Init DCW Env 2">I</button><button class="box-random-btn" data-box="dcw-env2" title="Randomise DCW Env 2">&#x27F3;</button></h3>
+            <div class="parameter-column moved-params-pot-group">
+                <div class="parameter-row keyfollow-btn-control" title="KFO (Key Follow): 
+When turned on, playing higher notes causes 
+the waveform to progressively shift closer 
+to a sine wave, effectively making the sound 
+'darker' or less harmonically complex in 
+higher registers">
+                    <label for="kf-check-dco1-dcw-keyfollow-lineoffset">KEY<br>FOLLOW</label>
+                    <input type="range" id="dco1-dcw-keyfollow-lineoffset" min="0" max="127" value="0" class="dcw-rate-slider keyfollow-hidden-input">
+                    <input type="checkbox" id="kf-check-dco1-dcw-keyfollow-lineoffset" class="keyfollow-checkbox" data-input="dco1-dcw-keyfollow-lineoffset">
+                </div>
+                <div class="parameter-row pot-control" title="KFR (Key Follow Range): 
+This determines the intensity of the effect. 
+Higher range values lead to more significant 
+changes in timbre as you play higher notes on 
+the keyboard">
+                    <label for="dco1-dcw-keyfollow-range-lineoffset">KEY-F<br>RANGE</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dco1-dcw-keyfollow-range-lineoffset" min="0" max="127" value="0" class="dcw-rate-slider">
+                        <div class="pot-knob"><div class="pot-indicator"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-row" title="DCW Sustain Point:
+Sets the sustain point 
+of the envelope.">
+                <label for="dcw2-sustain-point">SUS</label>
+                <input type="range" id="dcw2-sustain-point" min="0" max="127" value="0" list="dcw2-sustain-point-list">
+                <datalist id="dcw2-sustain-point-list">
+                    <option value="0" label="0"></option>
+                    <option value="21" label="1"></option>
+                    <option value="43" label="2"></option>
+                    <option value="64" label="3"></option>
+                    <option value="85" label="4"></option>
+                    <option value="106" label="5"></option>
+                    <option value="127" label="6"></option>
+                </datalist>
+            </div>
+            <div class="parameter-row" title="DCW End Point:
+Sets the end or release stage 
+of the envelope (determining 
+the final behavior of the sound 
+after the key is released)">
+                <label for="dcw2-end-point">END</label>
+                <input type="range" id="dcw2-end-point" min="0" max="127" value="0" list="dcw2-end-point-list">
+                <datalist id="dcw2-end-point-list">
+                    <option value="0" label="2"></option>
+                    <option value="22" label="3"></option>
+                    <option value="43" label="4"></option>
+                    <option value="64" label="5"></option>
+                    <option value="85" label="6"></option>
+                    <option value="106" label="7"></option>
+                    <option value="127" label="8"></option>
+                </datalist>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCW 2 Rate 1:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dcw2-rate-1">RATE 1<span class="dcw2-sustain-indicator" data-rate="1"></span></label>
+                    <input type="range" id="dcw2-rate-1" min="0" max="127" value="0" class="dcw-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCW 2 Level 1:
+The DCW Level (LV) determines the amount of Phase Distortion applied to the 
+oscillator's waveshape, effectively functioning as a timbre control by gradually 
+introducing harmonics. An LV setting of 0 outputs a basic sine wave (the 
+fundamental frequency without harmonics), while a maximum setting of 99 transforms 
+the wave into the fully distorted waveshape selected in the DCO section, such as a 
+sawtooth wave. Intermediate values transition the sound through different shapes, 
+such as a triangle wave in the middle position, where higher levels result in a 
+perceptively brighter timbre and lower levels create a darker one">
+                    <label for="dcw2-level-1">LVL 1</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dcw2-level-1" min="0" max="127" value="0" class="dcw-rate-slider">
+                        <div class="pot-knob"><div class="pot-indicator"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCW 2 Rate 2:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dcw2-rate-2">RATE 2<span class="dcw2-sustain-indicator" data-rate="2"></span><span class="dcw2-end-indicator" data-rate="2"></span></label>
+                    <input type="range" id="dcw2-rate-2" min="0" max="127" value="0" class="dcw-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCW 2 Level 2:
+The DCW Level (LV) determines the amount of Phase Distortion applied to the 
+oscillator's waveshape, effectively functioning as a timbre control by gradually 
+introducing harmonics. An LV setting of 0 outputs a basic sine wave (the 
+fundamental frequency without harmonics), while a maximum setting of 99 transforms 
+the wave into the fully distorted waveshape selected in the DCO section, such as a 
+sawtooth wave. Intermediate values transition the sound through different shapes, 
+such as a triangle wave in the middle position, where higher levels result in a 
+perceptively brighter timbre and lower levels create a darker one">
+                    <label for="dcw2-level-2">LVL 2</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dcw2-level-2" min="0" max="127" value="0" class="dcw-rate-slider">
+                        <div class="pot-knob"><div class="pot-indicator"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCW 2 Rate 3:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dcw2-rate-3">RATE 3<span class="dcw2-sustain-indicator" data-rate="3"></span><span class="dcw2-end-indicator" data-rate="3"></span></label>
+                    <input type="range" id="dcw2-rate-3" min="0" max="127" value="0" class="dcw-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCW 2 Level 3:
+The DCW Level (LV) determines the amount of Phase Distortion applied to the 
+oscillator's waveshape, effectively functioning as a timbre control by gradually 
+introducing harmonics. An LV setting of 0 outputs a basic sine wave (the 
+fundamental frequency without harmonics), while a maximum setting of 99 transforms 
+the wave into the fully distorted waveshape selected in the DCO section, such as a 
+sawtooth wave. Intermediate values transition the sound through different shapes, 
+such as a triangle wave in the middle position, where higher levels result in a 
+perceptively brighter timbre and lower levels create a darker one">
+                    <label for="dcw2-level-3">LVL 3</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dcw2-level-3" min="0" max="127" value="0" class="dcw-rate-slider">
+                        <div class="pot-knob"><div class="pot-indicator"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCW 2 Rate 4:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dcw2-rate-4">RATE 4<span class="dcw2-sustain-indicator" data-rate="4"></span><span class="dcw2-end-indicator" data-rate="4"></span></label>
+                    <input type="range" id="dcw2-rate-4" min="0" max="127" value="0" class="dcw-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCW 2 Level 4:
+The DCW Level (LV) determines the amount of Phase Distortion applied to the 
+oscillator's waveshape, effectively functioning as a timbre control by gradually 
+introducing harmonics. An LV setting of 0 outputs a basic sine wave (the 
+fundamental frequency without harmonics), while a maximum setting of 99 transforms 
+the wave into the fully distorted waveshape selected in the DCO section, such as a 
+sawtooth wave. Intermediate values transition the sound through different shapes, 
+such as a triangle wave in the middle position, where higher levels result in a 
+perceptively brighter timbre and lower levels create a darker one">
+                    <label for="dcw2-level-4">LVL 4</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dcw2-level-4" min="0" max="127" value="0" class="dcw-rate-slider">
+                        <div class="pot-knob"><div class="pot-indicator"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCW 2 Rate 5:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dcw2-rate-5">RATE 5<span class="dcw2-sustain-indicator" data-rate="5"></span><span class="dcw2-end-indicator" data-rate="5"></span></label>
+                    <input type="range" id="dcw2-rate-5" min="0" max="127" value="0" class="dcw-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCW 2 Level 5:
+The DCW Level (LV) determines the amount of Phase Distortion applied to the 
+oscillator's waveshape, effectively functioning as a timbre control by gradually 
+introducing harmonics. An LV setting of 0 outputs a basic sine wave (the 
+fundamental frequency without harmonics), while a maximum setting of 99 transforms 
+the wave into the fully distorted waveshape selected in the DCO section, such as a 
+sawtooth wave. Intermediate values transition the sound through different shapes, 
+such as a triangle wave in the middle position, where higher levels result in a 
+perceptively brighter timbre and lower levels create a darker one">
+                    <label for="dcw2-level-5">LVL 5</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dcw2-level-5" min="0" max="127" value="0" class="dcw-rate-slider">
+                        <div class="pot-knob"><div class="pot-indicator"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCW 2 Rate 6:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dcw2-rate-6">RATE 6<span class="dcw2-sustain-indicator" data-rate="6"></span><span class="dcw2-end-indicator" data-rate="6"></span></label>
+                    <input type="range" id="dcw2-rate-6" min="0" max="127" value="0" class="dcw-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCW 2 Level 6:
+The DCW Level (LV) determines the amount of Phase Distortion applied to the 
+oscillator's waveshape, effectively functioning as a timbre control by gradually 
+introducing harmonics. An LV setting of 0 outputs a basic sine wave (the 
+fundamental frequency without harmonics), while a maximum setting of 99 transforms 
+the wave into the fully distorted waveshape selected in the DCO section, such as a 
+sawtooth wave. Intermediate values transition the sound through different shapes, 
+such as a triangle wave in the middle position, where higher levels result in a 
+perceptively brighter timbre and lower levels create a darker one">
+                    <label for="dcw2-level-6">LVL 6</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dcw2-level-6" min="0" max="127" value="0" class="dcw-rate-slider">
+                        <div class="pot-knob"><div class="pot-indicator"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCW 2 Rate 7:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dcw2-rate-7">RATE 7<span class="dcw2-sustain-indicator" data-rate="7"></span><span class="dcw2-end-indicator" data-rate="7"></span></label>
+                    <input type="range" id="dcw2-rate-7" min="0" max="127" value="0" class="dcw-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCW 2 Level 7:
+The DCW Level (LV) determines the amount of Phase Distortion applied to the 
+oscillator's waveshape, effectively functioning as a timbre control by gradually 
+introducing harmonics. An LV setting of 0 outputs a basic sine wave (the 
+fundamental frequency without harmonics), while a maximum setting of 99 transforms 
+the wave into the fully distorted waveshape selected in the DCO section, such as a 
+sawtooth wave. Intermediate values transition the sound through different shapes, 
+such as a triangle wave in the middle position, where higher levels result in a 
+perceptively brighter timbre and lower levels create a darker one">
+                    <label for="dcw2-level-7">LVL 7</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dcw2-level-7" min="0" max="127" value="0" class="dcw-rate-slider">
+                        <div class="pot-knob"><div class="pot-indicator"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCW 2 Rate 8:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dcw2-rate-8">RATE 8<span class="dcw2-end-indicator" data-rate="8"></span></label>
+                    <input type="range" id="dcw2-rate-8" min="0" max="127" value="0" class="dcw-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCW 2 Level 8:
+The DCW Level (LV) determines the amount of Phase Distortion applied to the 
+oscillator's waveshape, effectively functioning as a timbre control by gradually 
+introducing harmonics. An LV setting of 0 outputs a basic sine wave (the 
+fundamental frequency without harmonics), while a maximum setting of 99 transforms 
+the wave into the fully distorted waveshape selected in the DCO section, such as a 
+sawtooth wave. Intermediate values transition the sound through different shapes, 
+such as a triangle wave in the middle position, where higher levels result in a 
+perceptively brighter timbre and lower levels create a darker one">
+                    <label for="dcw2-level-8">LVL 8</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dcw2-level-8" min="0" max="127" value="0" class="dcw-rate-slider">
+                        <div class="pot-knob"><div class="pot-indicator"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DCA LEVEL -->
+        <!-- <div class="control-box vertical-sliders noisy dca-level-max-width">
+            <h3>DCA LEVEL</h3>
+            <div class="parameter-row" title="DCA Sustain Point">
+                <label for="dca-sustain-point">SUS</label>
+                <input type="range" id="dca-sustain-point" min="0" max="127" value="0" list="dca-sustain-point-list">
+                <datalist id="dca-sustain-point-list">
+                    <option value="0" label="0"></option>
+                    <option value="21" label="1"></option>
+                    <option value="43" label="2"></option>
+                    <option value="64" label="3"></option>
+                    <option value="85" label="4"></option>
+                    <option value="106" label="5"></option>
+                    <option value="127" label="6"></option>
+                </datalist>
+            </div>
+            <div class="parameter-row" title="DCA End Point">
+                <label for="dca-end-point">END</label>
+                <input type="range" id="dca-end-point" min="0" max="127" value="0" list="dca-end-point-list">
+                <datalist id="dca-end-point-list">
+                    <option value="0" label="0"></option>
+                    <option value="16" label="1"></option>
+                    <option value="32" label="2"></option>
+                    <option value="48" label="3"></option>
+                    <option value="64" label="4"></option>
+                    <option value="80" label="5"></option>
+                    <option value="96" label="6"></option>
+                    <option value="112" label="7"></option>
+                    <option value="127" label="8"></option>
+                </datalist>
+            </div>
+        </div> -->
+
+        <!-- DCA ENV 1 -->
+        <div class="control-box vertical-sliders noisy dca-rate-small">
+            <h3 id="dca-env1-heading" title="The DCA (Digitally Controlled Amplifier) 
+Envelope is used to sculpt the volume and 
+behavior of a sound over time, such as
+determining if it has a short or prolonged 
+attack or long or short release times">DCA ENV 1<button class="box-init-btn" data-box="dca-env1" title="Init DCA Env 1">I</button><button class="box-random-btn" data-box="dca-env1" title="Randomise DCA Env 1">&#x27F3;</button></h3>
+            <div class="parameter-column moved-params-pot-group">
+                <div class="parameter-row keyfollow-btn-control" title="KFO (Key Follow): 
+When activated, higher notes will have
+a shorter volume envelope, meaning the 
+sound will decay more quickly the higher 
+up the keyboard you play">
+                    <label for="kf-check-dco1-dca-keyfollow">KEY<br>FOLLOW</label>
+                    <input type="range" id="dco1-dca-keyfollow" min="0" max="127" value="0" class="dca-rate-slider keyfollow-hidden-input">
+                    <input type="checkbox" id="kf-check-dco1-dca-keyfollow" class="keyfollow-checkbox" data-input="dco1-dca-keyfollow">
+                </div>
+                <div class="parameter-row pot-control" title="KFR (Key Follow Range): 
+This sets the magnitude of the timing difference. 
+Higher values result in greater variances in 
+envelope time in the upper registers">
+                    <label for="dco1-dca-keyfollow-range">KEY-F<br>RANGE</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dco1-dca-keyfollow-range" min="0" max="127" value="0" class="dca-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        <div class="parameter-row" title="DCA Sustain Point:
+Sets the sustain point 
+of the envelope.">
+                <label for="dca-sustain-point">SUS</label>
+                <input type="range" id="dca-sustain-point" min="0" max="127" value="0" list="dca-sustain-point-list">
+                <datalist id="dca-sustain-point-list">
+                    <option value="0" label="0"></option>
+                    <option value="21" label="1"></option>
+                    <option value="43" label="2"></option>
+                    <option value="64" label="3"></option>
+                    <option value="85" label="4"></option>
+                    <option value="106" label="5"></option>
+                    <option value="127" label="6"></option>
+                </datalist>
+            </div>
+            <div class="parameter-row" title="DCA End Point:
+Sets the end or release stage 
+of the envelope (determining 
+the final behavior of the sound 
+after the key is released)">
+                <label for="dca-end-point">END</label>
+                <input type="range" id="dca-end-point" min="0" max="127" value="0" list="dca-end-point-list">
+                <datalist id="dca-end-point-list">
+                    <option value="0" label="2"></option>
+                    <option value="22" label="3"></option>
+                    <option value="43" label="4"></option>
+                    <option value="64" label="5"></option>
+                    <option value="85" label="6"></option>
+                    <option value="106" label="7"></option>
+                    <option value="127" label="8"></option>
+                </datalist>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCA Rate 1: 
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dca-rate-1">RATE 1<span class="dca1-sustain-indicator" data-rate="1"></span></label>
+                    <input type="range" id="dca-rate-1" min="0" max="127" value="0" class="dca-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCA Level 1:
+The DCA Level (LV) controls the volume or amplitude of each envelope stage, 
+where a value of 0 results in no sound and a value of 99 represents the maximum 
+amplitude level, directly determining the loudness of the sound at that specific 
+point in the envelope cycle">
+                    <label for="dca-level-1">LVL 1</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dca-level-1" min="0" max="127" value="0" class="dca-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                        <!-- <div class="pot-value">0</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCA Rate 2: 
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dca-rate-2">RATE 2<span class="dca1-sustain-indicator" data-rate="2"></span><span class="dca1-end-indicator" data-rate="2"></span></label>
+                    <input type="range" id="dca-rate-2" min="0" max="127" value="0" class="dca-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCA Level 2:
+The DCA Level (LV) controls the volume or amplitude of each envelope stage, 
+where a value of 0 results in no sound and a value of 99 represents the maximum 
+amplitude level, directly determining the loudness of the sound at that specific 
+point in the envelope cycle">
+                    <label for="dca-level-2">LVL 2</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dca-level-2" min="0" max="127" value="0" class="dca-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                        <!-- <div class="pot-value">0</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCA Rate 3: 
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dca-rate-3">RATE 3<span class="dca1-sustain-indicator" data-rate="3"></span><span class="dca1-end-indicator" data-rate="3"></span></label>
+                    <input type="range" id="dca-rate-3" min="0" max="127" value="0" class="dca-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCA Level 3:
+The DCA Level (LV) controls the volume or amplitude of each envelope stage, 
+where a value of 0 results in no sound and a value of 99 represents the maximum 
+amplitude level, directly determining the loudness of the sound at that specific 
+point in the envelope cycle">
+                    <label for="dca-level-3">LVL 3</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dca-level-3" min="0" max="127" value="0" class="dca-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                        <!-- <div class="pot-value">0</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCA Rate 4: 
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dca-rate-4">RATE 4<span class="dca1-sustain-indicator" data-rate="4"></span><span class="dca1-end-indicator" data-rate="4"></span></label>
+                    <input type="range" id="dca-rate-4" min="0" max="127" value="0" class="dca-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCA Level 4:
+The DCA Level (LV) controls the volume or amplitude of each envelope stage, 
+where a value of 0 results in no sound and a value of 99 represents the maximum 
+amplitude level, directly determining the loudness of the sound at that specific 
+point in the envelope cycle">
+                    <label for="dca-level-4">LVL 4</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dca-level-4" min="0" max="127" value="0" class="dca-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                        <!-- <div class="pot-value">0</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCA Rate 5: 
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dca-rate-5">RATE 5<span class="dca1-sustain-indicator" data-rate="5"></span><span class="dca1-end-indicator" data-rate="5"></span></label>
+                    <input type="range" id="dca-rate-5" min="0" max="127" value="0" class="dca-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCA Level 5:
+The DCA Level (LV) controls the volume or amplitude of each envelope stage, 
+where a value of 0 results in no sound and a value of 99 represents the maximum 
+amplitude level, directly determining the loudness of the sound at that specific 
+point in the envelope cycle">
+                    <label for="dca-level-5">LVL 5</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dca-level-5" min="0" max="127" value="0" class="dca-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                        <!-- <div class="pot-value">0</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCA Rate 6: 
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dca-rate-6">RATE 6<span class="dca1-sustain-indicator" data-rate="6"></span><span class="dca1-end-indicator" data-rate="6"></span></label>
+                    <input type="range" id="dca-rate-6" min="0" max="127" value="0" class="dca-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCA Level 6:
+The DCA Level (LV) controls the volume or amplitude of each envelope stage, 
+where a value of 0 results in no sound and a value of 99 represents the maximum 
+amplitude level, directly determining the loudness of the sound at that specific 
+point in the envelope cycle">
+                    <label for="dca-level-6">LVL 6</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dca-level-6" min="0" max="127" value="0" class="dca-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                        <!-- <div class="pot-value">0</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCA Rate 7: 
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dca-rate-7">RATE 7<span class="dca1-sustain-indicator" data-rate="7"></span><span class="dca1-end-indicator" data-rate="7"></span></label>
+                    <input type="range" id="dca-rate-7" min="0" max="127" value="0" class="dca-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCA Level 7:
+The DCA Level (LV) controls the volume or amplitude of each envelope stage, 
+where a value of 0 results in no sound and a value of 99 represents the maximum 
+amplitude level, directly determining the loudness of the sound at that specific 
+point in the envelope cycle">
+                    <label for="dca-level-7">LVL 7</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dca-level-7" min="0" max="127" value="0" class="dca-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                        <!-- <div class="pot-value">0</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCA Rate 8: 
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dca-rate-8">RATE 8<span class="dca1-end-indicator" data-rate="8"></span></label>
+                    <input type="range" id="dca-rate-8" min="0" max="127" value="0" class="dca-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCA Level 8:
+The DCA Level (LV) controls the volume or amplitude of each envelope stage, 
+where a value of 0 results in no sound and a value of 99 represents the maximum 
+amplitude level, directly determining the loudness of the sound at that specific 
+point in the envelope cycle">
+                    <label for="dca-level-8">LVL 8</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dca-level-8" min="0" max="127" value="0" class="dca-rate-slider">
+                        <div class="pot-knob">
+                            <div class="pot-indicator"></div>
+                        </div>
+                        <!-- <div class="pot-value">0</div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DCA ENV 2 -->
+        <div class="control-box vertical-sliders noisy dca-rate-small">
+            <h3 id="dca-env2-heading" title="The DCA (Digitally Controlled Amplifier) 
+Envelope is used to sculpt the volume and 
+behavior of a sound over time, such as
+determining if it has a short or prolonged 
+attack or long or short release times">DCA ENV 2<button class="box-init-btn" data-box="dca-env2" title="Init DCA Env 2">I</button><button class="box-random-btn" data-box="dca-env2" title="Randomise DCA Env 2">&#x27F3;</button></h3>
+            <div class="parameter-column moved-params-pot-group">
+                <div class="parameter-row keyfollow-btn-control" title="DCO 1 DCA Keyfollow:
+When activated, higher notes will have a 
+shorter volume envelope, meaning the 
+sound will decay more quickly the higher 
+up the keyboard you play">
+                    <label for="kf-check-dco1-dca-keyfollow-lineoffset">KEY<br>FOLLOW</label>
+                    <input type="range" id="dco1-dca-keyfollow-lineoffset" min="0" max="127" value="0" class="dca-rate-slider keyfollow-hidden-input">
+                    <input type="checkbox" id="kf-check-dco1-dca-keyfollow-lineoffset" class="keyfollow-checkbox" data-input="dco1-dca-keyfollow-lineoffset">
+                </div>
+                <div class="parameter-row pot-control" title="KFR (Key Follow Range): 
+This sets the magnitude of the timing difference. 
+Higher values result in greater variances in 
+envelope time in the upper registers">
+                    <label for="dco1-dca-keyfollow-range-lineoffset">KEY-F<br>RANGE</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dco1-dca-keyfollow-range-lineoffset" min="0" max="127" value="0" class="dca-rate-slider">
+                        <div class="pot-knob"><div class="pot-indicator"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-row" title="DCA 2 Sustain Point:
+Sets the sustain point 
+of the envelope.">
+                <label for="dca2-sustain-point">SUS</label>
+                <input type="range" id="dca2-sustain-point" min="0" max="127" value="0" list="dca2-sustain-point-list">
+                <datalist id="dca2-sustain-point-list">
+                    <option value="0" label="0"></option>
+                    <option value="21" label="1"></option>
+                    <option value="43" label="2"></option>
+                    <option value="64" label="3"></option>
+                    <option value="85" label="4"></option>
+                    <option value="106" label="5"></option>
+                    <option value="127" label="6"></option>
+                </datalist>
+            </div>
+            <div class="parameter-row" title="DCA 2 End Point:
+Sets the end or release stage 
+of the envelope (determining 
+the final behavior of the sound 
+after the key is released)">
+                <label for="dca2-end-point">END</label>
+                <input type="range" id="dca2-end-point" min="0" max="127" value="0" list="dca2-end-point-list">
+                <datalist id="dca2-end-point-list">
+                    <option value="0" label="2"></option>
+                    <option value="22" label="3"></option>
+                    <option value="43" label="4"></option>
+                    <option value="64" label="5"></option>
+                    <option value="85" label="6"></option>
+                    <option value="106" label="7"></option>
+                    <option value="127" label="8"></option>
+                </datalist>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCA 2 Rate 1:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dca2-rate-1">RATE 1<span class="dca2-sustain-indicator" data-rate="1"></span></label>
+                    <input type="range" id="dca2-rate-1" min="0" max="127" value="0" class="dca-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCA 2 Level 1:
+The DCA Level (LV) controls the volume or amplitude of each envelope stage, 
+where a value of 0 results in no sound and a value of 99 represents the maximum 
+amplitude level, directly determining the loudness of the sound at that specific 
+point in the envelope cycle">
+                    <label for="dca2-level-1">LVL 1</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dca2-level-1" min="0" max="127" value="0" class="dca-rate-slider">
+                        <div class="pot-knob"><div class="pot-indicator"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCA 2 Rate 2:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dca2-rate-2">RATE 2<span class="dca2-sustain-indicator" data-rate="2"></span><span class="dca2-end-indicator" data-rate="2"></span></label>
+                    <input type="range" id="dca2-rate-2" min="0" max="127" value="0" class="dca-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCA 2 Level 2:
+The DCA Level (LV) controls the volume or amplitude of each envelope stage, 
+where a value of 0 results in no sound and a value of 99 represents the maximum 
+amplitude level, directly determining the loudness of the sound at that specific 
+point in the envelope cycle">
+                    <label for="dca2-level-2">LVL 2</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dca2-level-2" min="0" max="127" value="0" class="dca-rate-slider">
+                        <div class="pot-knob"><div class="pot-indicator"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCA 2 Rate 3:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dca2-rate-3">RATE 3<span class="dca2-sustain-indicator" data-rate="3"></span><span class="dca2-end-indicator" data-rate="3"></span></label>
+                    <input type="range" id="dca2-rate-3" min="0" max="127" value="0" class="dca-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCA 2 Level 3:
+The DCA Level (LV) controls the volume or amplitude of each envelope stage, 
+where a value of 0 results in no sound and a value of 99 represents the maximum 
+amplitude level, directly determining the loudness of the sound at that specific 
+point in the envelope cycle">
+                    <label for="dca2-level-3">LVL 3</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dca2-level-3" min="0" max="127" value="0" class="dca-rate-slider">
+                        <div class="pot-knob"><div class="pot-indicator"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCA 2 Rate 4:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dca2-rate-4">RATE 4<span class="dca2-sustain-indicator" data-rate="4"></span><span class="dca2-end-indicator" data-rate="4"></span></label>
+                    <input type="range" id="dca2-rate-4" min="0" max="127" value="0" class="dca-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCA 2 Level 4:
+The DCA Level (LV) controls the volume or amplitude of each envelope stage, 
+where a value of 0 results in no sound and a value of 99 represents the maximum 
+amplitude level, directly determining the loudness of the sound at that specific 
+point in the envelope cycle">
+                    <label for="dca2-level-4">LVL 4</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dca2-level-4" min="0" max="127" value="0" class="dca-rate-slider">
+                        <div class="pot-knob"><div class="pot-indicator"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCA 2 Rate 5:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dca2-rate-5">RATE 5<span class="dca2-sustain-indicator" data-rate="5"></span><span class="dca2-end-indicator" data-rate="5"></span></label>
+                    <input type="range" id="dca2-rate-5" min="0" max="127" value="0" class="dca-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCA 2 Level 5:
+The DCA Level (LV) controls the volume or amplitude of each envelope stage, 
+where a value of 0 results in no sound and a value of 99 represents the maximum 
+amplitude level, directly determining the loudness of the sound at that specific 
+point in the envelope cycle">
+                    <label for="dca2-level-5">LVL 5</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dca2-level-5" min="0" max="127" value="0" class="dca-rate-slider">
+                        <div class="pot-knob"><div class="pot-indicator"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCA 2 Rate 6:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dca2-rate-6">RATE 6<span class="dca2-sustain-indicator" data-rate="6"></span><span class="dca2-end-indicator" data-rate="6"></span></label>
+                    <input type="range" id="dca2-rate-6" min="0" max="127" value="0" class="dca-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCA 2 Level 6:
+The DCA Level (LV) controls the volume or amplitude of each envelope stage, 
+where a value of 0 results in no sound and a value of 99 represents the maximum 
+amplitude level, directly determining the loudness of the sound at that specific 
+point in the envelope cycle">
+                    <label for="dca2-level-6">LVL 6</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dca2-level-6" min="0" max="127" value="0" class="dca-rate-slider">
+                        <div class="pot-knob"><div class="pot-indicator"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCA 2 Rate 7:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dca2-rate-7">RATE 7<span class="dca2-sustain-indicator" data-rate="7"></span><span class="dca2-end-indicator" data-rate="7"></span></label>
+                    <input type="range" id="dca2-rate-7" min="0" max="127" value="0" class="dca-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCA 2 Level 7:
+The DCA Level (LV) controls the volume or amplitude of each envelope stage, 
+where a value of 0 results in no sound and a value of 99 represents the maximum 
+amplitude level, directly determining the loudness of the sound at that specific 
+point in the envelope cycle">
+                    <label for="dca2-level-7">LVL 7</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dca2-level-7" min="0" max="127" value="0" class="dca-rate-slider">
+                        <div class="pot-knob"><div class="pot-indicator"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="parameter-column">
+                <div class="parameter-row" title="DCA 2 Rate 8:
+Determines the transition speed (slope) between one stage 
+and the next in the envelope. A higher value results in a
+faster transition, while a lower value creates a slower, 
+more gradual change in pitch.">
+                    <label for="dca2-rate-8">RATE 8<span class="dca2-end-indicator" data-rate="8"></span></label>
+                    <input type="range" id="dca2-rate-8" min="0" max="127" value="0" class="dca-rate-slider">
+                </div>
+                <div class="parameter-row pot-control" title="DCA 2 Level 8:
+The DCA Level (LV) controls the volume or amplitude of each envelope stage, 
+where a value of 0 results in no sound and a value of 99 represents the maximum 
+amplitude level, directly determining the loudness of the sound at that specific 
+point in the envelope cycle">
+                    <label for="dca2-level-8">LVL 8</label>
+                    <div class="pot-wrapper">
+                        <input type="range" id="dca2-level-8" min="0" max="127" value="0" class="dca-rate-slider">
+                        <div class="pot-knob"><div class="pot-indicator"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DCW LEVEL -->
+        <!-- <div class="control-box vertical-sliders noisy dcw-level-max-width">
+            <h3>DCW LEVEL</h3>
+            <div class="parameter-row" title="DCW Sustain Point">
+                <label for="dcw-sustain-point">SUS</label>
+                <input type="range" id="dcw-sustain-point" min="0" max="127" value="0" list="dcw-sustain-point-list">
+                <datalist id="dcw-sustain-point-list">
+                    <option value="0" label="0"></option>
+                    <option value="21" label="1"></option>
+                    <option value="43" label="2"></option>
+                    <option value="64" label="3"></option>
+                    <option value="85" label="4"></option>
+                    <option value="106" label="5"></option>
+                    <option value="127" label="6"></option>
+                </datalist>
+            </div>
+            <div class="parameter-row" title="DCW End Point">
+                <label for="dcw-end-point">END</label>
+                <input type="range" id="dcw-end-point" min="0" max="127" value="0" list="dcw-end-point-list">
+                <datalist id="dcw-end-point-list">
+                    <option value="0" label="0"></option>
+                    <option value="16" label="1"></option>
+                    <option value="32" label="2"></option>
+                    <option value="48" label="3"></option>
+                    <option value="64" label="4"></option>
+                    <option value="80" label="5"></option>
+                    <option value="96" label="6"></option>
+                    <option value="112" label="7"></option>
+                    <option value="127" label="8"></option>
+                </datalist>
+            </div>
+        </div> -->
+
+
+
+        <!-- VIBRATO -->
+        <div class="control-box vertical-sliders noisy vibrato-max-width">
+            <h3 title="VIBRATO:
+Apply pitch modulation to your sounds">VIBRATO<button class="box-init-btn" data-box="vibrato" title="Init Vibrato">I</button><button class="box-random-btn" data-box="vibrato" title="Randomise Vibrato">&#x27F3;</button></h3>
+            <div class="vibr-wave-display">
+                <img src="media/cz1_wav_vibr.svg" alt="Vibrato Wave" class="wav-vibr-icon">
+                <div class="vibr-wave-indicator" id="vibr-wave-indicator"></div>
+            </div>
+            <div class="parameter-row" title="Vibrato Wave Selector:
+Selects the shape of the modulation
+TRI, SAW↑, SAW↓, SQR.">
+                <label for="vibrato-wave">WVE</label>
+                <input type="range" id="vibrato-wave" min="0" max="127" value="0" list="vibrato-wave-list">
+                <datalist id="vibrato-wave-list">
+                    <option value="0" label="TRI"></option>
+                    <option value="43" label="SAW↑"></option>
+                    <option value="85" label="SAW↓"></option>
+                    <option value="127" label="SQR"></option>
+                </datalist>
+            </div>
+            <div class="parameter-row" title="Vibrato Rate Amount:
+Adjusts the speed of the vibrato, 
+higher values result in faster modulation">
+                <label for="vibrato-rate">RTE</label>
+                <input type="range" id="vibrato-rate" min="0" max="127" value="0">
+            </div>
+            <div class="parameter-row" title="Vibrato Depth Amount:
+Controls the intensity of 
+the pitch modulation">
+                <label for="vibrato-depth">DPH</label>
+                <input type="range" id="vibrato-depth" min="0" max="127" value="0">
+            </div>
+            <div class="parameter-row" title="Vibrato Delay Time:
+Set the time before the vibrato effect 
+begins after a key is pressed. Note
+that if this value is too high, the
+sound's volume (DCA) envelope might
+end before the vibrato actually 
+kicks in">
+                <label for="vibrato-delay">DEL</label>
+                <input type="range" id="vibrato-delay" min="0" max="127" value="0">
+            </div>
+            <div class="parameter-row" title="Vibrato Sync:
+I couldn't find a control for this on the 
+hardware? It's included in the MIDI spec, 
+so I added it here.">
+                <label for="vibrato-sync">SNC</label>
+                <input type="range" id="vibrato-sync" min="0" max="127" value="0">
+            </div>
+            <div class="parameter-row" title="Vibrato Sync Rate:
+I couldn't find a control for this on the 
+hardware? It's included in the MIDI 
+spec, so I added it here.">
+                <label for="vibrato-sync-rate">SY-RT</label>
+                <input type="range" id="vibrato-sync-rate" min="0" max="127" value="0">
+            </div>
+        </div>
+
+        <!-- DETUNE -->
+        <div class="control-box vertical-sliders noisy detune-max-width">
+            <h3 id="detune-heading" title="DETUNE: 
+Adjusts the pitch difference between 
+Line 1 and Line 2 for richer sounds. 
+Detune effects DCO 2. It can only be 
+used if LINE SELECT 1+2 or 1+1 is 
+selected">DETUNE<button class="box-init-btn" data-box="detune" title="Init Detune">I</button><button class="box-random-btn" data-box="detune" title="Randomise Detune">&#x27F3;</button></h3>
+            <div class="parameter-row" title="Detune Polarity:
+Determines whether DCO 2 is detuned 
+higher (setting 1) or lower (setting 0) 
+than DCO 1.">
+                    <div class="circle-labels">
+                        <span>DN</span>
+                    <span>UP</span>
+                </div>
+                <div class="pol-indicator-leds">
+                    <div class="circle" data-value="0"></div>
+                    <div class="circle" data-value="65"></div>
+                </div>
+                <label for="detune-polarity">POL</label>
+                <input type="range" id="detune-polarity" min="0" max="65" value="0" list="detune-polarity-list">
+                <datalist id="detune-polarity-list">
+                    <option value="0"></option>
+                    <option value="65"></option>
+                </datalist>
+            </div>
+            <div class="parameter-row" title="Detune Octave: 
+Adjusts the pitch difference between 
+DCO 1 and DCO 2 in octave steps.">
+                <label for="detune-oct">OCT</label>
+                <input type="range" id="detune-oct" min="0" max="127" value="0" list="detune-oct-list">
+                <datalist id="detune-oct-list">
+                    <option value="0"></option>
+                    <option value="43"></option>
+                    <option value="85"></option>
+                    <option value="127"></option>
+                </datalist>
+            </div>
+            <div class="parameter-row" title="Detune Note: 
+Adjusts the pitch difference between 
+DCO 1 and DCO 2 in semitone steps.">
+                <label for="detune-note">NOTE</label>
+                <input type="range" id="detune-note" min="0" max="127" value="0" list="detune-note-list">
+                <datalist id="detune-note-list">
+                    <option value="0"></option>
+                    <option value="12"></option>
+                    <option value="24"></option>
+                    <option value="36"></option>
+                    <option value="47"></option>
+                    <option value="58"></option>
+                    <option value="70"></option>
+                    <option value="81"></option>
+                    <option value="93"></option>
+                    <option value="104"></option>
+                    <option value="116"></option>
+                    <option value="127"></option>
+                </datalist>
+            </div>
+            <div class="parameter-row detune-fine-disabled" title="Temporarily removed because 
+it causes a crash. Behringer 
+have since released updated 
+firmware that fixes this issue,
+ so I'll add it back in soon. ">
+                <label for="detune-fine">FINE</label>
+                <input type="range" id="detune-fine" min="0" max="60" value="0" disabled>
+            </div>
+        </div>
+
+        <!-- LFO 1 -->
+        <div class="control-box vertical-sliders noisy lfo1-max-width">
+            <h3 title="Low Frequency Oscillator:
+The LFO is positioned after the Phase 
+Distortion engine to provide additional 
+sound design capabilities by modulating 
+the filter's cutoff frequency ">FILTER LFO<button class="box-init-btn" data-box="lfo" title="Init LFO">i</button><button class="box-random-btn" data-box="lfo" title="Randomise LFO">&#x27F3;</button></h3>
+            <div class="lfo1-wave-display">
+                <img src="media/cz1_wav_lfo.svg" alt="LFO Wave" class="wav-lfo1-icon">
+                <div class="lfo1-wave-indicator" id="lfo1-wave-indicator"></div>
+            </div>
+            <div class="parameter-row" title="LFO WAVE TYPE:
+Choose TRI, SQR, SAW, RMP, S&H.">
+                <label for="lfo1-wave">WAVE</label>
+                <input type="range" id="lfo1-wave" min="0" max="127" value="0" list="lfo1-wave-list">
+                <datalist id="lfo1-wave-list">
+                    <option value="0" label="TRI"></option>
+                    <option value="26" label="SQR"></option>
+                    <option value="51" label="SAW"></option>
+                    <option value="77" label="RMP"></option>
+                    <option value="102" label="S&H"></option>
+                    <option value="127"></option>
+                </datalist>
+            </div>
+            <div class="parameter-row" title="LFO Rate:
+Adjusts the speed of the modulation rate.">
+                <label for="lfo1-rate">RATE</label>
+                <input type="range" id="lfo1-rate" min="0" max="127" value="0">
+            </div>
+            <div class="parameter-row" title="LFO Depth:
+Controls the intensity or strength of 
+the LFO's modulation on the filter">
+                <label for="lfo1-amount">DEPT</label>
+                <input type="range" id="lfo1-amount" min="0" max="127" value="0">
+            </div>
+        </div>
+
+        
+        <!-- FILTER -->
+        <div class="control-box vertical-sliders noisy filter-max-width">
+            <h3 title="ANALOG FILTER (Cutoff/Reso): 
+Manually adjusts the frequency and 
+resonance of the low-pass filter">FILTER<button class="box-init-btn" data-box="filter" title="Init Filter">I</button><button class="box-random-btn" data-box="filter" title="Randomise Filter">&#x27F3;</button></h3>
+            <div class="parameter-row" title="Filter Cutoff">
+                <label for="filter-cutoff">CUTOFF</label>
+                <input type="range" id="filter-cutoff" min="0" max="127" value="0">
+            </div>
+            <div class="parameter-row" title="Filter Resonance">
+                <label for="filter-resonance">RES</label>
+                <input type="range" id="filter-resonance" min="0" max="127" value="0">
+            </div>
+            <div class="parameter-row" title="Filter Envelope Amount: 
+Controls how much the filter 
+envelope affects the sound.">
+                <label for="filter-env-amount">ENV AMT</label>
+                <input type="range" id="filter-env-amount" min="0" max="127" value="0">
+            </div>
+        </div>
+        
+        <!-- FILTER EG -->
+        <div class="control-box vertical-sliders noisy filter-eg-max-width">
+            <h3 title="Filter Envelope is set here">FILTER EG<button class="box-init-btn" data-box="filter-eg" title="Init Filter EG">I</button><button class="box-random-btn" data-box="filter-eg" title="Randomise Filter EG">&#x27F3;</button></h3>
+            <div class="parameter-row" title="Filter Attack">
+                <label for="filter-attack">ATK</label>
+                <input type="range" id="filter-attack" min="0" max="127" value="0">
+            </div>
+            <div class="parameter-row" title="Filter Decay">
+                <label for="filter-decay">DCY</label>
+                <input type="range" id="filter-decay" min="0" max="127" value="0">
+            </div>
+            <div class="parameter-row" title="Filter Sustain">
+                <label for="filter-sustain">SUS</label>
+                <input type="range" id="filter-sustain" min="0" max="127" value="0">
+            </div>
+            <div class="parameter-row" title="Filter Release">
+                <label for="filter-release">REL</label>
+                <input type="range" id="filter-release" min="0" max="127" value="0">
+            </div>
+        </div>
+
+        <!-- CHORUS -->
+        <div class="control-box vertical-sliders noisy chorus-max-width">
+            <h3 title="CHORUS (Rate/Amt): 
+Controls the speed and depth of 
+the built-in chorus effect">CHORUS</h3>
+            <div class="parameter-row" title="Chorus Rate">
+                <label for="chorus-rate">RATE</label>
+                <input type="range" id="chorus-rate" min="0" max="127" value="0">
+            </div>
+            <div class="parameter-row" title="Chorus Depth">
+                <label for="chorus-depth">DEPT</label>
+                <input type="range" id="chorus-depth" min="0" max="127" value="0">
+            </div>
+        </div>
+
+    </div>
+
+    <div id="footer-disclaimer">
+        <button id="footer-disclaimer-close" aria-label="Close disclaimer">&times;</button>
+        <p>This software is provided as-is, without warranty of any kind. Use at your own risk. <a href="privacy.html">Privacy &amp; Cookies</a></p>
+    </div>
+
+    <div id="version-number">v1_00</div>
+
+    <div id="about-modal" class="modal-hidden" aria-hidden="true">
+        <div id="about-modal-content" role="dialog" aria-modal="true" aria-labelledby="about-modal-title">
+            <button id="about-modal-close" aria-label="Close info popup">&times;</button>
+            <p id="about-modal-title">CZ-1 Mini MIDI Editor</p>
+            <img src="media/CZMini_cutout.svg" alt="CZ-1 Mini Synth" id="about-modal-synth-img">
+            <p>Version 1.0</p>
+            <hr>
+            <p>Created for Behringer CZ-1 Mini Synthesizer</p>
+            <p><a href="privacy.html">Privacy &amp; Cookies</a></p>
+        </div>
+    </div>
+    
 </body>
 </html>

@@ -1,0 +1,1598 @@
+html {
+  min-height: 100%;
+  background: 
+      repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(255, 255, 255, 0.03) 2px,
+          rgba(255, 255, 255, 0.03) 4px
+      ),
+      linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.1) 0%,
+          rgba(0, 0, 0, 0.1) 100%
+      ),
+      #6987B2;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: inset 0 0 25px 10px rgba(74, 101, 141, 0.848);
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    font-family: Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* Striped background now applied to `body` using repeating-linear-gradient above. */
+
+h1 {
+  color: #EAEDEC;
+  font-family: 'Tourney', sans-serif;
+  font-size: 72px;
+  margin-bottom: -10px;
+  font-weight: 20;
+   -webkit-text-stroke: 1px rgb(255, 255, 255); /* width and color */
+}
+
+h2 {
+  color: #EAEDEC;
+  font-family: 'libre-franklin', sans-serif;
+  font-size: 40px;
+  letter-spacing: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+   /* -webkit-text-stroke: 2px rgb(255, 255, 255); width and color */
+}
+
+h3 {
+  color: #EAEDEC;
+  text-align: center;
+  font-family: 'libre-franklin', sans-serif;
+  font-weight: 400;
+}
+
+label {
+  color: #EAEDEC;
+  font-size: 10px;
+}
+
+p {
+  color: #aaa;
+}
+
+/* ********** FOOTER DISCLAIMER STYLING ********** */
+#footer-disclaimer {
+  background-color: rgba(20, 20, 20, 0.7);
+  padding: 12px 20px;
+  border-radius: 8px;
+  max-width: 90%;
+  text-align: center;
+  left: 50%;
+  transform: translateX(-50%);
+    position: relative;
+}
+
+#footer-disclaimer-close {
+    position: absolute;
+    top: 4px;
+    right: 8px;
+    border: none;
+    background: transparent;
+    color: #b7c0d3;
+    font-size: 16px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 2px 4px;
+}
+
+#footer-disclaimer-close:hover {
+    color: #EAEDEC;
+}
+
+#footer-disclaimer p {
+  margin: 0;
+  padding-right: 10px;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  font-family: 'Orbitron', sans-serif;
+  color: #b7c0d3;
+}
+
+#footer-disclaimer a {
+    color: #EBA85B;
+    text-decoration: none;
+}
+
+#version-number {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    color: #b7c0d3;
+    margin-bottom: 12px;
+    cursor: pointer;
+}
+
+#version-number:hover {
+    color: #EAEDEC;
+}
+
+#about-modal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+#about-modal.modal-hidden {
+    display: none;
+}
+
+#about-modal-content {
+    position: relative;
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(255, 255, 255, 0.02) 2px,
+            rgba(255, 255, 255, 0.02) 4px
+        ),
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.04) 0%,
+            rgba(0, 0, 0, 0.18) 100%
+        ),
+        #262B30;
+    border: 1px solid rgba(124, 185, 211, 0.25);
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    padding: 24px 20px 14px;
+    width: min(90vw, 370px);
+    text-align: center;
+}
+
+#about-modal-content p {
+    margin: 0 0 10px;
+    color: #b7c0d3;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.35px;
+}
+
+#about-modal-title {
+    color: #EAEDEC !important;
+    font-size: 17px !important;
+    letter-spacing: 1px !important;
+    margin-bottom: 12px !important;
+}
+
+#about-modal-synth-img {
+    display: block;
+    width: 50%;
+    height: auto;
+    margin: 0 auto 12px;
+}
+
+#about-modal-content a {
+    color: #EBA85B;
+    text-decoration: none;
+}
+
+#about-modal-content a:hover {
+    text-decoration: underline;
+}
+
+#about-modal-close {
+    position: absolute;
+    top: 7px;
+    right: 9px;
+    border: none;
+    background: transparent;
+    color: #b7c0d3;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 2px 6px;
+    transition: color 0.2s ease;
+}
+
+#about-modal-close:hover {
+    color: #EAEDEC;
+}
+
+#controls a {
+    color: #EBA85B;
+    text-decoration: none;
+}
+
+#controls a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 1200px) {
+  #footer-disclaimer {
+    position: relative;
+    margin: 10px auto 0;
+    margin-bottom: 5px;
+    transform: none;
+    left: auto;
+  }
+}
+
+@media (min-width: 1201px) {
+    #footer-disclaimer {
+        position: relative;
+        margin: 10px auto 0;
+        margin-bottom: 5px;
+        left: auto;
+        transform: none;
+        z-index: auto;
+        bottom: auto;
+    }
+}
+/* ********** END OF FOOTER DISCLAIMER STYLING ********** */
+
+.side-nav a.linkText {
+    font-family: Helvetica, sans-serif;
+    color: #aaa;
+    font-size: 16px;
+    /* font-weight: ; */
+}
+
+.guideNote {
+  color: #b7c0d3 !important;
+}
+
+.guideNote a,
+.side-nav .guideNote a {
+  color: #b7c0d3 !important;
+  text-decoration: none;
+  padding: 0;
+  margin: 0;
+  display: inline;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.nav-note {
+    padding: 10px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    color: #aaa;
+    line-height: 1.5;
+    justify-content: space-between;
+    /* border-top: 1px solid #333; */
+    /* margin-top: 20px; */
+}
+
+.nav-note a {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit;
+    text-align: inherit;
+    color: inherit;
+    text-decoration: underline;
+}
+
+.nav-note a:hover {
+    text-decoration: underline;
+}
+
+/* ********** ZOOM CONTROLS STYLING ******* */
+.zoom-controls {
+    position: fixed;
+    top: 20px;
+    right: 65px;
+    cursor: pointer;
+    z-index: 1001; /* Same as hamburger menu */
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.zoom-btn {
+    width: 30px;
+    height: 30px;
+    background-color: #7992b900;
+    border: 2px solid #eaedeccf;
+    border-radius: 25px;
+    color: #eaedecd4;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    padding: 3px 0 0 0; /* Adjust 1st value for visual centering */
+    line-height: 1;
+}
+
+.zoom-btn:hover {
+    background-color: #969696;
+    color: #EAEDEC;
+}
+
+.zoom-btn:active {
+    background-color: #6E89B0;
+}
+
+/* ********** HAMBURGER STYLING ******* */
+/* Hamburger Button */
+.hamburger-menu {
+    position: fixed;
+    top: 20px;
+    right: 15px;
+    cursor: pointer;
+    z-index: 1001; /* Above everything, except for the slide nav*/
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.bar {
+    width: 30px;
+    height: 4px;
+    background-color: #313236;
+    border-radius: 2px;
+    transition: background-color 0.3s ease;
+}
+
+.hamburger-menu:hover .bar {
+    background-color: #4e5262;
+    cursor: pointer;
+}
+
+/* Slide-out Panel */
+.side-nav {
+    height: 100%;
+    width: 0; /* Hidden by default */
+    position: fixed;
+    z-index: 1002;
+    top: 0;
+    right: 0;
+    background-color: #262B30;
+    overflow-x: hidden;
+    transition: 0.2s; /* Smooth slide effect */
+    padding-top: 60px;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+    color: white;
+}
+
+.side-nav a {
+    padding: 15px 10px 15px 15px; /* top right bottom left */
+    text-decoration: none;
+    font-size: 18px;
+    color: #aaa;
+    display: block;
+    font-family: 'Orbitron', sans-serif;
+    transition: 0.3s;
+    text-align: left;
+}
+
+.side-nav a:hover {
+    color: #7cb9d3;
+}
+
+.side-nav .nav-note a {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit;
+    text-align: left;
+    color: inherit;
+    text-decoration: underline;
+}
+
+.side-nav .nav-note a:hover {
+    color: inherit;
+    text-decoration: underline;
+}
+
+.side-nav .close-btn {
+    position: absolute;
+    top: 0px;
+    right: 20px;
+    font-size: 36px;
+}
+
+.side-nav hr {
+    border: 0;
+    border-top: 1px solid #333;
+    margin: 20px;
+}
+
+.HambText {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* ********** END OF HAMBURGER STYLING ******* */
+
+
+/* ********** Start OF ACCORDION STYLING ********** */
+.accordion-header {
+
+    background-color: transparent;
+    color: #aaa;
+    cursor: pointer;
+    padding: 15px 25px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    border-bottom: 1px solid #333;
+}
+
+.accordion-header:hover, .active {
+    color: #7cb9d3; /* Highlight color */
+}
+
+/* plus/minus icon */
+.accordion-header:after {
+    content: '\002B'; /* Plus sign */
+    float: right;
+    margin-left: 5px;
+}
+
+.accordion-header.active:after {
+    content: "\2212"; /* Minus sign */
+}
+
+.accordion-content {
+    padding: 0 10px;
+    background-color: #222;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out; /* Smooth slide */
+}
+
+.accordion-content p {
+    font-size: 14px;
+    color: #eee;
+    line-height: 1.6;
+}
+
+/* ********** END OF ACCORDION STYLING ********** */
+
+
+
+
+
+#main-header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center; 
+    max-width: 1280px;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+#header-block {  /* The main title */
+    text-align: left;
+    margin-left: 10px;
+}
+
+#header-block, #header-spacer {
+    width: 300px;
+    flex-shrink: 0;
+}
+
+/* the black text on the top line */
+.outerLabel {
+    color: #ffffff;
+}
+
+#controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1510px;
+    padding: 10px;
+}
+
+.control-box {
+    background: 
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(255, 255, 255, 0.03) 2px,
+            rgba(255, 255, 255, 0.03) 4px
+        ),
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.08) 0%,
+            rgba(0, 0, 0, 0.08) 100%
+        ),
+        #717682;
+    border: 3px solid #380454;
+    /* padding: 10px; */
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), inset 0 0 10px 1px rgba(0, 0, 0, 0.1);
+    min-width: auto;
+    margin: 10px;
+}
+
+.control-box h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    background-color: #380454;
+    transition: color 0.4s ease;
+    position: relative;
+}
+
+.box-random-btn, .box-init-btn {
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    background-color: #171a1d;
+    color: #ebe1d7;
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    font-weight: lighter;
+    border: 2px solid #5a3a6e;
+    padding: 0px 2px;
+    border-radius: 2px;
+    cursor: pointer;
+    /* line-height: 1.3; */
+    transition: background-color 0.1s;
+    height: 17px;
+    width: 17px;
+}
+
+.box-random-btn {
+    right: 2px;
+}
+
+.box-init-btn {
+    right: 24px;
+}
+
+.box-random-btn:hover {
+    background-color: #6E89B0;
+    border-color: #6E89B0;
+}
+
+.box-init-btn:hover {
+    background-color: #b47a34;
+    border-color: #b47a34;
+}
+
+.control-box h3.module-inactive {
+    color: grey;
+}
+
+.control-box h3.module-inactive .box-init-btn,
+.control-box h3.module-inactive .box-random-btn {
+    opacity: 0.35;
+    pointer-events: none;
+    border-color: #444;
+}
+
+body.privacy-page #controls {
+    max-width: 1280px;
+    margin: 0 auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+}
+
+body.privacy-page #controls .control-box {
+    width: min(360px, 100%);
+    height: 250px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    padding: 12px;
+    outline: 1px solid rgba(255, 255, 255, 0.2);
+    outline-offset: -6px;
+}
+
+/* .control-box:has(#pitch-sustain-point) {
+    width: 130px;
+} */
+
+.parameter-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+/* --- Tooltip Styling --- */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width:max-content;
+    background-color: #201c13;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 5px 5px;
+    position: absolute;
+    z-index: 10;
+    bottom: 100%;
+    right: 100%;
+    margin-left: 10px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    bottom: 0%;
+    left: -10%;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent #201c1300;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* --- End of Tooltip Styling --- */
+
+/* Styling for the MIDI output selection box */
+#midi-output-select {
+    width: 250px;
+    background-color: #262B30;
+    color: #51E7FF;
+    font-family: 'VT323', monospace;
+    font-size: 1.2em;
+    border: 5px solid #313236;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), inset 0 0 10px 1px rgba(0, 0, 0, 0.1);
+    padding: 5px;
+    margin-right: 24px; /* used to shift the init button slightly to the left  */
+    border-radius: 5px;
+}
+
+/* Centering the MIDI device selection */
+#midi-status {
+    display: flex;
+    flex-direction: column; /* Stack the label and select box vertically */
+    align-items: center; /* Center the stacked items horizontally */
+    margin-top: 20px;
+}
+
+/* Add space below the label within the MIDI status block */
+#midi-status label {
+    margin-bottom: 8px;
+}
+
+#patch-controls {
+    display: flex;
+    gap: 15px;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+#preset-name-display {
+    color: #EBA85B;
+    font-family: 'VT323', monospace;
+    font-size: 1.4em;
+    letter-spacing: 0.1em;
+    text-align: center;
+    min-height: 1.4em;
+    margin-top: 4px;
+}
+
+input[type="checkbox"] {
+    accent-color: #3C496B; /* Replace with your preferred hex color */
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.envelope-diagram {
+    display: block;      /* Required for margin: auto to work */
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;        /* Makes the image span the width of the control box */
+    height: auto;       /* Maintains aspect ratio */
+    margin-bottom: 15px; /* Space between image and the "VCA EG" text */
+    border-radius: 4px; /* Optional: matches your box styling */
+    opacity: 0.9;       /* Optional: softens the image to match the UI */
+}
+
+.wavs-diagram {
+    display: block;      /* Required for margin: auto to work */
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;        /* Makes the image span the width of the control box */
+    height: auto;       /* Maintains aspect ratio */
+    margin-bottom: 10px; /* Space between image and the "VCA EG" text */
+    border-radius: 4px; /* Optional: matches your box styling */
+    opacity: 0.9;       /* Optional: softens the image to match the UI */
+}
+
+.side-nav .wavs-diagram {
+    width: 70%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* --- Nav synth 3D spin --- */
+.nav-synth-wrap {
+    position: relative;
+    width: 70%;
+    margin: 10px auto;
+    cursor: pointer;
+}
+
+.nav-synth-img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.nav-synth-img--front {
+    position: relative;
+    z-index: 3;
+    opacity: 0.92;
+}
+
+.nav-synth-img--mid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    opacity: 0.4;
+}
+
+.nav-synth-img--back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    opacity: 0.2;
+}
+
+.vca-diagram {
+    display: block;      /* Required for margin: auto to work */
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;        /* Makes the image span the width of the control box */
+    height: auto;       /* Maintains aspect ratio */
+    margin-bottom: 10px; /* Space between image and the "VCA EG" text */
+    border-radius: 4px; /* Optional: matches your box styling */
+    opacity: 0.9;       /* Optional: softens the image to match the UI */
+}
+
+.filter-diagram {
+    display: block;      /* Required for margin: auto to work */
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;        /* Makes the image span the width of the control box */
+    height: auto;       /* Maintains aspect ratio */
+    margin-bottom: 10px; /* Space between image and the "VCA EG" text */
+    border-radius: 4px; /* Optional: matches your box styling */
+    opacity: 0.9;       /* Optional: softens the image to match the UI */
+}
+
+/* Lines graphics for DCO layout */
+.lines-graphic-left,
+.lines-graphic-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    flex-shrink: 0;
+}
+
+.lines-diagram-left,
+.lines-diagram-right {
+    width: auto;
+    height: 200px;
+    opacity: 0.85;
+}
+
+
+.patch-button-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 30px;
+}
+
+.patch-button-group label {
+    margin-bottom: 8px;
+}
+
+/* Style for the buttons themselves */
+#init-patch-button, #random-patch-button, #preset-patch-button, #bass-patch-button, #string-patch-button, #organ-patch-button, #sine-patch-button {
+    background-color: #313236;
+    color: #ebe1d7;
+    font-family: 'VT323', monospace;
+    font-size: 1.2em;
+    border: 5px solid #313236; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), inset 0 0 10px 1px rgba(0, 0, 0, 0.1);
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.1s;
+}
+
+#init-patch-button:hover, #random-patch-button:hover, #preset-patch-button:hover, #bass-patch-button:hover, #string-patch-button:hover, #organ-patch-button:hover, #sine-patch-button:hover {
+    background-color: #349db4; 
+}
+
+/* New style to highlight the active OSC2 PWM control */
+.active-control {
+    /* Apply underline */
+    text-decoration: underline;
+    /* You might also want to change the color for emphasis */
+    color: #EBA85B !important; 
+}
+
+/* ******************START OF WAVE MARKER STYLES ******************** */
+/* Container for the image and the line */
+.wave-display-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.wave-diagram {
+    display: block;
+    width: 100%; /* Adjust as needed */
+    height: auto;
+}
+
+/* The white highlight line */
+.wave-marker {
+    position: absolute;
+    bottom: 5px; /* near the bottom of image */
+    height: 3px;
+    width: 30% !important;
+    background-color: #9CA0A8;
+    /* box-shadow: 0 0 5px rgba(255, 255, 255, 0.3); */
+    /* transition: all 0.2s ease; Smooth sliding movement */
+    display: none; /* Hidden by default (Off state) */
+}
+/* ******************END OF WAVE MARKER STYLES ******************** */
+
+/* ******************VERTICAL SLIDERS STYLING ******************** */
+/* Vertical Sliders for PITCH RATE */
+.vertical-sliders {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* gap: 10px; */
+}
+
+/* SLIDER STYLING */
+input[type="range"] {
+    width: 90px; 
+    /* writing-mode: vertical-lr; */
+    accent-color: #380454; 
+}
+
+/* LINE SELECT slider size */
+#line-select {
+    height: 65px !important;
+}
+
+/* DETUNE POLARITY slider size (reduced to accommodate LEDs) */
+#detune-polarity {
+    height: 62px !important;
+}
+
+/* PITCH RATE sliders size */
+.pitch-rate-small .pitch-rate-slider {
+    height: 60px !important; /* Reduce slider height */
+}
+
+/* DCA RATE sliders size */
+.dca-rate-small .dca-rate-slider {
+    height: 60px !important;
+}
+
+/* DCW RATE sliders size */
+.dcw-rate-small .dcw-rate-slider {
+    height: 60px !important;
+}
+
+/* Updated slider sizes for SUS and END sliders only */
+#pitch-sustain-point {
+    height: 107px !important; /* Increased slider height for SUS */
+}
+
+#pitch-end-point {
+    height: 107px !important; /* Increased slider height for END */
+}
+
+#dca-sustain-point {
+    height: 107px !important; /* Increased slider height for SUS */
+}
+
+#dca-end-point {
+    height: 107px !important; /* Increased slider height for END */
+}
+
+#dcw-sustain-point {
+    height: 107px !important; /* Increased slider height for SUS */
+}
+
+#dcw-end-point {
+    height: 107px !important; /* Increased slider height for END */
+}
+
+.vertical-sliders h3 {
+    width: 100%;
+    text-align: center;
+    /* margin-bottom: 10px; */
+}
+
+.vertical-sliders .parameter-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    padding: 10px;
+    flex: 0 0 auto;
+}
+
+.vertical-sliders .parameter-row label {
+    position: relative;
+    writing-mode: horizontal-tb;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.rate-sustain-indicator {
+    display: block;
+    width: 100%;
+    height: 2px;
+    margin-top: 2px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.rate-sustain-indicator.active {
+    background-color: #380454;
+    opacity: 1;
+}
+
+.dca-sustain-indicator {
+    display: block;
+    width: 100%;
+    height: 2px;
+    margin-top: 2px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.dca-sustain-indicator.active {
+    background-color: #380454;
+    opacity: 1;
+}
+
+.end-sustain-indicator {
+    display: block;
+    width: 100%;
+    height: 2px;
+    margin-top: 2px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.end-sustain-indicator.active {
+    background-color: #ffffff;
+    opacity: 1;
+}
+
+/* When end indicator follows sustain indicator, collapse margin but offset visually */
+.rate-sustain-indicator + .end-sustain-indicator {
+    margin-top: -2px;
+    position: relative;
+    top: 4px;
+}
+
+.dca-end-indicator {
+    display: block;
+    width: 100%;
+    height: 2px;
+    margin-top: 2px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.dca-end-indicator.active {
+    background-color: #ffffff;
+    opacity: 1;
+}
+
+/* When DCA end indicator follows sustain indicator, collapse margin but offset visually */
+.dca-sustain-indicator + .dca-end-indicator {
+    margin-top: -2px;
+    position: relative;
+    top: 4px;
+}
+
+.dcw-sustain-indicator {
+    display: block;
+    width: 100%;
+    height: 2px;
+    margin-top: 2px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.dcw-sustain-indicator.active {
+    background-color: #380454;
+    opacity: 1;
+}
+
+.dcw-end-indicator {
+    display: block;
+    width: 100%;
+    height: 2px;
+    margin-top: 2px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.dcw-end-indicator.active {
+    background-color: #ffffff;
+    opacity: 1;
+}
+
+/* When DCW end indicator follows sustain indicator, collapse margin but offset visually */
+.dcw-sustain-indicator + .dcw-end-indicator {
+    margin-top: -2px;
+    position: relative;
+    top: 4px;
+}
+
+/* ── Scoped ENV 1 / ENV 2 indicators (position:absolute – no layout impact) ── */
+
+.pitch1-sustain-indicator, .pitch2-sustain-indicator,
+.dcw1-sustain-indicator,   .dcw2-sustain-indicator,
+.dca1-sustain-indicator,   .dca2-sustain-indicator {
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+
+.pitch1-sustain-indicator.active, .pitch2-sustain-indicator.active,
+.dcw1-sustain-indicator.active,   .dcw2-sustain-indicator.active,
+.dca1-sustain-indicator.active,   .dca2-sustain-indicator.active {
+    background-color: #380454;
+    opacity: 1;
+}
+
+.pitch1-end-indicator, .pitch2-end-indicator,
+.dcw1-end-indicator,   .dcw2-end-indicator,
+.dca1-end-indicator,   .dca2-end-indicator {
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+
+.pitch1-end-indicator.active, .pitch2-end-indicator.active,
+.dcw1-end-indicator.active,   .dcw2-end-indicator.active,
+.dca1-end-indicator.active,   .dca2-end-indicator.active {
+    background-color: #ffffff;
+    opacity: 1;
+}
+
+.vertical-sliders .parameter-row input[type="range"] {
+    -webkit-appearance: slider-vertical;
+    appearance: slider-vertical;
+    writing-mode: bt-lr;
+    width: 8px;
+    height: 100px;
+    margin: 0;
+}
+
+/* Ensure pot controls in vertical slider sections align properly */
+.vertical-sliders .pot-control {
+    align-items: center;
+}
+
+.vertical-sliders .pot-wrapper {
+    width: 35px;
+    align-items: center;
+}
+
+/* Parameter column for grouping slider and pot vertically */
+.vertical-sliders .parameter-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 0 0 auto;
+    padding: 10px;
+}
+
+.vertical-sliders .parameter-column .parameter-row {
+    min-height: auto;
+    padding: 2px;
+    margin-bottom: 2px;
+}
+
+.vertical-sliders .parameter-column .pot-control {
+    min-height: auto;
+    padding: 2px;
+}
+
+/* Firefox vertical slider — override writing-mode since Firefox ignores bt-lr */
+@supports (-moz-appearance: none) {
+    .vertical-sliders .parameter-row input[type="range"] {
+        writing-mode: vertical-lr;
+    }
+}
+.vertical-sliders .parameter-row input[type="range"]::-moz-range-track {
+    width: 8px;
+}
+/* ******************END OF VERTICAL SLIDERS ******************** */
+
+/* *************** START OF BOX SIZES ******************************* */
+
+/* LINE SELECT box size */
+.control-box:has(#line-select) {
+    max-width: 180px;
+}
+
+/* PITCH RATE box size */
+.pitch-rate-small {
+    max-width: 665px;
+}
+
+/* DETUNE cbox size */
+.detune-max-width {
+    max-width: 220px;
+}
+
+/* DETUNE FINE — temporarily disabled (causes hardware crash) */
+.detune-fine-disabled {
+    opacity: 0.7;
+    /* cursor: not-allowed; */
+    position: relative;
+}
+
+/* DCO 1 box size */
+.dco1-max-width {
+    max-width: 600px;
+}
+
+/* DCO 2 box size */
+.dco2-max-width {
+    max-width: 600px;
+}
+
+/* DCA LEVEL box size */
+/* .dca-level-max-width {
+    max-width: 120px;
+} */
+
+/* DCA ENV 1 & 2 RATE box size */
+.dca-rate-small {
+    max-width: 665px;
+    /* max-height: 180px; */
+}
+
+/* DCW LEVEL box size */
+.dcw-level-max-width {
+    max-width: 120px;
+}
+
+/* LFO 1 box size */
+.lfo1-max-width {
+    max-width: 220px;
+}
+
+/* FILTER EG box size */
+.filter-eg-max-width {
+    max-width: 200px;
+}
+
+/* FILTER control box size */
+.filter-max-width {
+    max-width: 170px;
+}
+
+
+/* VIBRATO box size */
+.vibrato-max-width {
+    max-width: 310px;
+}
+
+/* DCW ENV 1 & 2 RATE box size */
+.dcw-rate-small {
+    max-width: 665px;
+}
+
+/* CHORUS box size */
+.chorus-max-width {
+    max-width: 110px;
+}
+/* *************** END OF BOX SIZES ******************************* */
+
+/* ******************POT/KNOB CONTROL STYLING ******************** */
+.pot-control {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+
+.pot-control label {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.pot-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pot-wrapper input[type="range"] {
+    position: absolute;
+    opacity: 0;
+    width: 40px;
+    height: 70px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.pot-knob {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #ffffff, #dbdbdb);
+    /* box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.2),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.3); */
+    position: relative;
+    transition: transform 0.1s ease;
+}
+
+.moved-params-pot-group .pot-knob {
+    background: linear-gradient(145deg, #9b98a3, #d8caef);
+}
+
+.pot-indicator {
+    position: absolute;
+    width: 4px;
+    height: 8px;
+    background: #380454;
+    border-radius: 2px;
+    top: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.pot-value {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #EAEDEC;
+    font-weight: bold;
+    min-width: 30px;
+    text-align: center;
+}
+/* ******************END OF POT CONTROL ******************** */
+
+/* ******************KEY FOLLOW CHECKBOX ******************** */
+.keyfollow-hidden-input {
+    display: none;
+}
+
+.keyfollow-btn-control {
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+}
+
+.keyfollow-btn-control label {
+    margin-bottom: 15px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.keyfollow-checkbox {
+    margin-bottom: 15px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #ff2200;
+}
+/* ******************END OF KEY FOLLOW CHECKBOX ******************** */
+
+.noisy {
+  background-image: url(data:image/png;base64,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);
+    /* opacity: 0.5; */
+}
+
+.vibr-wave-display {
+    position: relative;
+    display: inline-block;
+    width: 10%;
+    margin: 5px;
+    margin-top: 15px;
+}
+
+.wav-vibr-icon {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.vibr-wave-indicator {
+    position: absolute;
+    left: 2px;
+    right: 2px;
+    background: rgba(200, 200, 200, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    pointer-events: none;
+    transition: top 0.15s ease;
+}
+
+.lfo1-wave-display {
+    position: relative;
+    display: inline-block;
+    width: 31px;
+    margin: 5px;
+    margin-top: 15px;
+}
+
+.wav-lfo1-icon {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.lfo1-wave-indicator {
+    position: absolute;
+    left: 2px;
+    right: 2px;
+    background: rgba(200, 200, 200, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    pointer-events: none;
+    transition: top 0.15s ease;
+}
+
+/* --- DETUNE POLARITY LED INDICATORS --- */
+.pol-indicator-leds {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 8px;
+    gap: 12px;
+}
+
+/* --- LINE INDICATOR CIRCLES --- */
+.line-indicator-circles {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 8px;
+    gap: 12px;
+}
+
+.circle {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: #262B30;
+    color: #262B30;
+    /* transition: background-color 0.02s ease; */
+    cursor: pointer;
+}
+
+.circle.active {
+    background-color: #ff0000;
+    color: #ff0000;
+}
+
+.circle-labels {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 4px;
+    gap: 12px;
+}
+
+.circle-labels span {
+    flex: 1;
+    text-align: center;
+    flex-shrink: 0;
+    color: #EAEDEC;
+    font-size: 10px;
+}
+
+/* *****************Start of Waveform display ***************** */
+.waveform-display {
+    position: relative;
+    width: 200px;
+    margin: 32px 20px 10px 0px;
+}
+.waveform-label {
+    display: block;
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #EAEDEC;
+    font-size: 10px;
+    text-align: center;
+    white-space: nowrap;
+    z-index: 10;
+}
+.waveform-grid {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.waveform-indicators {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.waveform-indicator {
+    position: absolute;
+    height: 3px;
+    width: 25%; /* Each waveform is 1/4 of the width */
+    /* transition: left 0.2s ease, top 0.2s ease; */
+}
+
+/* DCO 1 indicator - white, slightly higher */
+.waveform-indicator.wf-dco1 {
+    background: #380454;
+}
+
+/* DCO 2 indicator - purple, at the bottom */
+.waveform-indicator.wf-dco2 {
+    background: #380454; /* see line js 484 for positioning */
+}
+
+/* DCO 2 (WF1) indicator */
+.waveform-indicator.wf-dco3 {
+    background: #380454;
+}
+
+/* DCO 2 (WF2) indicator */
+.waveform-indicator.wf-dco4 {
+    background: #380454;
+}
+/* *****************End of Waveform display ***************** */
+
+/* --- HIDE LINES SVG GRAPHICS ON SMALLER SCREENS --- */
+@media (max-width: 1119px) {
+    .lines-graphic-left,
+    .lines-graphic-right {
+        display: none;
+    }
+}
+
+/* --- NEW MEDIA QUERY FOR MOBILE VIEW --- */
+@media (max-width: 768px) {
+    
+    /* Adjust zoom controls for mobile */
+    .zoom-controls {
+        right: 60px;
+    }
+    
+    /* Floating Screen bar */
+    #midi-status {
+        position: fixed; /* Makes it float relative to the viewport */
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000; 
+        
+        /* Compact/Horizontal layout */
+        display: flex; 
+        flex-direction: row; 
+        justify-content: center;
+        gap: 20px;
+        align-items: center;
+        
+        /* Appearance */
+        background-color: #717682;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        padding: 10px 0; 
+        margin: 0;
+    }
+
+    /* Hide the MIDI device label on mobile to save space on the floating bar */
+    #midi-status label {
+        display: none;
+    }
+
+    body {
+        padding-top: 40px;
+    }
+    
+    /* 1. Stack the three main header sections vertically */
+    #main-header {
+        flex-direction: column;
+        /* Remove space-around and use flex-start for a tight stack, 
+           then center the content within the header */
+        justify-content: flex-start; 
+        align-items: center; /* Center the entire header block */
+        padding: 10px 0; /* Add some vertical padding */
+    }
+
+    /* 2. Ensure each block is full width (or nearly full) and centered */
+    #header-block,
+    /* #midi-status, */
+    #patch-controls {
+        width: 90%; /* Take up the full width of the main-header */
+        margin: 10px 0; /* Add vertical spacing between stacked elements */
+        text-align: center; /* Center text inside the header block */
+        
+        /* Optional: Center the button groups horizontally within their block */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    /* 3. Adjust specific inner elements to ensure they stack/center correctly */
+    
+    /* Center the buttons within the patch-controls group */
+    #patch-controls {
+        flex-direction: row;
+        gap: 15px; /* Remove horizontal gap when stacked */
+        justify-content: center; /* <<< THIS IS THE CRITICAL ADDITION */
+        width: 100%;
+    }
+    
+    /* Center the individual button groups and add vertical margin */
+    .patch-button-group {
+        margin: 0; 
+        width: auto; /* Allow content to dictate width */
+    }
+}

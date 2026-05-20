@@ -1,0 +1,968 @@
+let midiOutput = null;
+let originalMidiStatusText = "";
+
+const ALL_CONTROLS = Array.from(document.querySelectorAll("input[data-cc]"));
+
+const INIT_VALUES = {
+    "mod-time": 0,
+    "portamento-time": 0,
+    "fx-engine": 0,
+    "voice-a-wave": 0,
+    "voice-b-wave": 0,
+    "voice-c-wave": 0,
+    "voice-d-wave": 0,
+    "lfo2-amt": 0,
+    "filter-env-amount": 0,
+    "lfo1-wave": 0,
+    "lfo2-wave": 0,
+    "lfo1-amt": 0,
+    "filter-resonance": 0,
+    "lfo1-rate": 0,
+    "lfo2-rate": 0,
+    "filter-cutoff": 99,
+    "amp-attack": 0,
+    "amp-decay": 0,
+    "amp-sustain": 99,
+    "amp-release": 0,
+    "filter-attack": 0,
+    "filter-decay": 0,
+    "filter-sustain": 99,
+    "filter-release": 0,
+    "chorus-depth": 0,
+    "chorus-rate": 0,
+    "voice-a-fine": 0,
+    "voice-b-fine": 0,
+    "voice-c-fine": 0,
+    "voice-d-fine": 0,
+    "voice-a-coarse": 0,
+    "voice-b-coarse": 0,
+    "voice-c-coarse": 0,
+    "voice-d-coarse": 0
+};
+
+const WAVEFORM_BASE_PATH = "waveforms_svg_pass3/";
+const WAVEFORM_INDEX = window.WAVEFORM_INDEX;
+const WAVEFORM_BY_NUMBER = new Map(WAVEFORM_INDEX.map((entry) => [entry.n, entry]));
+let activeWaveModalControlId = null;
+
+function getWaveformEntry(value) {
+    const numericValue = Number.isFinite(value) ? value : 0;
+    const clampedValue = Math.max(0, Math.min(127, numericValue));
+    return WAVEFORM_BY_NUMBER.get(clampedValue);
+}
+
+function getWaveCaption(entry) {
+    const numberText = String(entry.n).padStart(3, "0");
+    return `${numberText} - ${entry.name.toUpperCase()}`;
+}
+
+function updateWaveModalFromControl(control) {
+    if (!control) {
+        return;
+    }
+
+    const modal = document.getElementById("wave-modal");
+    const modalImage = document.getElementById("wave-modal-image");
+    const modalCaption = document.getElementById("wave-modal-caption");
+
+    if (!modal || modal.classList.contains("modal-hidden") || !modalImage || !modalCaption) {
+        return;
+    }
+
+    const entry = getWaveformEntry(parseInt(control.value, 10));
+    modalImage.src = `${WAVEFORM_BASE_PATH}${entry.file}?t=${Date.now()}`;
+    modalImage.alt = `Waveform ${entry.n} ${entry.name}`;
+    modalCaption.textContent = getWaveCaption(entry);
+}
+
+function openWaveModal(controlId) {
+    const control = document.getElementById(controlId);
+    const modal = document.getElementById("wave-modal");
+    if (!control || !modal) {
+        return;
+    }
+
+    activeWaveModalControlId = controlId;
+    modal.classList.remove("modal-hidden");
+    modal.setAttribute("aria-hidden", "false");
+    updateWaveModalFromControl(control);
+}
+
+function closeWaveModal() {
+    const modal = document.getElementById("wave-modal");
+    if (!modal) {
+        return;
+    }
+
+    activeWaveModalControlId = null;
+    modal.classList.add("modal-hidden");
+    modal.setAttribute("aria-hidden", "true");
+}
+
+function setWavePreviewFromControl(control) {
+    if (!control) {
+        return;
+    }
+
+    updateWaveCycleIndicator(control);
+    updateFxCycleIndicator(control);
+
+    if (!control.dataset.wavePreview) {
+        return;
+    }
+
+    const value = parseInt(control.value, 10);
+    const entry = getWaveformEntry(value);
+    const image = document.getElementById(control.dataset.wavePreview);
+
+    if (image) {
+        image.src = `${WAVEFORM_BASE_PATH}${entry.file}?t=${Date.now()}`;
+        image.alt = `Waveform ${entry.n} ${entry.name}`;
+    }
+
+    if (control.dataset.waveCaption) {
+        const caption = document.getElementById(control.dataset.waveCaption);
+        if (caption) {
+            caption.textContent = getWaveCaption(entry);
+        }
+    }
+
+    if (activeWaveModalControlId && control.id === activeWaveModalControlId) {
+        updateWaveModalFromControl(control);
+    }
+}
+
+function syncAllWavePreviews() {
+    ALL_CONTROLS.forEach((control) => {
+        setWavePreviewFromControl(control);
+    });
+}
+
+function getRandomInt(min, max) {
+    const low = Math.ceil(min);
+    const high = Math.floor(max);
+    return Math.floor(Math.random() * (high - low + 1)) + low;
+}
+
+function getWaveName(value) {
+    if (value <= 25) {
+        return "TRIANGLE";
+    }
+    if (value <= 51) {
+        return "S&H";
+    }
+    if (value <= 76) {
+        return "RAMP";
+    }
+    if (value <= 102) {
+        return "SAW";
+    }
+    return "SQUARE";
+}
+
+function getWaveIndexFromValue(value) {
+    if (value <= 25) {
+        return 0;
+    }
+    if (value <= 51) {
+        return 1;
+    }
+    if (value <= 76) {
+        return 2;
+    }
+    if (value <= 102) {
+        return 3;
+    }
+    return 4;
+}
+
+function getWaveValueFromIndex(index) {
+    const mappedValues = [0, 32, 64, 96, 127];
+    return mappedValues[index] ?? 0;
+}
+
+function updateWaveCycleIndicator(control) {
+    if (!control || control.dataset.format !== "wave3") {
+        return;
+    }
+
+    const button = document.querySelector(`.wave-cycle-button[data-wave-cycle-for="${control.id}"]`);
+    if (!button) {
+        return;
+    }
+
+    const numericValue = parseInt(control.value, 10);
+    const waveIndex = getWaveIndexFromValue(numericValue);
+    const waveName = getWaveName(numericValue);
+    const wrapper = button.closest(".wave-cycle-wrap");
+
+    button.textContent = waveName.slice(0, 3);
+    button.setAttribute("aria-label", `Cycle ${control.dataset.label || control.id} (current ${waveName})`);
+
+    if (!wrapper) {
+        return;
+    }
+
+    const options = wrapper.querySelectorAll(".wave-cycle-option");
+    options.forEach((option, optionIndex) => {
+        option.classList.toggle("is-active", optionIndex === waveIndex);
+    });
+}
+
+function getFxIndexFromValue(value) {
+    if (value <= 42) {
+        return 0;
+    }
+    if (value <= 84) {
+        return 1;
+    }
+    return 2;
+}
+
+function getFxValueFromIndex(index) {
+    const mappedValues = [0, 64, 127];
+    return mappedValues[index] ?? 0;
+}
+
+function updateFxCycleIndicator(control) {
+    if (!control || control.dataset.format !== "fx3") {
+        return;
+    }
+
+    const button = document.querySelector(`.wave-cycle-button[data-fx-cycle-for="${control.id}"]`);
+    if (!button) {
+        return;
+    }
+
+    const numericValue = parseInt(control.value, 10);
+    const fxIndex = getFxIndexFromValue(numericValue);
+    const fxName = getFxEngineName(numericValue);
+    const wrapper = button.closest(".wave-cycle-wrap");
+
+    button.textContent = fxName.slice(0, 3);
+    button.setAttribute("aria-label", `Cycle ${control.dataset.label || control.id} (current ${fxName})`);
+
+    if (!wrapper) {
+        return;
+    }
+
+    const options = wrapper.querySelectorAll(".wave-cycle-option");
+    options.forEach((option, optionIndex) => {
+        option.classList.toggle("is-active", optionIndex === fxIndex);
+    });
+}
+
+function getFxEngineName(value) {
+    if (value <= 42) {
+        return "CHORUS";
+    }
+    if (value <= 84) {
+        return "ENSEMBLE";
+    }
+    return "REVERB";
+}
+
+function formatValue(control, value) {
+    const format = control.dataset.format || "int";
+
+    if (format === "wave3") {
+        return getWaveName(value);
+    }
+
+    if (format === "fx3") {
+        return getFxEngineName(value);
+    }
+
+    if (format === "signed50") {
+        const centered = value - 50;
+        if (centered > 0) {
+            return `+${centered}`;
+        }
+        return `${centered}`;
+    }
+
+    return `${value}`;
+}
+
+function onMIDIFailure() {
+    const status = document.getElementById("midi-device-status-text");
+    if (status) {
+        status.textContent = "ERROR: Could not access MIDI devices.";
+        status.style.color = "#ff7f7f";
+    }
+}
+
+function connectToSelectedOutput(portId, midiAccess) {
+    midiOutput = portId ? midiAccess.outputs.get(portId) : null;
+}
+
+function populateOutputDevices(midiAccess) {
+    const select = document.getElementById("midi-output-select");
+    if (!select) {
+        return;
+    }
+
+    const previousId = select.value;
+    select.innerHTML = "";
+
+    if (midiAccess.outputs.size === 0) {
+        select.innerHTML = '<option value="">-- No Devices Found --</option>';
+        midiOutput = null;
+        return;
+    }
+
+    let autoSelectId = null;
+    midiAccess.outputs.forEach((output) => {
+        if (output.id === previousId) {
+            autoSelectId = output.id;
+        } else if (!autoSelectId && output.name && output.name.toLowerCase().includes("pro")) {
+            autoSelectId = output.id;
+        }
+    });
+
+    midiAccess.outputs.forEach((output) => {
+        const option = document.createElement("option");
+        option.value = output.id;
+        option.textContent = output.name;
+        if (output.id === autoSelectId) {
+            option.selected = true;
+        }
+        select.appendChild(option);
+    });
+
+    if (!select.value && select.options.length > 0) {
+        select.options[0].selected = true;
+    }
+
+    connectToSelectedOutput(select.value, midiAccess);
+}
+
+function sendMidiCC(cc, value) {
+    if (!midiOutput) {
+        return;
+    }
+    midiOutput.send([0xB0, cc, value]);
+}
+
+function updateTempStatus(text) {
+    const select = document.getElementById("midi-output-select");
+    if (!select || select.selectedIndex < 0) {
+        return;
+    }
+    select.options[select.selectedIndex].textContent = text;
+}
+
+function restoreStatusText() {
+    const select = document.getElementById("midi-output-select");
+    if (!select || select.selectedIndex < 0) {
+        return;
+    }
+    if (originalMidiStatusText) {
+        select.options[select.selectedIndex].textContent = originalMidiStatusText;
+    }
+}
+
+function attachControlListeners() {
+    const select = document.getElementById("midi-output-select");
+
+    ALL_CONTROLS.forEach((control) => {
+        const cc = parseInt(control.dataset.cc, 10);
+        const label = control.dataset.label || control.id.toUpperCase();
+
+        control.addEventListener("mousedown", () => {
+            if (!select || select.selectedIndex < 0) {
+                return;
+            }
+            originalMidiStatusText = select.options[select.selectedIndex].textContent;
+        });
+
+        control.addEventListener(
+            "touchstart",
+            () => {
+                if (!select || select.selectedIndex < 0) {
+                    return;
+                }
+                originalMidiStatusText = select.options[select.selectedIndex].textContent;
+            },
+            { passive: true }
+        );
+
+        control.addEventListener("input", (event) => {
+            const value = parseInt(event.target.value, 10);
+            sendMidiCC(cc, value);
+            const displayValue = formatValue(control, value);
+            updateTempStatus(`${label}: ${displayValue}`);
+            setWavePreviewFromControl(control);
+        });
+
+    });
+}
+
+function setupWaveCycleButtons() {
+    const buttons = document.querySelectorAll(".wave-cycle-button[data-wave-cycle-for]");
+    const select = document.getElementById("midi-output-select");
+
+    buttons.forEach((button) => {
+        const controlId = button.dataset.waveCycleFor;
+        const control = document.getElementById(controlId);
+
+        if (!control) {
+            return;
+        }
+
+        updateWaveCycleIndicator(control);
+
+        button.addEventListener("click", () => {
+            if (select && select.selectedIndex >= 0) {
+                originalMidiStatusText = select.options[select.selectedIndex].textContent;
+            }
+
+            const currentValue = parseInt(control.value, 10);
+            const currentIndex = getWaveIndexFromValue(currentValue);
+            const nextIndex = (currentIndex + 1) % 5;
+            const nextValue = getWaveValueFromIndex(nextIndex);
+            const cc = parseInt(control.dataset.cc, 10);
+            const label = control.dataset.label || control.id.toUpperCase();
+
+            control.value = nextValue;
+            sendMidiCC(cc, nextValue);
+            updateTempStatus(`${label}: ${formatValue(control, nextValue)}`);
+            setWavePreviewFromControl(control);
+            setTimeout(restoreStatusText, 900);
+        });
+    });
+}
+
+function setupFxCycleButtons() {
+    const buttons = document.querySelectorAll(".wave-cycle-button[data-fx-cycle-for]");
+    const select = document.getElementById("midi-output-select");
+
+    buttons.forEach((button) => {
+        const controlId = button.dataset.fxCycleFor;
+        const control = document.getElementById(controlId);
+
+        if (!control) {
+            return;
+        }
+
+        updateFxCycleIndicator(control);
+
+        button.addEventListener("click", () => {
+            if (select && select.selectedIndex >= 0) {
+                originalMidiStatusText = select.options[select.selectedIndex].textContent;
+            }
+
+            const currentValue = parseInt(control.value, 10);
+            const currentIndex = getFxIndexFromValue(currentValue);
+            const nextIndex = (currentIndex + 1) % 3;
+            const nextValue = getFxValueFromIndex(nextIndex);
+            const cc = parseInt(control.dataset.cc, 10);
+            const label = control.dataset.label || control.id.toUpperCase();
+
+            control.value = nextValue;
+            sendMidiCC(cc, nextValue);
+            updateTempStatus(`${label}: ${formatValue(control, nextValue)}`);
+            setWavePreviewFromControl(control);
+            setTimeout(restoreStatusText, 900);
+        });
+    });
+}
+
+function initPatch() {
+    ALL_CONTROLS.forEach((control) => {
+        const cc = parseInt(control.dataset.cc, 10);
+        const fallbackValue = control.id.includes("sustain") ? parseInt(control.max, 10) : 0;
+        const value = Object.prototype.hasOwnProperty.call(INIT_VALUES, control.id) ? INIT_VALUES[control.id] : fallbackValue;
+        control.value = value;
+        sendMidiCC(cc, value);
+        setWavePreviewFromControl(control);
+    });
+
+    updateTempStatus("PATCH INITIALIZED");
+    setTimeout(restoreStatusText, 900);
+}
+
+function randomPatch() {
+    ALL_CONTROLS.forEach((control) => {
+        const cc = parseInt(control.dataset.cc, 10);
+        const min = parseInt(control.min || "0", 10);
+        const max = parseInt(control.max || "127", 10);
+        const randomValue = getRandomInt(min, max);
+        control.value = randomValue;
+        sendMidiCC(cc, randomValue);
+        setWavePreviewFromControl(control);
+    });
+
+    updateTempStatus("RANDOM PATCH SENT");
+    setTimeout(restoreStatusText, 900);
+}
+
+// SYN 1 — Pad: slow attack, long release, detuned soft waves, chorus, gentle filter
+const SYN1_VALUES = {
+    "voice-a-wave": 37,   // Mellow Dome
+    "voice-b-wave": 67,   // Soft Wave 1
+    "voice-c-wave": 59,   // Soft Dome 3
+    "voice-d-wave": 116,  // Soothing 1
+    "voice-a-fine": 64,   // center
+    "voice-b-fine": 67,   // +3 cents (slight detune)
+    "voice-c-fine": 61,   // -3 cents (slight detune)
+    "voice-d-fine": 69,   // +5 cents
+    "voice-a-coarse": 0,
+    "voice-b-coarse": 0,
+    "voice-c-coarse": 0,
+    "voice-d-coarse": 0,
+    "amp-attack": 70,
+    "amp-decay": 40,
+    "amp-sustain": 99,
+    "amp-release": 80,
+    "filter-cutoff": 72,
+    "filter-resonance": 18,
+    "filter-env-amount": 30,
+    "filter-attack": 60,
+    "filter-decay": 50,
+    "filter-sustain": 80,
+    "filter-release": 70,
+    "lfo1-wave": 0,
+    "lfo1-rate": 28,
+    "lfo1-amt": 12,
+    "lfo2-wave": 0,
+    "lfo2-rate": 14,
+    "lfo2-amt": 8,
+    "chorus-depth": 55,
+    "chorus-rate": 22,
+    "portamento-time": 0,
+    "mod-time": 0,
+    "fx-engine": 0
+};
+
+// SYN 2 — Bass: fast attack, punchy filter env, sawtooth, no chorus
+const SYN2_VALUES = {
+    "voice-a-wave": 33,   // Sawtooth
+    "voice-b-wave": 34,   // Square
+    "voice-c-wave": 51,   // Limp Saw
+    "voice-d-wave": 126,  // Silence (3-voice bass)
+    "voice-a-fine": 64,
+    "voice-b-fine": 62,   // slight detune
+    "voice-c-fine": 66,
+    "voice-d-fine": 64,
+    "voice-a-coarse": 0,
+    "voice-b-coarse": 0,
+    "voice-c-coarse": 0,
+    "voice-d-coarse": 0,
+    "amp-attack": 0,
+    "amp-decay": 35,
+    "amp-sustain": 70,
+    "amp-release": 15,
+    "filter-cutoff": 55,
+    "filter-resonance": 40,
+    "filter-env-amount": 65,
+    "filter-attack": 0,
+    "filter-decay": 30,
+    "filter-sustain": 20,
+    "filter-release": 20,
+    "lfo1-wave": 0,
+    "lfo1-rate": 0,
+    "lfo1-amt": 0,
+    "lfo2-wave": 0,
+    "lfo2-rate": 0,
+    "lfo2-amt": 0,
+    "chorus-depth": 0,
+    "chorus-rate": 0,
+    "portamento-time": 8,
+    "mod-time": 0,
+    "fx-engine": 0
+};
+
+// SYN 3 — Bell: fast attack, medium decay, low sustain, sine/dome waves
+const SYN3_VALUES = {
+    "voice-a-wave": 32,   // Sine
+    "voice-b-wave": 2,    // Xylophone
+    "voice-c-wave": 16,   // Peal
+    "voice-d-wave": 35,   // Dome 1
+    "voice-a-fine": 64,
+    "voice-b-fine": 64,
+    "voice-c-fine": 70,   // slight inharmonic detune
+    "voice-d-fine": 58,
+    "voice-a-coarse": 0,
+    "voice-b-coarse": 0,
+    "voice-c-coarse": 12, // octave-ish upper partial
+    "voice-d-coarse": 0,
+    "amp-attack": 0,
+    "amp-decay": 75,
+    "amp-sustain": 20,
+    "amp-release": 60,
+    "filter-cutoff": 99,
+    "filter-resonance": 10,
+    "filter-env-amount": 50,
+    "filter-attack": 0,
+    "filter-decay": 55,
+    "filter-sustain": 10,
+    "filter-release": 50,
+    "lfo1-wave": 0,
+    "lfo1-rate": 0,
+    "lfo1-amt": 0,
+    "lfo2-wave": 0,
+    "lfo2-rate": 0,
+    "lfo2-amt": 0,
+    "chorus-depth": 20,
+    "chorus-rate": 18,
+    "portamento-time": 0,
+    "mod-time": 0,
+    "fx-engine": 0
+};
+
+// SYN 4 — FX: noise/trashy waves, heavy LFO, long release, chaos
+const SYN4_VALUES = {
+    "voice-a-wave": 118,  // Space Wave
+    "voice-b-wave": 7,    // Chaos 1
+    "voice-c-wave": 127,  // White Noise
+    "voice-d-wave": 52,   // Spark Wave 1
+    "voice-a-fine": 64,
+    "voice-b-fine": 50,
+    "voice-c-fine": 78,
+    "voice-d-fine": 55,
+    "voice-a-coarse": 0,
+    "voice-b-coarse": 0,
+    "voice-c-coarse": 0,
+    "voice-d-coarse": 0,
+    "amp-attack": 20,
+    "amp-decay": 60,
+    "amp-sustain": 60,
+    "amp-release": 90,
+    "filter-cutoff": 60,
+    "filter-resonance": 65,
+    "filter-env-amount": 75,
+    "filter-attack": 30,
+    "filter-decay": 80,
+    "filter-sustain": 30,
+    "filter-release": 85,
+    "lfo1-wave": 85,      // SAW range
+    "lfo1-rate": 55,
+    "lfo1-amt": 45,
+    "lfo2-wave": 43,      // SQR range
+    "lfo2-rate": 20,
+    "lfo2-amt": 35,
+    "chorus-depth": 80,
+    "chorus-rate": 50,
+    "portamento-time": 30,
+    "mod-time": 0,
+    "fx-engine": 0
+};
+
+function applyPreset(values, statusLabel) {
+    ALL_CONTROLS.forEach((control) => {
+        const cc = parseInt(control.dataset.cc, 10);
+        const fallbackValue = Object.prototype.hasOwnProperty.call(INIT_VALUES, control.id)
+            ? INIT_VALUES[control.id]
+            : (control.id.includes("sustain") ? parseInt(control.max, 10) : 0);
+        const value = Object.prototype.hasOwnProperty.call(values, control.id) ? values[control.id] : fallbackValue;
+        control.value = value;
+        sendMidiCC(cc, value);
+        setWavePreviewFromControl(control);
+    });
+
+    updateTempStatus(statusLabel);
+    setTimeout(restoreStatusText, 900);
+}
+
+function onMIDISuccess(midiAccess) {
+    populateOutputDevices(midiAccess);
+    midiAccess.addEventListener("statechange", () => populateOutputDevices(midiAccess));
+
+    const midiSelect = document.getElementById("midi-output-select");
+    if (midiSelect) {
+        midiSelect.addEventListener("change", (event) => {
+            connectToSelectedOutput(event.target.value, midiAccess);
+        });
+    }
+
+    const initButton = document.getElementById("init-patch-button");
+    if (initButton) {
+        initButton.addEventListener("click", initPatch);
+    }
+
+    const randomButton = document.getElementById("random-patch-button");
+    if (randomButton) {
+        randomButton.addEventListener("click", randomPatch);
+    }
+
+    const syn1Button = document.getElementById("syn-1-button");
+    if (syn1Button) {
+        syn1Button.addEventListener("click", () => applyPreset(SYN1_VALUES, "SYN 1: Preset 1"));
+    }
+
+    const syn2Button = document.getElementById("syn-2-button");
+    if (syn2Button) {
+        syn2Button.addEventListener("click", () => applyPreset(SYN2_VALUES, "SYN 2: Preset 2"));
+    }
+
+    const syn3Button = document.getElementById("syn-3-button");
+    if (syn3Button) {
+        syn3Button.addEventListener("click", () => applyPreset(SYN3_VALUES, "SYN 3: Preset 3"));
+    }
+
+    const syn4Button = document.getElementById("syn-4-button");
+    if (syn4Button) {
+        syn4Button.addEventListener("click", () => applyPreset(SYN4_VALUES, "SYN 4: Preset 4"));
+    }
+}
+
+function openAboutModal() {
+    const aboutModal = document.getElementById("about-modal");
+    if (!aboutModal) {
+        return;
+    }
+    aboutModal.classList.remove("modal-hidden");
+    aboutModal.setAttribute("aria-hidden", "false");
+}
+
+function closeAboutModal() {
+    const aboutModal = document.getElementById("about-modal");
+    if (!aboutModal) {
+        return;
+    }
+    aboutModal.classList.add("modal-hidden");
+    aboutModal.setAttribute("aria-hidden", "true");
+}
+
+function setupNavSynth() {
+    const navWrap = document.querySelector('.nav-synth-wrap');
+    if (!navWrap) return;
+    const imgs = Array.from(navWrap.querySelectorAll('.nav-synth-img'));
+    // Degrees offset per ghost layer (matching previous -0.05s and -0.1s delays on 12s/360° cycle)
+    const OFFSETS = [0, 1.5, 3];
+    const SPEED = 30;        // deg/s  (360° / 12s)
+    const RETURN_DUR = 0.8;  // seconds to ease back to 0°
+
+    let angle = 0;
+    let spinning = false;
+    let rafId = null;
+    let lastTime = null;
+
+    function applyTransforms(a) {
+        imgs.forEach((img, i) => {
+            const a2 = ((a + OFFSETS[i]) % 360 + 360) % 360;
+            img.style.transform = `perspective(300px) rotateY(${a2}deg)`;
+        });
+    }
+
+    function spinLoop(ts) {
+        if (lastTime == null) lastTime = ts;
+        const dt = (ts - lastTime) / 1000;
+        lastTime = ts;
+        angle = (angle + SPEED * dt) % 360;
+        applyTransforms(angle);
+        if (spinning) rafId = requestAnimationFrame(spinLoop);
+    }
+
+    function returnToZero() {
+        const remainder = ((angle % 360) + 360) % 360;
+        const startAngle = angle;
+        // Take the shortest arc back to 0°
+        const target = remainder <= 180 ? startAngle - remainder : startAngle + (360 - remainder);
+        const startTime = performance.now();
+
+        function returnLoop(ts) {
+            if (spinning) return;
+            const t = Math.min((ts - startTime) / 1000 / RETURN_DUR, 1);
+            const eased = 1 - Math.pow(1 - t, 3);
+            angle = startAngle + (target - startAngle) * eased;
+            applyTransforms(angle);
+            if (t < 1) {
+                rafId = requestAnimationFrame(returnLoop);
+            } else {
+                angle = 0;
+                applyTransforms(0);
+            }
+        }
+        rafId = requestAnimationFrame(returnLoop);
+    }
+
+    navWrap.addEventListener('mouseenter', () => {
+        spinning = true;
+        if (rafId) cancelAnimationFrame(rafId);
+        lastTime = null;
+        rafId = requestAnimationFrame(spinLoop);
+    });
+
+    navWrap.addEventListener('mouseleave', () => {
+        spinning = false;
+        if (rafId) cancelAnimationFrame(rafId);
+        returnToZero();
+    });
+}
+
+function setupAboutSynth() {
+    const aboutWrap = document.querySelector('#about-modal .nav-synth-wrap');
+    if (!aboutWrap) return;
+    const imgs = Array.from(aboutWrap.querySelectorAll('.nav-synth-img'));
+    const OFFSETS = [0, 1.5, 3];
+    const SPEED = 30;
+    let angle = 0;
+    let lastTime = null;
+
+    function applyTransforms(a) {
+        imgs.forEach((img, i) => {
+            const a2 = ((a + OFFSETS[i]) % 360 + 360) % 360;
+            img.style.transform = `perspective(300px) rotateY(${a2}deg)`;
+        });
+    }
+
+    function spinLoop(ts) {
+        if (lastTime == null) lastTime = ts;
+        const dt = (ts - lastTime) / 1000;
+        lastTime = ts;
+        angle = (angle + SPEED * dt) % 360;
+        applyTransforms(angle);
+        requestAnimationFrame(spinLoop);
+    }
+
+    requestAnimationFrame(spinLoop);
+}
+
+function setupNavAndModal() {
+    const hamburger = document.getElementById("hamburger-menu");
+    const sideNav = document.getElementById("side-nav");
+    const closeBtn = document.getElementById("close-btn");
+    const aboutBtn = document.getElementById("about-btn");
+    const versionNumber = document.getElementById("version-number");
+    const aboutModal = document.getElementById("about-modal");
+    const aboutModalClose = document.getElementById("about-modal-close");
+    const aboutModalContent = document.getElementById("about-modal-content");
+    const waveModal = document.getElementById("wave-modal");
+    const waveModalClose = document.getElementById("wave-modal-close");
+    const waveModalContent = document.getElementById("wave-modal-content");
+    const footerDisclaimer = document.getElementById("footer-disclaimer");
+    const footerClose = document.getElementById("footer-disclaimer-close");
+
+    if (hamburger && sideNav) {
+        const openNav = () => {
+            sideNav.style.width = "300px";
+        };
+
+        hamburger.addEventListener("click", openNav);
+        hamburger.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                openNav();
+            }
+        });
+    }
+
+    if (closeBtn && sideNav) {
+        closeBtn.addEventListener("click", (event) => {
+            event.preventDefault();
+            sideNav.style.width = "0";
+        });
+    }
+
+    if (aboutBtn) {
+        aboutBtn.addEventListener("click", (event) => {
+            event.preventDefault();
+            openAboutModal();
+            if (sideNav) {
+                sideNav.style.width = "0";
+            }
+        });
+    }
+
+    if (versionNumber) {
+        versionNumber.addEventListener("click", openAboutModal);
+    }
+
+    if (aboutModalClose) {
+        aboutModalClose.addEventListener("click", closeAboutModal);
+    }
+
+    if (aboutModal) {
+        aboutModal.addEventListener("click", (event) => {
+            if (!aboutModalContent || !aboutModalContent.contains(event.target)) {
+                closeAboutModal();
+            }
+        });
+    }
+
+    if (waveModalClose) {
+        waveModalClose.addEventListener("click", closeWaveModal);
+    }
+
+    if (waveModal) {
+        waveModal.addEventListener("click", (event) => {
+            if (!waveModalContent || !waveModalContent.contains(event.target)) {
+                closeWaveModal();
+            }
+        });
+    }
+
+    if (footerDisclaimer && footerClose) {
+        footerClose.addEventListener("click", () => {
+            footerDisclaimer.style.display = "none";
+        });
+    }
+
+    window.addEventListener("click", (event) => {
+        if (
+            sideNav &&
+            hamburger &&
+            event.target !== hamburger &&
+            !hamburger.contains(event.target) &&
+            event.target !== sideNav &&
+            !sideNav.contains(event.target)
+        ) {
+            sideNav.style.width = "0";
+        }
+    });
+
+    window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            closeAboutModal();
+            closeWaveModal();
+        }
+    });
+
+    const wavePreviewCards = document.querySelectorAll(".wave-preview[data-wave-control]");
+    wavePreviewCards.forEach((card) => {
+        const controlId = card.dataset.waveControl;
+        card.addEventListener("click", () => {
+            openWaveModal(controlId);
+        });
+        card.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                openWaveModal(controlId);
+            }
+        });
+    });
+
+    const accordions = document.getElementsByClassName("accordion-header");
+    for (let i = 0; i < accordions.length; i += 1) {
+        accordions[i].addEventListener("click", function onAccordionClick() {
+            const panel = this.nextElementSibling;
+            const isActive = this.classList.contains("active");
+
+            for (let j = 0; j < accordions.length; j += 1) {
+                accordions[j].classList.remove("active");
+                accordions[j].nextElementSibling.style.maxHeight = null;
+            }
+
+            if (!isActive) {
+                this.classList.add("active");
+                panel.style.maxHeight = `${panel.scrollHeight}px`;
+            }
+        });
+    }
+}
+
+syncAllWavePreviews();
+setupWaveCycleButtons();
+setupFxCycleButtons();
+attachControlListeners();
+setupNavAndModal();
+setupNavSynth();
+setupAboutSynth();
+
+if (navigator.requestMIDIAccess) {
+    navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
+} else {
+    onMIDIFailure();
+}

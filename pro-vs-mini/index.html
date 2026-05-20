@@ -3,22 +3,310 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Behringer PRO VS Mini — MIDI Editor</title>
-    <style>
-        body { font-family: system-ui, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; background: #f5f5f5; color: #374151; text-align: center; gap: 1rem; padding: 2rem; }
-        h1 { font-size: 1.5rem; }
-        p { color: #6b7280; max-width: 480px; line-height: 1.6; }
-        a { color: #5c5fef; }
-        .back { display: inline-block; margin-top: 1rem; padding: 0.5rem 1.25rem; background: #111827; color: #fff; border-radius: 6px; text-decoration: none; font-size: 0.875rem; font-weight: 600; }
-    </style>
+    <title>Pro VS Mini MIDI Editor</title>
+    <meta name="description" content="A free online Behringer Pro VS Mini MIDI editor. Edit patch parameters via MIDI CC.">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=VT323&family=Barlow+Condensed:wght@400;500;600;700&display=swap">
+    <script src="waveforms_svg_pass3/waveform-index.js" defer></script>
+    <script src="app.js" defer></script>
 </head>
 <body>
-    <h1>Behringer PRO VS Mini — MIDI Editor</h1>
-    <p>
-        Copy the files from
-        <a href="https://github.com/gary909/Pro_VS_Mini_Editor" target="_blank" rel="noopener">github.com/gary909/Pro_VS_Mini_Editor</a>
-        into this folder (<code>pro-vs-mini/</code>), replacing this placeholder file.
-    </p>
-    <a href="../index.html" class="back">&larr; Back to editors</a>
+    <div class="hamburger-menu" id="hamburger-menu" aria-label="Open menu" role="button" tabindex="0">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+
+    <nav class="side-nav" id="side-nav" aria-label="Main navigation">
+        <a href="#" class="close-btn" id="close-btn" aria-label="Close menu">&times;</a>
+        <a href="#" id="about-btn" class="hamb-text">PRO VS MINI EDITOR</a>
+        <div class="nav-synth-wrap">
+            <img src="media/proVS_cutout.svg" alt="" aria-hidden="true" class="nav-synth-img nav-synth-img--back">
+            <img src="media/proVS_cutout.svg" alt="" aria-hidden="true" class="nav-synth-img nav-synth-img--mid">
+            <img src="media/proVS_cutout.svg" alt="Pro VS Mini Synth" class="nav-synth-img nav-synth-img--front">
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header" type="button">GUIDE</button>
+            <div class="accordion-content">
+                <p class="guide-note">Connect your Pro VS Mini by USB and allow MIDI access in your browser (Safari is not supported).</p>
+                <p class="guide-note">Choose your synth in the MIDI device selector, then move controls to transmit MIDI CC data.</p>
+                <p class="guide-note">To save sounds, complete write/save on the hardware after editing.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header" type="button">OTHER EDITORS</button>
+            <div class="accordion-content">
+                <a class="link-text" href="https://www.behringer-cz1-editor.co.uk/" target="_blank" rel="noopener noreferrer">CZ-1 MINI EDITOR</a>
+                <a class="link-text" href="https://www.behringer-jt4000m-editor.co.uk/" target="_blank" rel="noopener noreferrer">JT4000M MICRO EDITOR</a>
+                <a class="link-text" href="https://gary909.github.io/JT-Midi-Editor/" target="_blank" rel="noopener noreferrer">JT MINI EDITOR</a>
+                <a class="link-text" href="https://www.behringer-ub1-micro-editor.co.uk/" target="_blank" rel="noopener noreferrer">UB-1 MICRO EDITOR</a>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header" type="button">PRO VS MINI MANUAL</button>
+            <div class="accordion-content">
+                <a class="link-text" href="https://behringer.com/en/products/0722-ABF" target="_blank" rel="noopener noreferrer">LINK TO MANUAL</a>
+            </div>
+        </div>
+
+        <div class="nav-note-wrap">
+            <p class="nav-note"><strong>NOTE</strong>: Community-made editor for Pro VS Mini. Use at your own risk. <a href="privacy.html">Privacy, Cookies &amp; Terms</a></p>
+        </div>
+    </nav>
+
+    <header id="main-header">
+        <div id="header-block">
+            <h1>PRO VS</h1>
+            <h2>MINI -  EDITOR</h2>
+        </div>
+
+        <div id="midi-status">
+            <label class="outer-label" for="midi-output-select">SELECT MIDI DEVICE</label>
+            <select id="midi-output-select">
+                <option value="">-- No Devices Found --</option>
+            </select>
+            <span id="midi-device-status-text"></span>
+        </div>
+
+        <div id="patch-controls">
+            <div class="patch-button-group">
+                <label class="outer-label" for="init-patch-button">INIT</label>
+                <button id="init-patch-button" type="button"></button>
+            </div>
+            <div class="patch-button-group">
+                <label class="outer-label" for="random-patch-button">RAND</label>
+                <button id="random-patch-button" type="button"></button>
+            </div>
+            <div class="patch-button-group">
+                <label class="outer-label" for="syn-1-button">SYN 1</label>
+                <button id="syn-1-button" type="button"></button>
+            </div>
+            <div class="patch-button-group">
+                <label class="outer-label" for="syn-2-button">SYN 2</label>
+                <button id="syn-2-button" type="button"></button>
+            </div>
+            <div class="patch-button-group">
+                <label class="outer-label" for="syn-3-button">SYN 3</label>
+                <button id="syn-3-button" type="button"></button>
+            </div>
+            <div class="patch-button-group">
+                <label class="outer-label" for="syn-4-button">SYN 4</label>
+                <button id="syn-4-button" type="button"></button>
+            </div>
+        </div>
+
+        <div id="header-spacer"></div>
+    </header>
+
+    <main id="controls">
+        <div class="rack-frame">
+
+            <section class="control-box voice-box">
+                <h3>VOICE 1</h3>
+                <!-- <div class="voice-screen">ProVS</div> -->
+                <div class="wave-preview" role="button" tabindex="0" aria-label="Open Voice 1 waveform preview" data-wave-control="voice-a-wave">
+                    <img id="voice-a-wave-image" src="waveforms_svg_pass3/000-twang.svg" alt="Waveform 0 Twang">
+                    <p id="voice-a-wave-caption">000 - TWANG</p>
+                </div>
+                <div class="slider-row">
+                    <div class="parameter-row voice-tune-row"><label for="voice-a-coarse">COARSE</label><input type="range" id="voice-a-coarse" min="0" max="127" value="0" data-cc="115" data-label="VOICE A COARSE"></div>
+                    <div class="parameter-row voice-tune-row"><label for="voice-a-fine">FINE</label><input type="range" id="voice-a-fine" min="0" max="127" value="0" data-cc="111" data-label="VOICE A FINE"></div>
+                    <div class="parameter-row"><label for="voice-a-wave">WAVE</label><input type="range" id="voice-a-wave" min="0" max="127" value="0" data-cc="24" data-label="VOICE A WAVE" data-wave-preview="voice-a-wave-image" data-wave-caption="voice-a-wave-caption"></div>
+                </div>
+            </section>
+
+            <section class="control-box voice-box">
+                <h3>VOICE 2</h3>
+                <!-- <div class="voice-screen">ProVS</div> -->
+                <div class="wave-preview" role="button" tabindex="0" aria-label="Open Voice 2 waveform preview" data-wave-control="voice-b-wave">
+                    <img id="voice-b-wave-image" src="waveforms_svg_pass3/000-twang.svg" alt="Waveform 0 Twang">
+                    <p id="voice-b-wave-caption">000 - TWANG</p>
+                </div>
+                <div class="slider-row">
+                    <div class="parameter-row voice-tune-row"><label for="voice-b-coarse">COARSE</label><input type="range" id="voice-b-coarse" min="0" max="127" value="0" data-cc="116" data-label="VOICE B COARSE"></div>
+                    <div class="parameter-row voice-tune-row"><label for="voice-b-fine">FINE</label><input type="range" id="voice-b-fine" min="0" max="127" value="0" data-cc="112" data-label="VOICE B FINE"></div>
+                    <div class="parameter-row"><label for="voice-b-wave">WAVE</label><input type="range" id="voice-b-wave" min="0" max="127" value="0" data-cc="25" data-label="VOICE B WAVE" data-wave-preview="voice-b-wave-image" data-wave-caption="voice-b-wave-caption"></div>
+                </div>
+            </section>
+
+            <section class="control-box mini-box">
+                <h3>MOD</h3>
+                <div class="slider-row single-slider">
+                    <div class="parameter-row"><label for="mod-time">AMT</label><input type="range" id="mod-time" min="0" max="127" value="0" data-cc="1" data-label="MODULATION"></div>
+                </div>
+            </section>
+
+            <section class="control-box lfo-box">
+                <h3>LFO 1</h3>
+                <div class="slider-row">
+                    <div class="parameter-row wave-cycle-row">
+                        <label for="lfo1-wave-cycle">WAVE</label>
+                        <div class="wave-cycle-wrap">
+                            <button id="lfo1-wave-cycle" class="wave-cycle-button" type="button" data-wave-cycle-for="lfo1-wave" aria-label="Cycle LFO 1 waveform">WAVE</button>
+                            <input type="range" id="lfo1-wave" class="wave-cycle-control" min="0" max="127" value="0" data-cc="54" data-label="LFO 1 WAVE" data-format="wave3" tabindex="-1" aria-hidden="true">
+                            <img src="media/proVS_lineWave.svg" class="wave-cycle-line" alt="" aria-hidden="true">
+                            <div class="wave-cycle-leds" aria-hidden="true">
+                                <span class="wave-cycle-option" data-wave-option="0"><b class="wave-led"></b><span>TRI</span></span>
+                                <span class="wave-cycle-option" data-wave-option="1"><b class="wave-led"></b><span>SQR</span></span>
+                                <span class="wave-cycle-option" data-wave-option="2"><b class="wave-led"></b><span>SAW</span></span>
+                                <span class="wave-cycle-option" data-wave-option="3"><b class="wave-led"></b><span>RAMP</span></span>
+                                <span class="wave-cycle-option" data-wave-option="4"><b class="wave-led"></b><span>S&H</span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="parameter-row"><label for="lfo1-rate">RATE</label><input type="range" id="lfo1-rate" min="0" max="127" value="0" data-cc="72" data-label="LFO 1 RATE"></div>
+                    <div class="parameter-row"><label for="lfo1-amt">AMT</label><input type="range" id="lfo1-amt" min="0" max="127" value="0" data-cc="70" data-label="LFO 1 AMOUNT"></div>
+                </div>
+            </section>
+
+            <section class="control-box lfo-box">
+                <h3>LFO 2</h3>
+                <div class="slider-row">
+                    <div class="parameter-row wave-cycle-row">
+                        <label for="lfo2-wave-cycle">WAVE</label>
+                        <div class="wave-cycle-wrap">
+                            <button id="lfo2-wave-cycle" class="wave-cycle-button" type="button" data-wave-cycle-for="lfo2-wave" aria-label="Cycle LFO 2 waveform">WAVE</button>
+                            <input type="range" id="lfo2-wave" class="wave-cycle-control" min="0" max="127" value="0" data-cc="55" data-label="LFO 2 WAVE" data-format="wave3" tabindex="-1" aria-hidden="true">
+                            <img src="media/proVS_lineWave.svg" class="wave-cycle-line" alt="" aria-hidden="true">
+                            <div class="wave-cycle-leds" aria-hidden="true">
+                                <span class="wave-cycle-option" data-wave-option="0"><b class="wave-led"></b><span>TRI</span></span>
+                                <span class="wave-cycle-option" data-wave-option="1"><b class="wave-led"></b><span>SQR</span></span>
+                                <span class="wave-cycle-option" data-wave-option="2"><b class="wave-led"></b><span>SAW</span></span>
+                                <span class="wave-cycle-option" data-wave-option="3"><b class="wave-led"></b><span>RAMP</span></span>
+                                <span class="wave-cycle-option" data-wave-option="4"><b class="wave-led"></b><span>S&H</span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="parameter-row"><label for="lfo2-rate">RATE</label><input type="range" id="lfo2-rate" min="0" max="127" value="0" data-cc="73" data-label="LFO 2 RATE"></div>
+                    <div class="parameter-row"><label for="lfo2-amt">AMT</label><input type="range" id="lfo2-amt" min="0" max="127" value="0" data-cc="28" data-label="LFO 2 AMOUNT"></div>
+                </div>
+            </section>
+
+            <section class="control-box env-box amp-env-box">
+                <h3>AMP ENV</h3>
+                <div class="slider-row">
+                    <div class="parameter-row"><label for="amp-attack">ATK</label><input type="range" id="amp-attack" min="0" max="127" value="0" data-cc="81" data-label="AMP ATTACK"></div>
+                    <div class="parameter-row"><label for="amp-decay">DEC</label><input type="range" id="amp-decay" min="0" max="127" value="0" data-cc="82" data-label="AMP DECAY"></div>
+                    <div class="parameter-row"><label for="amp-sustain">SUS</label><input type="range" id="amp-sustain" min="0" max="127" value="99" data-cc="83" data-label="AMP SUSTAIN"></div>
+                    <div class="parameter-row"><label for="amp-release">REL</label><input type="range" id="amp-release" min="0" max="127" value="0" data-cc="84" data-label="AMP RELEASE"></div>
+                </div>
+            </section>
+
+            <section class="control-box voice-box">
+                <h3>VOICE 3</h3>
+                <!-- <div class="voice-screen">ProVS</div> -->
+                <div class="wave-preview" role="button" tabindex="0" aria-label="Open Voice 3 waveform preview" data-wave-control="voice-c-wave">
+                    <img id="voice-c-wave-image" src="waveforms_svg_pass3/000-twang.svg" alt="Waveform 0 Twang">
+                    <p id="voice-c-wave-caption">000 - TWANG</p>
+                </div>
+                <div class="slider-row">
+                    <div class="parameter-row voice-tune-row"><label for="voice-c-coarse">COARSE</label><input type="range" id="voice-c-coarse" min="0" max="127" value="0" data-cc="117" data-label="VOICE C COARSE"></div>
+                    <div class="parameter-row voice-tune-row"><label for="voice-c-fine">FINE</label><input type="range" id="voice-c-fine" min="0" max="127" value="0" data-cc="113" data-label="VOICE C FINE"></div>
+                    <div class="parameter-row"><label for="voice-c-wave">WAVE</label><input type="range" id="voice-c-wave" min="0" max="127" value="0" data-cc="26" data-label="VOICE C WAVE" data-wave-preview="voice-c-wave-image" data-wave-caption="voice-c-wave-caption"></div>
+                </div>
+            </section>
+
+            <section class="control-box voice-box">
+                <h3>VOICE 4</h3>
+                <!-- <div class="voice-screen">ProVS</div> -->
+                <div class="wave-preview" role="button" tabindex="0" aria-label="Open Voice 4 waveform preview" data-wave-control="voice-d-wave">
+                    <img id="voice-d-wave-image" src="waveforms_svg_pass3/000-twang.svg" alt="Waveform 0 Twang">
+                    <p id="voice-d-wave-caption">000 - TWANG</p>
+                </div>
+                <div class="slider-row">
+                    <div class="parameter-row voice-tune-row"><label for="voice-d-coarse">COARSE</label><input type="range" id="voice-d-coarse" min="0" max="127" value="0" data-cc="118" data-label="VOICE D COARSE"></div>
+                    <div class="parameter-row voice-tune-row"><label for="voice-d-fine">FINE</label><input type="range" id="voice-d-fine" min="0" max="127" value="0" data-cc="114" data-label="VOICE D FINE"></div>
+                    <div class="parameter-row"><label for="voice-d-wave">WAVE</label><input type="range" id="voice-d-wave" min="0" max="127" value="0" data-cc="27" data-label="VOICE D WAVE" data-wave-preview="voice-d-wave-image" data-wave-caption="voice-d-wave-caption"></div>
+                </div>
+            </section>
+
+            <section class="control-box mini-box">
+                <h3>PORTO</h3>
+                <div class="slider-row single-slider">
+                    <div class="parameter-row"><label for="portamento-time">AMT</label><input type="range" id="portamento-time" min="0" max="127" value="0" data-cc="5" data-label="PORTAMENTO TIME"></div>
+                </div>
+            </section>
+
+            <section class="control-box effects-box">
+                <h3>EFFECTS</h3>
+                <div class="slider-row">
+                    <div class="parameter-row wave-cycle-row">
+                        <label for="fx-engine-cycle">SELECT</label>
+                        <div class="wave-cycle-wrap">
+                            <button id="fx-engine-cycle" class="wave-cycle-button" type="button" data-fx-cycle-for="fx-engine" aria-label="Cycle effects engine">FX</button>
+                            <input type="range" id="fx-engine" class="wave-cycle-control" min="0" max="127" value="0" data-cc="9" data-label="FX ENGINE" data-format="fx3" tabindex="-1" aria-hidden="true">
+                            <img src="media/VS_Line.svg" class="wave-cycle-line" alt="" aria-hidden="true">
+                            <div class="wave-cycle-leds" aria-hidden="true">
+                                <span class="wave-cycle-option" data-fx-option="0"><b class="wave-led"></b><span>CHORUS</span></span>
+                                <span class="wave-cycle-option" data-fx-option="1"><b class="wave-led"></b><span>ENSEMBLE</span></span>
+                                <span class="wave-cycle-option" data-fx-option="2"><b class="wave-led"></b><span>REVERB</span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="parameter-row"><label for="chorus-depth">DEPTH</label><input type="range" id="chorus-depth" min="0" max="127" value="0" data-cc="91" data-label="CHORUS DEPTH"></div>
+                    <div class="parameter-row"><label for="chorus-rate">RATE</label><input type="range" id="chorus-rate" min="0" max="127" value="0" data-cc="92" data-label="CHORUS RATE"></div>
+                </div>
+            </section>
+
+            <section class="control-box filter-box">
+                <h3>FILTER</h3>
+                <div class="slider-row">
+                    <div class="parameter-row"><label for="filter-cutoff">CUTOFF</label><input type="range" id="filter-cutoff" min="0" max="127" value="127" data-cc="74" data-label="FILTER CUTOFF"></div>
+                    <div class="parameter-row"><label for="filter-resonance">RESO</label><input type="range" id="filter-resonance" min="0" max="127" value="0" data-cc="71" data-label="FILTER RESONANCE"></div>
+                    <div class="parameter-row"><label for="filter-env-amount">ENV</label><input type="range" id="filter-env-amount" min="0" max="127" value="0" data-cc="47" data-label="FILTER ENV AMOUNT"></div>
+                </div>
+            </section>
+
+            <section class="control-box env-box filter-env-box">
+                <h3>FILTER ENV</h3>
+                <div class="slider-row">
+                    <div class="parameter-row"><label for="filter-attack">ATK</label><input type="range" id="filter-attack" min="0" max="127" value="0" data-cc="85" data-label="FILTER ATTACK"></div>
+                    <div class="parameter-row"><label for="filter-decay">DEC</label><input type="range" id="filter-decay" min="0" max="127" value="0" data-cc="86" data-label="FILTER DECAY"></div>
+                    <div class="parameter-row"><label for="filter-sustain">SUS</label><input type="range" id="filter-sustain" min="0" max="127" value="127" data-cc="87" data-label="FILTER SUSTAIN"></div>
+                    <div class="parameter-row"><label for="filter-release">REL</label><input type="range" id="filter-release" min="0" max="127" value="0" data-cc="88" data-label="FILTER RELEASE"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div id="footer-disclaimer">
+        <button type="button" id="footer-disclaimer-close" aria-label="Close disclaimer">&times;</button>
+        <p>This software is provided as-is, without warranty of any kind. Use at your own risk. <a href="privacy.html">Privacy &amp; Cookies</a></p>
+    </div>
+
+    <div id="version-number">v1.00</div>
+
+    <div id="wave-modal" class="modal-hidden" aria-hidden="true">
+        <div id="wave-modal-content" role="dialog" aria-modal="true" aria-labelledby="wave-modal-title">
+            <button id="wave-modal-close" aria-label="Close waveform preview" type="button">&times;</button>
+            <p id="wave-modal-title">VOICE WAVEFORM</p>
+            <img id="wave-modal-image" src="waveforms_svg_pass3/000-twang.svg" alt="Waveform 0 Twang">
+            <p id="wave-modal-caption">000 - TWANG</p>
+        </div>
+    </div>
+
+    <div id="about-modal" class="modal-hidden" aria-hidden="true">
+        <div id="about-modal-content" role="dialog" aria-modal="true" aria-labelledby="about-modal-title">
+            <button id="about-modal-close" aria-label="Close info popup" type="button">&times;</button>
+            <p id="about-modal-title">Pro VS Mini MIDI Editor</p>
+            <div class="nav-synth-wrap nav-synth-wrap--small">
+                <img src="media/proVS_cutout.svg" alt="" aria-hidden="true" class="nav-synth-img nav-synth-img--back">
+                <img src="media/proVS_cutout.svg" alt="" aria-hidden="true" class="nav-synth-img nav-synth-img--mid">
+                <img src="media/proVS_cutout.svg" alt="Pro VS Mini Synth" class="nav-synth-img nav-synth-img--front">
+            </div>
+            <p>Version 1.00</p>
+            <hr>
+            <p>Added click-to-zoom waveform modal with live preview updates for all four voices.</p>
+            <hr>
+            <p><a href="privacy.html">Privacy, Cookies &amp; Terms</a></p>
+        </div>
+    </div>
 </body>
 </html>

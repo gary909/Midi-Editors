@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 110 182" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-3,0)">
+        <g id="main-Curve" serif:id="main Curve" transform="matrix(-1,0,0,1,187.196,-54.0189)">
+            <path d="M78.438,55.294L126.478,94.424L126.478,195.395L77.914,234.001" style="fill:none;stroke:rgb(56,4,84);stroke-width:2.55px;"/>
+        </g>
+        <g id="main-Curve1" serif:id="main Curve" transform="matrix(-0.926069,0,0,0.926069,181.627,-43.3234)">
+            <path d="M78.121,55.332L126.478,94.424L126.478,195.395L78.121,234.114" style="fill:none;stroke:rgb(56,4,84);stroke-width:1.15px;"/>
+        </g>
+        <g id="main-Curve2" serif:id="main Curve" transform="matrix(-0.865054,0,0,0.865054,178.434,-34.5028)">
+            <path d="M79.94,57.151L126.478,94.424L126.478,195.395L79.94,232.657" style="fill:none;stroke:rgb(56,4,84);stroke-width:1.23px;"/>
+        </g>
+        <g id="main-Curve3" serif:id="main Curve" transform="matrix(-0.784781,0,0,0.784781,172.342,-22.8709)">
+            <path d="M80.354,57.565L126.478,94.424L126.478,195.395L80.354,232.326" style="fill:none;stroke:rgb(56,4,84);stroke-width:1.36px;"/>
+        </g>
+        <g id="main-Curve4" serif:id="main Curve" transform="matrix(-0.728684,0,0,0.728684,169.541,-14.7399)">
+            <path d="M82.695,59.436L126.478,94.424L126.478,195.395L82.695,230.451" style="fill:none;stroke:rgb(56,4,84);stroke-width:1.46px;"/>
+        </g>
+        <g id="main-Curve5" serif:id="main Curve" transform="matrix(-0.673122,0,0,0.673122,166.924,-5.95324)">
+            <path d="M85.634,61.785L126.478,94.424L126.478,195.395L85.634,228.098" style="fill:none;stroke:rgb(56,4,84);stroke-width:1.58px;"/>
+        </g>
+        <g id="main-Curve6" serif:id="main Curve" transform="matrix(-0.609723,0,0,0.609723,163.28,2.63219)">
+            <path d="M88.562,64.712L126.478,94.424L126.478,195.395L88.562,225.754" style="fill:none;stroke:rgb(56,4,84);stroke-width:1.75px;"/>
+        </g>
+        <g id="main-Curve7" serif:id="main Curve" transform="matrix(-0.53463,0,0,0.53463,158.206,13.5381)">
+            <path d="M91.51,67.661L126.478,94.424L126.478,195.395L91.51,223.393" style="fill:none;stroke:rgb(56,4,84);stroke-width:2px;"/>
+        </g>
+        <g id="main-Curve8" serif:id="main Curve" transform="matrix(-0.480383,0,0,0.480383,155.293,21.4325)">
+            <path d="M95.781,71.931L126.478,94.424L126.478,195.395L95.781,219.974" style="fill:none;stroke:rgb(56,4,84);stroke-width:2.22px;"/>
+        </g>
+        <g id="main-Curve9" serif:id="main Curve" transform="matrix(-0.418269,0,0,0.418269,151.391,30.4983)">
+            <path d="M100.674,75.516L126.478,94.424L126.478,195.395L100.674,216.056" style="fill:none;stroke:rgb(56,4,84);stroke-width:2.55px;"/>
+        </g>
+        <g id="main-Curve10" serif:id="main Curve" transform="matrix(-0.340822,0,0,0.340822,145.595,41.7889)">
+            <path d="M106.544,79.104L126.478,94.424L126.478,195.395L106.544,210.93" style="fill:none;stroke:rgb(56,4,84);stroke-width:3.13px;"/>
+        </g>
+    </g>
+    <g>
+        <g id="main-Curve11" serif:id="main Curve" transform="matrix(1,0,0,1,-75.1962,-54.0189)">
+            <path d="M78.438,55.294L126.478,94.424L126.478,195.395L77.914,234.001" style="fill:none;stroke:rgb(56,4,84);stroke-width:2.55px;"/>
+        </g>
+        <g id="main-Curve12" serif:id="main Curve" transform="matrix(0.926069,0,0,0.926069,-69.6272,-43.3234)">
+            <path d="M78.121,55.332L126.478,94.424L126.478,195.395L78.121,234.114" style="fill:none;stroke:rgb(56,4,84);stroke-width:1.15px;"/>
+        </g>
+        <g id="main-Curve13" serif:id="main Curve" transform="matrix(0.865054,0,0,0.865054,-66.4343,-34.5028)">
+            <path d="M79.94,57.151L126.478,94.424L126.478,195.395L79.94,232.657" style="fill:none;stroke:rgb(56,4,84);stroke-width:1.23px;"/>
+        </g>
+        <g id="main-Curve14" serif:id="main Curve" transform="matrix(0.784781,0,0,0.784781,-60.3419,-22.8709)">
+            <path d="M80.354,57.565L126.478,94.424L126.478,195.395L80.354,232.326" style="fill:none;stroke:rgb(56,4,84);stroke-width:1.36px;"/>
+        </g>
+        <g id="main-Curve15" serif:id="main Curve" transform="matrix(0.728684,0,0,0.728684,-57.5406,-14.7399)">
+            <path d="M82.695,59.436L126.478,94.424L126.478,195.395L82.695,230.451" style="fill:none;stroke:rgb(56,4,84);stroke-width:1.46px;"/>
+        </g>
+        <g id="main-Curve16" serif:id="main Curve" transform="matrix(0.673122,0,0,0.673122,-54.9241,-5.95324)">
+            <path d="M85.634,61.785L126.478,94.424L126.478,195.395L85.634,228.098" style="fill:none;stroke:rgb(56,4,84);stroke-width:1.58px;"/>
+        </g>
+        <g id="main-Curve17" serif:id="main Curve" transform="matrix(0.609723,0,0,0.609723,-51.2798,2.63219)">
+            <path d="M88.562,64.712L126.478,94.424L126.478,195.395L88.562,225.754" style="fill:none;stroke:rgb(56,4,84);stroke-width:1.75px;"/>
+        </g>
+        <g id="main-Curve18" serif:id="main Curve" transform="matrix(0.53463,0,0,0.53463,-46.2059,13.5381)">
+            <path d="M91.51,67.661L126.478,94.424L126.478,195.395L91.51,223.393" style="fill:none;stroke:rgb(56,4,84);stroke-width:2px;"/>
+        </g>
+        <g id="main-Curve19" serif:id="main Curve" transform="matrix(0.480383,0,0,0.480383,-43.2933,21.4325)">
+            <path d="M95.781,71.931L126.478,94.424L126.478,195.395L95.781,219.974" style="fill:none;stroke:rgb(56,4,84);stroke-width:2.22px;"/>
+        </g>
+        <g id="main-Curve20" serif:id="main Curve" transform="matrix(0.418269,0,0,0.418269,-39.3905,30.4983)">
+            <path d="M100.674,75.516L126.478,94.424L126.478,195.395L100.674,216.056" style="fill:none;stroke:rgb(56,4,84);stroke-width:2.55px;"/>
+        </g>
+        <g id="main-Curve21" serif:id="main Curve" transform="matrix(0.340822,0,0,0.340822,-33.5945,41.7889)">
+            <path d="M106.544,79.104L126.478,94.424L126.478,195.395L106.544,210.93" style="fill:none;stroke:rgb(56,4,84);stroke-width:3.13px;"/>
+        </g>
+    </g>
+</svg>

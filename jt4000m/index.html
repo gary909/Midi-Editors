@@ -3,22 +3,490 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Behringer JT4000M — MIDI Editor</title>
-    <style>
-        body { font-family: system-ui, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; background: #f5f5f5; color: #374151; text-align: center; gap: 1rem; padding: 2rem; }
-        h1 { font-size: 1.5rem; }
-        p { color: #6b7280; max-width: 480px; line-height: 1.6; }
-        a { color: #e11d48; }
-        .back { display: inline-block; margin-top: 1rem; padding: 0.5rem 1.25rem; background: #111827; color: #fff; border-radius: 6px; text-decoration: none; font-size: 0.875rem; font-weight: 600; }
-    </style>
+    <title>JT-4000M MIDI Editor</title>
+    <meta name="description" content="A free online Behringer JT4000M Micro Editor. Edit and save your patches with ease. Enables use of all hidden menu functions, allowing easy access with sliders.">
+  
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron&family=VT323&display=swap">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="favicon/site.webmanifest">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.behringer-jt4000m-editor.co.uk/">
+    <meta property="og:site_name" content="Behringer JT4000M Micro Editor">
+    <meta property="og:title" content="JT-4000M MIDI Editor">
+    <meta property="og:description" content="Unlock hidden features of your Behringer JT-4000M. Edit and save patches via MIDI.">
+    <meta property="og:image" content="https://www.behringer-jt4000m-editor.co.uk/preview-image.png">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.behringer-jt4000m-editor.co.uk/">
+    <meta property="twitter:title" content="JT-4000M MIDI Editor">
+    <meta property="twitter:description" content="Unlock hidden features of your Behringer JT-4000M. Edit and save patches via MIDI.">
+    <meta property="twitter:image" content="https://www.behringer-jt4000m-editor.co.uk/preview-image.png">
+
+    <script src="app.js" defer></script>
+
+    <script type="application/ld+json">
+    {
+        "@context" : "https://schema.org",
+        "@type" : "SoftwareApplication",
+        "name" : "Behringer JT4000M Micro Editor",
+        "description": "A browser-based MIDI editor for the Behringer JT-4000M Micro Synthesizer.",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Web",
+        "url" : "https://www.behringer-jt4000m-editor.co.uk/"
+    }
+    </script>
 </head>
 <body>
-    <h1>Behringer JT4000M — MIDI Editor</h1>
-    <p>
-        Copy the files from
-        <a href="https://github.com/gary909/JT4000M-MIDI-EDITOR" target="_blank" rel="noopener">github.com/gary909/JT4000M-MIDI-EDITOR</a>
-        into this folder (<code>jt4000m/</code>), replacing this placeholder file.
-    </p>
-    <a href="../index.html" class="back">&larr; Back to editors</a>
+    <div id="main-header">
+
+        <div class="hamburger-menu" id="hamburger-menu">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+
+        <nav class="side-nav" id="side-nav">
+            <a href="#" class="close-btn" id="close-btn">&times;</a>
+            <a href="#" id="about-btn" class="HambText">JT4000M EDITOR</a>
+            <div class="nav-synth-wrap">
+                <img src="media/Behringer_Micro_cutout.png" alt="" aria-hidden="true" class="nav-synth-img nav-synth-img--back">
+                <img src="media/Behringer_Micro_cutout.png" alt="" aria-hidden="true" class="nav-synth-img nav-synth-img--mid">
+                <img src="media/Behringer_Micro_cutout.png" alt="JT4000M Micro Synth" class="nav-synth-img nav-synth-img--front">
+            </div>
+            
+            <div class="accordion-item">
+                <button class="accordion-header">GUIDE</button>
+                <div class="accordion-content">
+                        <p class="guideNote">Connect your synth via USB. Enable your browser for MIDI access (Safari not supported). If no midi-enable pop-up is present, click the "Enable MIDI" button in the top right of your browser.</p>
+                        <p class="guideNote">Your device should show up in the Select MIDI device screen.</p>
+                        <p class="guideNote">You can now use the sliders to edit your patch.</p>
+                        <p class="guideNote">To save a patch, click down on 'SEL' enter button on the JT4000.  Caution: This will overwrite the current patch.</p>
+                        <p class="guideNote">Happy editing!</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">OTHER EDITORS</button>
+                <div class="accordion-content">
+                    <!-- <a class="linkText" target="_blank" href="https://www.behringer-jt4000m-editor.co.uk/">JT4000M MICRO EDITOR</a> -->
+                    <a class="linkText" href="https://www.behringer-cz1-editor.co.uk/">CZ-1 MINI</a>
+                    <a class="linkText" href="https://gary909.github.io/JT-Midi-Editor/">JT MINI</a>
+                    <a class="linkText" href="https://gary909.github.io/Pro_VS_Mini_Editor/">Pro VS MINI</a>
+                    <a class="linkText" href="https://www.behringer-ub1-micro-editor.co.uk/">UB-1 MICRO EDITOR</a>
+                    <!-- <a class="linkText" href="javascript:void(0)">PRO VS MINI (coming soon)</a> -->
+                </div>
+            </div>  
+            
+            <div class="accordion-item">
+                <button class="accordion-header">DOWNLOAD</button>
+                <div class="accordion-content">
+                    <a class="linkText" href="javascript:void(0)">COMING SOON</a>
+
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">JT4000M MANUAL</button>
+                <div class="accordion-content">
+                    <a class="linkText" target="_blank" href="https://cdn-media.empowertribe.com/5a687491c4e64f22aa20673e842e5829/QSG_BE_0722-ACI_JT-4000M%20MICRO_WW.pdf
+">LINK TO PDF MANUAL</a>
+                </div>
+            </div>   
+
+            <div class="nav-note">
+                <p class="nav-note"><b>NOTE</b>: This software is provided as-is, without warranty of any kind. <a href="privacy.html">Privacy &amp; Cookies</a></p>
+            </div>
+
+
+        </nav>
+
+        <div id="header-block">
+            <h1>JT-4000M</h1>
+            <h2>MIDI EDITOR</h2>
+        </div>
+        
+        <div id="midi-status">
+            <label for="midi-output-select">SELECT MIDI DEVICE</label>
+            <select id="midi-output-select">
+                <option value="">-- No Devices Found --</option>
+            </select>
+            <span id="midi-device-status-text"></span>
+        </div>
+
+        <div id="patch-controls">
+            <div class="patch-button-group">
+                <label for="init-patch-button">INIT PATCH</label>
+                <button id="init-patch-button"></button>
+            </div>
+            <div class="patch-button-group">
+                <label for="random-patch-button">RANDOM</label>
+                <button id="random-patch-button"></button>
+            </div>
+        </div>
+
+        <div id="header-spacer"></div>
+    </div>
+    
+    <div id="controls">
+        
+        <div class="control-box"> 
+            <h3>GLOBAL</h3>
+            
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="mod-wheel">MOD</label>
+                    <span class="tooltiptext">MODULATION (MIDI CC 1)</span>
+                </div>  
+                <!-- <label for="mod-wheel">MODULATION (LFO 2)</label> -->
+                <input type="range" id="mod-wheel" min="0" max="127" value="0">
+            </div>
+
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="portamento-time">PORTA</label>
+                    <span class="tooltiptext">PORTAMENTO (MIDI CC 5)</span>
+                </div>  
+                <!-- <label for="portamento-time">PORTAMENTO</label> -->
+                <input type="range" id="portamento-time" min="0" max="127" value="0">
+            </div>
+
+        </div>
+
+        <div class="control-box"> 
+            <h3>OSC BALANCE</h3>
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="osc-balance">BAL 1/2</label>
+                    <span class="tooltiptext">OSC BALANCE (MIDI CC 29)</span>
+                </div>  
+                <!-- <label for="osc-balance">Oscillator Balance (CC 29):</label> -->
+                <input type="range" id="osc-balance" min="0" max="127" value="64">
+            </div>
+        </div>
+
+        <div class="control-box">            
+            <h3>OSC 1</h3>
+            <div class="parameter-row">  
+                <div class="tooltip">
+                    <label for="osc1-wave">WAV</label>
+                    <span class="tooltiptext">WAVEFORM (MIDI CC 24)</span>
+                </div>               
+                <!-- <label for="osc1-wave">Waveform (CC 24):</label> -->
+                <input type="range" id="osc1-wave" min="0" max="127" value="18">
+            </div>
+
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="osc1-coarse">CRS</label>
+                    <span class="tooltiptext">COARSE TUNE (MIDI CC 115)</span>
+                </div>    
+                <!-- <label for="osc1-coarse">Coarse Tune (CC 115):</label> -->
+                <input type="range" id="osc1-coarse" min="0" max="127" value="64">
+            </div>
+
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="osc1-fine">FINE</label>
+                    <span class="tooltiptext">FINE TUNE (MIDI CC 111)</span>
+                </div>    
+                <!-- <label for="osc1-fine">Fine Tune (CC 111):</label> -->
+                <input type="range" id="osc1-fine" min="0" max="127" value="64">
+            </div>
+
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="osc1-pwm-detune"><span id="osc1-pwm-detune-label">OFF</span></label>
+                    <span class="tooltiptext">PWM/S-SAW Detune/FM FEEDBACK MIDI CC 113</span>
+                </div>                 
+                <!-- <label for="osc1-pwm-detune">OSC1 PWM/ S-SAW Detune/FM FEEDBACK</label> -->
+                <input type="range" id="osc1-pwm-detune" min="0" max="127" value="0">
+            </div>
+
+        </div>
+
+        <div class="control-box">
+            <h3>OSC 2</h3>
+
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="osc2-wave">WAV</label>
+                    <span class="tooltiptext">WAVEFORM (MIDI CC 22)</span>
+                </div> 
+                <!-- <label for="osc2-wave">Waveform (CC 25):</label> -->
+                <input type="range" id="osc2-wave" min="0" max="127" value="21">
+            </div>
+
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="osc2-coarse">CRS</label>
+                    <span class="tooltiptext">COARSE TUNE (MIDI CC 116)</span>
+                </div> 
+                <!-- <label for="osc2-coarse">Coarse Tune (CC 116):</label> -->
+                <input type="range" id="osc2-coarse" min="0" max="127" value="64">
+            </div>
+
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="osc2-fine">FINE</label>
+                    <span class="tooltiptext">FINE TUNE (MIDI CC 112)</span>
+                </div> 
+                <!-- <label for="osc2-fine">Fine Tune (CC 112):</label> -->
+                <input type="range" id="osc2-fine" min="0" max="127" value="64">
+            </div>
+
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="osc2-pwm"><span id="osc2-pwm-label">OFF</span></label>
+                    <span class="tooltiptext">MIDI CC 114</span>
+                </div> 
+                <!-- <label for="osc2-pwm">PWM (CC 114):</label> -->
+                <input type="range" id="osc2-pwm" min="0" max="127" value="0">
+            </div>
+
+        </div>
+
+        <div class="control-box">
+            <h3>RING MOD</h3>
+
+            <div class="parameter-row toggle-row">
+                <button class="toggle-button" id="ring-mod-onoff" aria-pressed="false">
+                    <span class="toggle-led"></span>
+                </button>
+                <div class="tooltip">
+                    <label>ON/OFF</label>
+                    <span class="tooltiptext">RING MODULATION (MIDI CC 96)</span>
+                </div>
+            </div>
+
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="ring-mod-amount">AMT</label>
+                    <span class="tooltiptext">RING MOD AMOUNT (MIDI CC 95)</span>
+                </div>  
+                <!-- <label for="ring-mod-amount">AMOUNT</label> -->
+                <input type="range" id="ring-mod-amount" min="0" max="127" value="0">
+            </div>
+
+        </div>
+        
+
+        
+        <div class="control-box">
+            <h3>LFO 1</h3>
+
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="lfo1-amount">AMT</label>
+                    <span class="tooltiptext">LFO AMOUNT (MIDI CC 70)</span>
+                </div>  
+                <!-- <label for="lfo1-amount">Amount (CC 70):</label> -->
+                <input type="range" id="lfo1-amount" min="0" max="127" value="0">
+            </div>
+
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="lfo1-rate">RATE</label>
+                    <span class="tooltiptext">LFO RATE (MIDI CC 72)</span>
+                </div>  
+                <!-- <label for="lfo1-rate">Rate (CC 72):</label> -->
+                <input type="range" id="lfo1-rate" min="0" max="127" value="64">
+            </div>
+                        
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="lfo1-wave">WAV</label>
+                    <span class="tooltiptext">LFO WAVEFORM (MIDI CC 54)</span>
+                </div>  
+                <!-- <label for="lfo1-wave">Waveform (CC 54):</label> -->
+                <input type="range" id="lfo1-wave" min="0" max="127" value="0">
+            </div>
+
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="lfo1-dest">DEST</label>
+                    <span class="tooltiptext">LFO DESTINATION (MIDI CC 56)</span>
+                </div>  
+                <!-- <label for="lfo1-dest">Destination (CC 56):</label> -->
+                <input type="range" id="lfo1-dest" min="0" max="127" value="0">
+            </div>
+        </div>
+
+        <div class="control-box">
+            <h3>LFO 2</h3>
+
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="lfo2-amount">AMT</label>
+                    <span class="tooltiptext">LFO 2 AMOUNT (MIDI CC 28)</span>
+                </div>  
+                <!-- <label for="lfo2-amount">Amount (CC 28):</label> -->
+                <input type="range" id="lfo2-amount" min="0" max="127" value="0">
+            </div>            
+
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="lfo2-rate">RATE</label>
+                    <span class="tooltiptext">LFO 2 RATE (MIDI CC 73)</span>
+                </div>  
+                <!-- <label for="lfo2-rate">Rate (CC 73):</label> -->
+                <input type="range" id="lfo2-rate" min="0" max="127" value="64">
+            </div>            
+
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="lfo2-wave">WAV</label>
+                    <span class="tooltiptext">LFO 2 WAVEFORM (MIDI CC 55)</span>
+                </div>  
+                <!-- <label for="lfo2-wave">Waveform (CC 55):</label> -->
+                <input type="range" id="lfo2-wave" min="0" max="127" value="0">
+            </div>            
+
+        </div>
+        
+        <div class="control-box">
+
+            <h3>FILTER</h3>
+    
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="vcf-cutoff">CUT</label>
+                    <span class="tooltiptext">CUTOFF FREQ (MIDI CC 74)</span>
+                </div> 
+                <!-- <label for="vcf-cutoff">CUTOFF FREQ</label> -->
+                <input type="range" id="vcf-cutoff" min="0" max="127" value="80">
+            </div>
+
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="vcf-resonance">RES</label>
+                    <span class="tooltiptext">RESONANCE (MIDI CC 71)</span>
+                </div> 
+                <!-- <label for="vcf-resonance">RESONANCE</label> -->
+                <input type="range" id="vcf-resonance" min="0" max="127" value="10">
+            </div>    
+
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="vcf-env-amount">ENV</label>
+                    <span class="tooltiptext">VCF ENV AMOUNT (MIDI CC 47)</span>
+                </div> 
+                <!-- <label for="vcf-env-amount">ENV DEPTH</label> -->
+                <input type="range" id="vcf-env-amount" min="0" max="127" value="64">
+            </div>    
+
+        </div>
+
+        <div class="control-box">
+            <h3>FILTER ENV</h3>
+
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="vcf-attack">ATK</label>
+                    <span class="tooltiptext">VCF EG ATTACK (MIDI CC 85)</span>
+                </div> 
+                <!-- <label for="vcf-attack">VCF EG Attack (CC 85):</label> -->
+                <input type="range" id="vcf-attack" min="0" max="127" value="0">
+            </div>
+
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="vcf-decay">DCY</label>
+                    <span class="tooltiptext">VCF EG DECAY (MIDI CC 86)</span>
+                </div> 
+                <!-- <label for="vcf-decay">VCF EG Decay (CC 86):</label> -->
+                <input type="range" id="vcf-decay" min="0" max="127" value="0">
+            </div>         
+
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="vcf-sustain">SUS</label>
+                    <span class="tooltiptext">VCF EG SUSTAIN (MIDI CC 87)</span>
+                </div>                
+                <!-- <label for="vcf-sustain">VCF EG Sustain (CC 87):</label> -->
+                <input type="range" id="vcf-sustain" min="0" max="127" value="127">
+            </div>
+
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="vcf-release">REL</label>
+                    <span class="tooltiptext">VCF EG RELEASE (MIDI CC 88)</span>
+                </div>
+                <!-- <label for="vcf-release">VCF EG Release (CC 88):</label> -->
+                <input type="range" id="vcf-release" min="0" max="127" value="0">
+            </div>    
+
+        </div>
+
+        <div class="control-box">
+            <h3>AMP</h3>
+            <div class="parameter-row">                
+                <div class="tooltip">
+                    <label for="vca-attack">ATK</label>
+                    <span class="tooltiptext">VCA EG ATTACK (MIDI CC 81)</span>
+                </div>
+                <input type="range" id="vca-attack" min="0" max="127" value="0">
+            </div>
+
+            <div class="parameter-row">    
+                <div class="tooltip">
+                    <label for="vca-decay">DCY</label>
+                    <span class="tooltiptext">VCA EG DECAY (MIDI CC 82)</span>
+                </div>
+                <input type="range" id="vca-decay" min="0" max="127" value="0">
+            </div>
+
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="vca-sustain">SUS</label>
+                    <span class="tooltiptext">VCA EG SUSTAIN (MIDI CC 83)</span>
+                </div>
+                <input type="range" id="vca-sustain" min="0" max="127" value="127">
+            </div>
+
+            <div class="parameter-row">
+                <div class="tooltip">
+                    <label for="vca-release">REL</label>
+                    <span class="tooltiptext">VCA EG RELEASE (MIDI CC 84)</span>
+                </div>                
+                <input type="range" id="vca-release" min="0" max="127" value="0">
+            </div>
+                
+        </div>
+
+    </div>
+
+    <div id="footer-disclaimer">
+        <button id="close-footer-disclaimer" aria-label="Close disclaimer">&times;</button>
+        <p>This software is provided as-is, without warranty of any kind. Use at your own risk. <a href="privacy.html">Privacy &amp; Cookies</a></p>
+    </div>
+
+    <div id="version-number">v1.02</div>
+
+    <div id="about-modal" class="modal-hidden" aria-hidden="true">
+        <div id="about-modal-content" role="dialog" aria-modal="true" aria-labelledby="about-modal-title">
+            <button id="about-modal-close" aria-label="Close info popup">&times;</button>
+            <p id="about-modal-title">JT4000M MIDI Editor</p>
+            <div id="about-modal-synth-wrap" style="position:relative; width:40%; margin:8px auto;">
+                <img src="media/Behringer_Micro_cutout.png" alt="" aria-hidden="true" class="about-modal-synth-img" style="display:block; width:100%; opacity:0.2; position:absolute; top:0; left:0;">
+                <img src="media/Behringer_Micro_cutout.png" alt="" aria-hidden="true" class="about-modal-synth-img" style="display:block; width:100%; opacity:0.4; position:absolute; top:0; left:0;">
+                <img src="media/Behringer_Micro_cutout.png" alt="Behringer JT-4000M Micro" class="about-modal-synth-img" style="display:block; width:100%; opacity:0.92; position:relative;">
+            </div>
+            <p>Version 1.02</p>
+            <hr>
+            <p>1.02 - Graphics Update</p>
+            <p>1.01 - changed other editor link</p>
+            <p>1.0 - initial realease</p>
+            <hr>
+            <p>Created for Behringer JT-4000M Micro Synthesizer</p>
+            <p><a href="privacy.html">Privacy &amp; Cookies</a></p>
+        </div>
+    </div>
+    
 </body>
 </html>

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemap Location
+Sitemap: https://www.behringer-cz1-editor.co.uk/sitemap.xml

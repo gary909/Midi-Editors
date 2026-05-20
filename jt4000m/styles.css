@@ -1,0 +1,868 @@
+html {
+  height: 100%;
+}
+
+body {
+  background-color: #36436A;
+  box-shadow: inset 0 0 25px 10px rgba(0, 0, 0, 0.4);
+  min-height: 100vh;
+  margin: 0;
+  font-family: Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  color: #D4CABF;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 40px;
+  margin-bottom: -10px;
+}
+
+h2 {
+  color: #ff8e0c;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 37px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h3 {
+  color: #ff8e0c;
+  text-align: center;
+}
+
+label {
+  color: #ebe1d7;
+  font-size: 10px;
+}
+
+p {
+  color: #ebe1d7;
+}
+
+#controls a {
+    color: #ff8e0c;
+    text-decoration: none;
+}
+
+#controls a:hover {
+    text-decoration: underline;
+}
+
+.side-nav a.linkText {
+    font-family: Helvetica, sans-serif;
+    color: #aaa;
+    font-size: 16px;
+    /* font-weight: ; */
+}
+
+/* ********** FOOTER DISCLAIMER STYLING ********** */
+#footer-disclaimer {
+  background-color: rgba(20, 20, 20, 0.7);
+  padding: 12px 20px;
+  border-radius: 8px;
+  max-width: 90%;
+  text-align: center;
+  left: 50%;
+  transform: translateX(-50%);
+    position: relative;
+}
+
+#close-footer-disclaimer {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    border: none;
+    background: transparent;
+    color: #b7c0d3;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 2px 6px;
+}
+
+#close-footer-disclaimer:hover {
+    color: #EBA85B;
+}
+
+#footer-disclaimer p {
+  margin: 0;
+  padding-right: 10px;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  font-family: 'Orbitron', sans-serif;
+  color: #b7c0d3;
+}
+
+#footer-disclaimer a {
+    color: #EBA85B;
+    font-size: inherit;
+    font-family: inherit;
+    letter-spacing: inherit;
+    text-decoration: underline;
+}
+
+#footer-disclaimer a:hover {
+    color: #EBA85B;
+}
+
+#version-number {
+    position: fixed;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    color: #6f747e;
+    opacity: 0.85;
+    cursor: pointer;
+    z-index: 998;
+}
+
+#about-modal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+#about-modal.modal-hidden {
+    display: none;
+}
+
+#about-modal-content {
+    position: relative;
+    background-color: #262B30;
+    border: 2px solid #313236;
+    border-radius: 10px;
+    padding: 22px 20px 14px;
+    width: min(92vw, 420px);
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+#about-modal-content p {
+    margin: 0 0 8px;
+    color: #b7c0d3;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+}
+
+#about-modal-title {
+    color: #EBA85B !important;
+    font-size: 16px !important;
+    margin-bottom: 12px !important;
+}
+
+#about-modal-close {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    border: none;
+    background: transparent;
+    color: #b7c0d3;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 6px;
+}
+
+#about-modal-close:hover {
+    color: #EBA85B;
+}
+
+#about-modal a {
+    color: #EBA85B;
+    text-decoration: underline;
+}
+
+@media (max-width: 1200px) {
+  #footer-disclaimer {
+    position: relative;
+    margin: 10px auto 0;
+    margin-bottom: 5px;
+    transform: none;
+    left: auto;
+  }
+
+    #version-number {
+        position: relative;
+        left: auto;
+        bottom: auto;
+        transform: none;
+        margin: 2px 0 10px;
+    }
+}
+
+@media (min-width: 1201px) {
+  #footer-disclaimer {
+    position: fixed;
+    bottom: 20px;
+    z-index: 999;
+  }
+
+  #main-header {
+    margin-left: 180px;
+    width: calc(100% - 180px);
+  }
+}
+/* ********** END OF FOOTER DISCLAIMER STYLING ********** */
+
+.guideNote {
+  color: #b7c0d3 !important;
+}
+
+.nav-note {
+    padding: 10px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    color: #aaa;
+    line-height: 1.5;
+    justify-content: space-between;
+    /* border-top: 1px solid #333; */
+    /* margin-top: 20px; */
+}
+
+.side-nav .nav-note a {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit;
+    color: inherit;
+    text-decoration: underline;
+    text-align: inherit;
+}
+
+.side-nav .nav-note a:hover {
+    color: inherit;
+}
+
+#show-footer-disclaimer {
+    text-decoration: underline;
+}
+
+/* ********** HAMBURGER STYLING ******* */
+/* Hamburger Button */
+.hamburger-menu {
+    position: fixed;
+    top: 20px;
+    right: 15px;
+    cursor: pointer;
+    z-index: 1001; /* Above everything, except for the slide nav*/
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.bar {
+    width: 30px;
+    height: 4px;
+    background-color: #ff8e0c;
+    border-radius: 2px;
+    transition: background-color 0.3s ease;
+}
+
+.hamburger-menu:hover .bar {
+    background-color: #ff4800;
+    cursor: pointer;
+}
+
+/* Slide-out Panel */
+.side-nav {
+    height: 100%;
+    width: 0; /* Hidden by default */
+    position: fixed;
+    z-index: 1002;
+    top: 0;
+    right: 0;
+    background-color: #262B30;
+    overflow-x: hidden;
+    transition: 0.2s; /* Smooth slide effect */
+    padding-top: 60px;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+    color: white;
+}
+
+.side-nav a {
+    padding: 15px 10px 15px 15px; /* top right bottom left */
+    text-decoration: none;
+    font-size: 18px;
+    color: #aaa;
+    display: block;
+    font-family: 'Orbitron', sans-serif;
+    transition: 0.3s;
+    text-align: left;
+}
+
+.side-nav a:hover {
+    color: #ff8e0c;
+}
+
+.side-nav .close-btn {
+    position: absolute;
+    top: 0px;
+    right: 20px;
+    font-size: 36px;
+}
+
+.side-nav hr {
+    border: 0;
+    border-top: 1px solid #333;
+    margin: 20px;
+}
+
+.HambText {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* ********** END OF HAMBURGER STYLING ******* */
+
+
+/* ********** Start OF ACCORDION STYLING ********** */
+.accordion-header {
+
+    background-color: transparent;
+    color: #aaa;
+    cursor: pointer;
+    padding: 15px 25px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    border-bottom: 1px solid #333;
+}
+
+.accordion-header:hover, .active {
+    color: #ff8e0c; /* Highlight color */
+}
+
+/* plus/minus icon */
+.accordion-header:after {
+    content: '\002B'; /* Plus sign */
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2212"; /* Minus sign */
+}
+
+.accordion-content {
+    padding: 0 10px;
+    background-color: #222;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out; /* Smooth slide */
+}
+
+.accordion-content p {
+    font-size: 14px;
+    color: #eee;
+    line-height: 1.6;
+}
+
+/* ********** END OF ACCORDION STYLING ********** */
+
+#main-header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center; 
+    max-width: 1280px;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+#header-block {  /* The main title */
+    text-align: left;
+    margin-left: 10px;
+}
+
+#header-block, #header-spacer {
+    width: 300px;
+    flex-shrink: 0;
+}
+
+#controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1280px;
+    padding: 10px;
+}
+
+.control-box {
+    background-color: #36436A;
+    border: 3px solid #252527;
+    padding: 10px;
+    border-radius: 10px;
+    overflow: visible;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), inset 0 0 10px 1px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-evenly;
+    width: 205px;
+    box-sizing: border-box;
+    padding-bottom: 12px;
+}
+
+.privacy-page #controls {
+    align-items: stretch;
+}
+
+.privacy-page .control-box {
+    width: min(100%, 360px);
+    min-height: 220px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.control-box h3 {
+    flex: 0 0 calc(100% + 20px);
+    margin-top: -15px;
+    margin-left: -10px;
+    margin-right: -10px;
+    margin-bottom: 10px;
+    padding: 6px 10px 2px 10px;
+    box-sizing: border-box;
+    background-color: #252527;
+    text-align: center;
+    border-radius: 7px 7px 0 0;
+}
+
+.parameter-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+    padding-bottom: 2px;
+    width: 40px;
+}
+
+.parameter-row > input[type="range"] {
+    order: 1;
+}
+
+.parameter-row > .tooltip {
+    order: 2;
+    width: 100%;
+    text-align: center;
+}
+
+.parameter-row label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    max-width: 100%;
+}
+
+.parameter-row::before {
+    content: "";
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 14px;
+    height: 96px;
+    background:
+        repeating-linear-gradient(
+            180deg,
+            transparent 0px,
+            transparent 7px,
+            #808080 7px,
+            #808080 8.5px
+        );
+    background-position: 0 -5px;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.parameter-row::after {
+    content: "";
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 96px;
+    background: #13171F;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* SLIDER STYLING */
+.control-box input[type="range"] {
+    writing-mode: vertical-lr;
+    direction: rtl;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 96px;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    position: relative;
+    z-index: 2;
+}
+
+.control-box input[type="range"]::-webkit-slider-runnable-track {
+    width: 22px;
+    border-radius: 6px;
+    background: transparent;
+    border: none;
+}
+
+.control-box input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 24px;
+    height: 10px;
+    border-radius: 2px;
+    border: 1px solid #0d1018;
+    border-top-color: #5a6070;
+    background: linear-gradient(180deg,
+        #7a8090 0%,
+        #50566a 18%,
+        #2e3248 40%,
+        #222640 43%,
+        #e4e4e8 44%,
+        #e4e4e8 56%,
+        #1e2236 57%,
+        #14182a 80%,
+        #0c1018 100%
+    );
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.15),
+        0 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.control-box input[type="range"]::-moz-range-track {
+    width: 22px;
+    border-radius: 6px;
+    background: transparent;
+    border: none;
+}
+
+.control-box input[type="range"]::-moz-range-thumb {
+    width: 24px;
+    height: 10px;
+    border-radius: 2px;
+    border: 1px solid #0d1018;
+    border-top-color: #5a6070;
+    background: linear-gradient(180deg,
+        #7a8090 0%,
+        #50566a 18%,
+        #2e3248 40%,
+        #222640 43%,
+        #e4e4e8 44%,
+        #e4e4e8 56%,
+        #1e2236 57%,
+        #14182a 80%,
+        #0c1018 100%
+    );
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.15),
+        0 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+
+/* --- Toggle Button Styling --- */
+.toggle-row::before,
+.toggle-row::after {
+    display: none;
+}
+
+.toggle-button {
+    width: 22px;
+    height: 34px;
+    border-radius: 3px;
+    margin-bottom: 30px;
+    border: 1px solid #1c222d;
+    background: #333945;
+    cursor: pointer;
+    box-shadow: inset 0 0 0 1px rgb(22, 22, 23), inset 0 2px 6px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(0, 0, 0, 0.55), 0 0 6px 1px rgba(26, 28, 30, 0.4);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 5px;
+    position: relative;
+    z-index: 2;
+}
+
+.toggle-button:hover {
+    border-color: #2e7ee2;
+}
+
+.toggle-button:active {
+    transform: translateY(1px);
+}
+
+.toggle-led {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #2f1416;
+    border: 1px solid #38181b;
+    box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.65);
+    pointer-events: none;
+    flex-shrink: 0;
+}
+
+.toggle-button.is-active .toggle-led {
+    background: radial-gradient(circle at 35% 30%, #ffd8d8 0, #ff6363 25%, #ff2222 58%, #b70808 100%);
+    border-color: #6e1015;
+    box-shadow: 0 0 5px rgba(255, 61, 61, 0.85), 0 0 1px rgba(255, 152, 152, 0.95);
+}
+
+
+/* --- Tooltip Styling --- */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width:max-content;
+    background-color: #201c13;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 5px 5px;
+    position: absolute;
+    z-index: 10;
+    bottom: 100%;
+    right: 100%;
+    margin-left: 10px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    bottom: 0%;
+    left: -10%;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent #201c1300;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* --- End of Tooltip Styling --- */
+
+/* Styling for the MIDI output selection box */
+#midi-output-select {
+    width: 250px;
+    background-color: #514109;
+    color: #B3B953;
+    text-shadow: rgba(110, 233, 250, 0.5) 1px 0 8px; /* set glow of text */
+    font-family: 'VT323', monospace;
+    font-size: 1.2em;
+    border: 5px solid #313236;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), inset 0 0 10px 1px rgba(0, 0, 0, 0.1);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+/* Centering the MIDI device selection */
+#midi-status {
+    display: flex;
+    flex-direction: column; /* Stack the label and select box vertically */
+    align-items: center; /* Center the stacked items horizontally */
+    margin-top: 20px;
+}
+
+/* Add space below the label within the MIDI status block */
+#midi-status label {
+    margin-bottom: 8px;
+}
+
+#patch-controls {
+    display: flex;
+    gap: 15px;
+    margin-right: 10px;
+    margin-top: 15px;
+    flex-shrink: 0;
+}
+
+.patch-button-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 30px;
+}
+
+.patch-button-group label {
+    margin-bottom: 8px;
+}
+
+/* Style for the buttons themselves */
+#init-patch-button, #random-patch-button {
+    width: 22px;
+    height: 34px;
+    border-radius: 3px;
+    border: 1px solid #1c222d;
+    background: #333945;
+    cursor: pointer;
+    box-shadow: inset 0 0 0 1px rgb(22, 22, 23), inset 0 2px 6px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(0, 0, 0, 0.55), 0 0 6px 1px rgba(26, 28, 30, 0.4);
+}
+
+#init-patch-button:hover, #random-patch-button:hover {
+    border-color: #2e7ee2;
+}
+
+#init-patch-button:active, #random-patch-button:active {
+    transform: translateY(1px);
+}
+
+/* New style to highlight the active OSC2 PWM control */
+.active-control {
+    /* Apply underline */
+    text-decoration: underline;
+    /* You might also want to change the color for emphasis */
+    color: #EBA85B !important; 
+}
+
+.wavs-diagram {
+    display: block;      /* Required for margin: auto to work */
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;        /* Makes the image span the width of the control box */
+    height: auto;       /* Maintains aspect ratio */
+    margin-bottom: 10px; /* Space between image and the "VCA EG" text */
+    border-radius: 4px; /* Optional: matches your box styling */
+    opacity: 0.9;       /* Optional: softens the image to match the UI */
+}
+
+.nav-synth-wrap {
+    position: relative;
+    width: 70%;
+    margin: 10px auto;
+}
+
+.nav-synth-img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.nav-synth-img--front {
+    position: relative;
+    z-index: 3;
+    opacity: 0.92;
+}
+
+.nav-synth-img--mid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    opacity: 0.4;
+}
+
+.nav-synth-img--back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    opacity: 0.2;
+}
+
+/* --- NEW MEDIA QUERY FOR MOBILE VIEW --- */
+@media (max-width: 768px) {
+
+    /* Floating Screen bar */
+    #midi-status {
+        position: fixed; /* Makes it float relative to the viewport */
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000; 
+        
+        /* Compact/Horizontal layout */
+        display: flex; 
+        flex-direction: row; 
+        justify-content: center;
+        gap: 20px;
+        align-items: center;
+        
+        /* Appearance */
+        background-color: #36436A;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        padding: 10px 0; 
+        margin: 0;
+    }
+
+    /* Hide the MIDI device label on mobile to save space on the floating bar */
+    #midi-status label {
+        display: none;
+    }
+
+    body {
+        padding-top: 40px;
+    }
+    
+    /* 1. Stack the three main header sections vertically */
+    #main-header {
+        flex-direction: column;
+        /* Remove space-around and use flex-start for a tight stack, 
+           then center the content within the header */
+        justify-content: flex-start; 
+        align-items: center; /* Center the entire header block */
+        padding: 10px 0; /* Add some vertical padding */
+    }
+
+    /* 2. Ensure each block is full width (or nearly full) and centered */
+    #header-block,
+    /* #midi-status, */
+    #patch-controls {
+        width: 90%; /* Take up the full width of the main-header */
+        margin: 10px 0; /* Add vertical spacing between stacked elements */
+        text-align: center; /* Center text inside the header block */
+        
+        /* Optional: Center the button groups horizontally within their block */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    /* 3. Adjust specific inner elements to ensure they stack/center correctly */
+    
+    /* Center the buttons within the patch-controls group */
+    #patch-controls {
+        flex-direction: row;
+        gap: 15px; /* Remove horizontal gap when stacked */
+        justify-content: center; /* <<< THIS IS THE CRITICAL ADDITION */
+        width: 100%;
+    }
+    
+    /* Center the individual button groups and add vertical margin */
+    .patch-button-group {
+        margin: 0; 
+        width: auto; /* Allow content to dictate width */
+    }
+}
