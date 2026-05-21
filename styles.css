@@ -35,8 +35,8 @@ body {
 .site-subtitle {
     margin-top: 0.5rem;
     font-size: 0.9rem;
-    letter-spacing: 2.9px !important;
-    font-weight: 300;
+    letter-spacing: 2.0px !important;
+    font-weight: 200;
     color: #6b7280;
     max-width: 580px;
     margin-inline: auto;
@@ -257,7 +257,7 @@ body {
 
 @keyframes cube-spin {
     from { transform: rotateX(20deg) rotateY(0deg); }
-    to   { transform: rotateX(20deg) rotateY(360deg); }
+    to   { transform: rotateX(20deg) rotateY(-360deg); }
 }
 
 .loader-track {
