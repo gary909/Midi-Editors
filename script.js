@@ -104,14 +104,41 @@ document.querySelectorAll('.editor-card').forEach(card => {
     });
 });
 
+// ── Info card: populate & animate on card hover ─────────────────
+const infoCard = document.getElementById('info-card');
+const infoEls = {
+    model:     document.getElementById('info-model'),
+    released:  document.getElementById('info-released'),
+    polyphony: document.getElementById('info-polyphony'),
+    os:        document.getElementById('info-os'),
+    about:     document.getElementById('info-about'),
+};
+
+let exitTimeout = null;
 
 document.querySelectorAll('.editor-card').forEach(card => {
-    card.addEventListener('click', function (e) {
-        e.preventDefault();
-        const href = this.getAttribute('href');
-        overlay.classList.add('active');
-        setTimeout(() => {
-            window.location.href = href;
-        }, 450);
+    card.addEventListener('mouseenter', () => {
+        if (exitTimeout) { clearTimeout(exitTimeout); exitTimeout = null; }
+        infoCard.classList.remove('exit');
+
+        infoEls.model.textContent     = `Model:      ${card.dataset.model     ?? ''}`;
+        infoEls.released.textContent  = `Released:   ${card.dataset.released  ?? ''}`;
+        infoEls.polyphony.textContent = `Polyphony:  ${card.dataset.polyphony ?? ''}`;
+        infoEls.os.textContent        = `Latest OS:  ${card.dataset.os        ?? ''}`;
+        infoEls.about.textContent     = `About:      ${card.dataset.about     ?? ''}`;
+
+        infoCard.classList.remove('animate');
+        void infoCard.offsetWidth; // force reflow to restart animation
+        infoCard.classList.add('animate');
+    });
+
+    card.addEventListener('mouseleave', () => {
+        infoCard.classList.add('exit');
+        exitTimeout = setTimeout(() => {
+            infoCard.classList.remove('exit');
+            infoCard.classList.remove('animate');
+            Object.values(infoEls).forEach(el => { el.textContent = ''; });
+            exitTimeout = null;
+        }, 600); // duration (0.30s) + max delay (0.20s) + buffer
     });
 });
