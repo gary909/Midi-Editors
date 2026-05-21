@@ -185,6 +185,42 @@ body {
     text-transform: uppercase;
 }
 
+/* ─── Loader Cube ───────────────────────────────────────────── */
+.loader-cube-wrap {
+    perspective: 1600px;
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 1.5rem;
+}
+
+.loader-cube {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: cube-spin 3s linear infinite;
+}
+
+.cube-face {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border: 1.5px solid #252525;
+    background: transparent;
+}
+
+.cube-front  { transform: translateZ(25px); }
+.cube-back   { transform: translateZ(-25px) rotateY(180deg); }
+.cube-left   { transform: translateX(-25px) rotateY(-90deg); }
+.cube-right  { transform: translateX(25px) rotateY(90deg); }
+.cube-top    { transform: translateY(-25px) rotateX(90deg); }
+.cube-bottom { transform: translateY(25px) rotateX(-90deg); }
+
+@keyframes cube-spin {
+    from { transform: rotateX(20deg) rotateY(0deg); }
+    to   { transform: rotateX(20deg) rotateY(360deg); }
+}
+
 .loader-track {
     background: #e5e7eb;
     border-radius: 999px;
@@ -196,7 +232,7 @@ body {
     height: 100%;
     width: 0%;
     border-radius: 999px;
-    background: linear-gradient(90deg, #5c5fef, #e11d48);
+    background: #252525;
     animation: loader-fill 1.8s ease-out forwards;
 }
 
