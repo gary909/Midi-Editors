@@ -20,7 +20,7 @@ body {
 .site-header {
     background: #ffffff;
     border-bottom: 1px solid #e5e7eb;
-    padding: 2.5rem 2rem 2rem;
+    padding: 1.5rem 1rem 1rem;
     text-align: center;
 }
 
@@ -35,12 +35,13 @@ body {
 .site-subtitle {
     margin-top: 0.5rem;
     font-size: 0.9rem;
+    letter-spacing: 2.9px !important;
     font-weight: 300;
     color: #6b7280;
     max-width: 580px;
     margin-inline: auto;
     line-height: 1.6;
-    text-transform: lowercase;
+    /* text-transform: lowercase; */
     letter-spacing: 0.01em;
 }
 
@@ -215,9 +216,9 @@ body {
 
 .bg-title {
     font-family: 'Source Code Pro', monospace;
-    font-size: 1.1rem;
+    font-size: 1.4rem;
     font-weight: 300;
-    color: #11182792;
+    color: #111827cb;
     margin-bottom: 0.5rem;
     letter-spacing: 0.5px;
     text-transform: uppercase;
