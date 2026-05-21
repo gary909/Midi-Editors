@@ -2,13 +2,23 @@
 const loaderModal = document.getElementById('loader-modal');
 if (sessionStorage.getItem('visited')) {
     loaderModal.remove();
+    document.body.classList.add('cards-visible');
 } else {
     sessionStorage.setItem('visited', '1');
     setTimeout(() => {
         loaderModal.classList.add('hide');
+        document.body.classList.add('cards-visible');
         setTimeout(() => loaderModal.remove(), 500);
     }, 1500);
 }
+
+// ── Card enter animation cleanup (restores hover after animation) ──
+document.querySelectorAll('.editor-card').forEach(card => {
+    card.addEventListener('animationend', () => {
+        card.style.opacity = '1';
+        card.style.animation = 'none';
+    }, { once: true });
+});
 
 // ── Synth image 3D spin on card hover ──────────────────────────
 function setupCardSynths() {

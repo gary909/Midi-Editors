@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300&display=swap');
+
 /* ─── Reset & Base ─────────────────────────────────────────── */
 *, *::before, *::after {
     box-sizing: border-box;
@@ -78,6 +80,19 @@ body {
 .editor-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 12px 32px rgba(0, 0, 0, 0.1);
+}
+
+.cards-visible .editor-card {
+    animation: card-enter 0.45s ease both;
+}
+.cards-visible .editor-card:nth-child(2) { animation-delay: 0.07s; }
+.cards-visible .editor-card:nth-child(3) { animation-delay: 0.14s; }
+.cards-visible .editor-card:nth-child(4) { animation-delay: 0.21s; }
+.cards-visible .editor-card:nth-child(5) { animation-delay: 0.28s; }
+
+@keyframes card-enter {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ─── Card Thumbnail ────────────────────────────────────────── */
@@ -168,7 +183,10 @@ body {
 }
 
 .loader-box {
-    background: #ffffff;
+    background-color: #f2d45d;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.35' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)' opacity='0.22'/%3E%3C/svg%3E");
+    background-size: 250px 250px;
+    border: 1px solid #111111;
     border-radius: 14px;
     padding: 2rem 2.5rem;
     width: 320px;
@@ -177,8 +195,9 @@ body {
 }
 
 .loader-title {
+    font-family: 'Source Code Pro', monospace;
     font-size: 1.1rem;
-    font-weight: 700;
+    font-weight: 300;
     color: #111827;
     margin-bottom: 1.25rem;
     letter-spacing: 0.5px;
@@ -205,7 +224,7 @@ body {
     position: absolute;
     width: 50px;
     height: 50px;
-    border: 1.5px solid #252525;
+    border: 1px solid #3e3e3e;
     background: transparent;
 }
 
@@ -243,8 +262,10 @@ body {
 
 .loader-label {
     margin-top: 0.75rem;
+    font-family: 'Source Code Pro', monospace;
     font-size: 0.8rem;
-    color: #9ca3af;
+    font-weight: 300;
+    color: #252525;
 }
 
 /* ─── Fade Overlay ─────────────────────────────────────────── */
