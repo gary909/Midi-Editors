@@ -182,6 +182,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-bottom: 15vh; /*` move it up slightly */
     z-index: 10000;
     opacity: 1;
     transition: opacity 0.5s ease;
