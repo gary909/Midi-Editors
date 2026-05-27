@@ -866,3 +866,32 @@ p {
         width: auto; /* Allow content to dictate width */
     }
 }
+
+/* ===== Back to Home Button ===== */
+.back-home-btn {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 50%;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+}
+.back-home-btn:hover {
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+}
+.back-home-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
