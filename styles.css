@@ -289,6 +289,35 @@ body {
     color: #252525;
 }
 
+/* ─── About Modal ──────────────────────────────────────────── */
+#about-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(245, 245, 245, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 15vh;
+    z-index: 10000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+#about-modal.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.about-text {
+    margin-top: 1.25rem;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: #252525;
+    line-height: 1.6;
+}
+
 /* ─── Fade Overlay ─────────────────────────────────────────── */
 #fade-overlay {
     position: fixed;

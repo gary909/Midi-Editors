@@ -1,25 +1,45 @@
 /* Set app size in this file */
-const { app, BrowserWindow, session } = require('electron');
+const { app, BrowserWindow, session, Menu } = require('electron');
 const path = require('path');
 
+let mainWindow;
+
 function createWindow() {
-  const win = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1440,
-    height: 900,
+    height: 910,
     show: false,              // hide until first paint to avoid white flash
     backgroundColor: '#f5f5f5', // match loader-modal background
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,
+      preload: path.join(__dirname, 'preload.js'),
     },
     title: 'MIDI Editors',
   });
 
-  win.loadFile('index.html');
+  mainWindow.loadFile('index.html');
 
   // Show the window once the first frame has been painted —
   // the loader modal will already be visible at this point.
-  win.once('ready-to-show', () => win.show());
+  mainWindow.once('ready-to-show', () => mainWindow.show());
+}
+
+function buildMenu() {
+  const template = [
+    {
+      label: 'Help',
+      submenu: [
+        {
+          label: 'About',
+          click: () => {
+            if (mainWindow) mainWindow.webContents.send('show-about');
+          },
+        },
+      ],
+    },
+  ];
+  Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 
 app.whenReady().then(() => {
@@ -30,6 +50,7 @@ app.whenReady().then(() => {
     callback(allowed.includes(permission));
   });
 
+  buildMenu();
   createWindow();
 
   app.on('activate', () => {

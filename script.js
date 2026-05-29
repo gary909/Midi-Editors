@@ -142,3 +142,16 @@ document.querySelectorAll('.editor-card').forEach(card => {
         }, 600); // duration (0.30s) + max delay (0.20s) + buffer
     });
 });
+
+// ── About modal (triggered from Help menu in Electron) ──────────
+if (window.electronAPI) {
+    const aboutModal = document.getElementById('about-modal');
+
+    window.electronAPI.onShowAbout(() => {
+        aboutModal.classList.add('visible');
+    });
+
+    aboutModal.addEventListener('click', () => {
+        aboutModal.classList.remove('visible');
+    });
+}
