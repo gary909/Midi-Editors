@@ -28,6 +28,23 @@ function createWindow() {
 function buildMenu() {
   const template = [
     {
+      label: app.name,
+      submenu: [
+        {
+          label: 'About MIDI Editors',
+          click: () => {
+            if (mainWindow) mainWindow.webContents.send('show-about');
+          },
+        },
+        { type: 'separator' },
+        {
+          label: 'Quit',
+          accelerator: 'CmdOrCtrl+Q',
+          click: () => app.quit(),
+        },
+      ],
+    },
+    {
       label: 'Help',
       submenu: [
         {
