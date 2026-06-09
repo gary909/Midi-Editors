@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemap Location
+Sitemap: https://behringer-synth-editor.co.uk/sitemap.xml
